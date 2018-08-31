@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <h3>Últimas pesquisas realizadas</h3>
+    <button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
+      <div class="item-datarealizacao" item-start>
+      {{p.data_realizacao}}
+      </div>
+      <div class="item-pesquisa">
+        {{p.pesquisa}}
+      </div>
+      <div class="item-aluno">
+        {{p.aluno}}
+      </div>
+      <div class="item-supermercado" item-end>
+        {{p.supermercado}}
+      </div>
+    </button>
+  </ion-list>
+
+  <ion-fab bottom right >
+     <button ion-fab><ion-icon name="add"></ion-icon></button>
+     <ion-fab-list side="top">
+       <button ion-fab color="dark" (click)="realizarPesquisa()">
+          <ion-icon name="clipboard"></ion-icon>
+          <ion-label>Realizar Pesquisa</ion-label>
+       </button>
+       
+       <button ion-fab color="dark">
+          <ion-icon name="pricetag"></ion-icon>
+          <ion-label>Adicionar Produto</ion-label>
+       </button>
+
+       <button ion-fab color="dark">
+          <ion-icon name="cart"></ion-icon>
+          <ion-label>Adicionar Supermercado</ion-label>
+       </button>
+
+     </ion-fab-list>
+   </ion-fab>
+</ion-content>

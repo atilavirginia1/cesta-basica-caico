@@ -1,0 +1,78 @@
+<!--
+  Generated template for the CadastrarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cadastrar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+ <form [formGroup]="form">
+    <ion-item>
+      <ion-input type="text" formControlName="nome" placeholder="Nome Completo"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!form.controls.nome.valid && (form.controls.nome.dirty || form.controls.nome.touched)" color="danger">
+      <div [hidden]="!form.controls.nome.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+
+     <ion-item>
+      <ion-label>Cargo</ion-label>
+      <ion-select [(ngModel)]="cargo" placeholder="Selecionar" formControlName="cargo">
+        <ion-option value="P">Professor</ion-option>
+        <ion-option value="A">Aluno</ion-option>
+      </ion-select>
+    </ion-item>
+      <ion-item *ngIf="!form.controls.cargo.valid && (form.controls.cargo.dirty || form.controls.cargo.touched)" color="danger">
+      <div [hidden]="!form.controls.cargo.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+    <ion-item *ngIf="getCargo()">
+    </ion-item>
+
+    <ion-item [hidden]="!isVisible">
+      <ion-input type="text" formControlName="mat_siape" placeholder="{{mat_siape}}"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!form.controls.mat_siape.valid && (form.controls.mat_siape.dirty || form.controls.mat_siape.touched)" color="danger">
+      <div [hidden]="!form.controls.mat_siape.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+
+     <ion-item [hidden]="!showEmail">
+      <ion-input type="text" formControlName="email" type="email" placeholder="Email"></ion-input>
+    </ion-item>
+
+     <ion-item>
+      <ion-input type="text" formControlName="usuario" type="text" placeholder="Username"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!form.controls.usuario.valid && (form.controls.usuario.dirty || form.controls.usuario.touched)" color="danger">
+      <div [hidden]="!form.controls.usuario.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+
+     <ion-item>
+      <ion-input type="text" formControlName="senha" type="password" placeholder="Senha"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!form.controls.senha.valid && (form.controls.usuario.dirty || form.controls.senha.touched)" color="danger">
+      <div [hidden]="!form.controls.senha.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+
+    <div padding>
+     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Cadastrar</button>
+    </div>
+
+ </form>
+</ion-content>
