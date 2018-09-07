@@ -1,18 +1,51 @@
-<!--
-  Generated template for the CadastrarProdutoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>cadastrar_produto</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Cadastrar Produto</ion-title>
+      </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-input type="text" formControlName="nomeProduto" placeholder="Nome do Produto"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!form.controls.nomeProduto.valid && (form.controls.nomeProduto.dirty || form.controls.nomeProduto.touched)" color="danger">
+      <div [hidden]="!form.controls.nomeProduto.errors.required">
+        O campo é obrigatório
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Medida</ion-label>
+      <ion-select [(ngModel)]="medida" placeholder="Selecionar" formControlName="medida">
+        <ion-option value="U">Unidade</ion-option>
+        <ion-option value="Kg">Quilogramas</ion-option>
+        <ion-option value="Ml">Miligramas</ion-option>
+      </ion-select>
+    </ion-item>
+      <ion-item *ngIf="!form.controls.medida.valid && (form.controls.medida.dirty || form.controls.medida.touched)" color="danger">
+        <div [hidden]="!form.controls.medida.errors.required">
+          O campo é obrigatório
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="text" formControlName="marcas" placeholder="Marcas"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.marcas.valid && (form.controls.marcas.dirty || form.controls.marcas.touched)" color="danger">
+        <div [hidden]="!form.controls.marcas.errors.required">
+          O campo é obrigatório
+        </div>
+      </ion-item>
+
+    <div padding>
+     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Cadastrar</button>
+    </div>
+
+ </form>
 </ion-content>

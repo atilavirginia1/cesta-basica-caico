@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -24,6 +24,8 @@ import { ProvedorProvider } from '../providers/provedor/provedor';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { CadastrarProdutoPage } from '../pages/cadastrar-produto/cadastrar-produto';
+import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadastrar-supermercado';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     SolicitacoesPage,
     BuscaPage,
     RelatoriosPage,
-    RealizarPesquisaPage
+    RealizarPesquisaPage,
+    CadastrarProdutoPage,
+    CadastrarSupermercadoPage
 
   ],
   imports: [
@@ -71,7 +75,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     SolicitacoesPage,
     BuscaPage,
     RelatoriosPage,
-    RealizarPesquisaPage
+    RealizarPesquisaPage,
+    CadastrarProdutoPage,
+    CadastrarSupermercadoPage
   ],
   providers: [
     StatusBar,

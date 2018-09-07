@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { RealizarPesquisaPage } from '../realizar-pesquisa/realizar-pesquisa';
+import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
+import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-supermercado';
 
 @Component({
   selector: 'page-home',
@@ -26,6 +28,15 @@ export class HomePage {
   realizarPesquisa(){
     this.navCtrl.push(RealizarPesquisaPage);
   }
+
+  adicionarProduto(){
+    this.navCtrl.push(CadastrarProdutoPage);
+  }
+
+  adicionarSupermercado(){
+    this.navCtrl.push(CadastrarSupermercadoPage);
+  }
+
   itemTapped(event, p) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(DetalhesPesquisaPage, {

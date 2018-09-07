@@ -10,7 +10,6 @@ import { BuscaPage } from '../pages/busca/busca';
 import { RelatoriosPage } from '../pages/relatorios/relatorios';
 
 
-
 @Component({
   templateUrl: 'app.html'
 })
