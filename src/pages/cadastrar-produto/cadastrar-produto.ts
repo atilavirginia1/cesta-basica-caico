@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { FormBuilder, FormsModule, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvedorProvider } from '../../providers/provedor/provedor';
 
 /**
@@ -45,7 +45,7 @@ export class CadastrarProdutoPage {
   onSubmit() {
     console.log(this.form);
     if (this.form.valid) {
-      this.message_success = 'Cadastro de produto realizado com sucesso'
+      this.message_success = 'Cadastro de produto realizado com sucesso';
       this.provider.save(this.form.value)
         .then(() => {
           	this.toast.create({ message: this.message_success, duration: 3000 }).present();
