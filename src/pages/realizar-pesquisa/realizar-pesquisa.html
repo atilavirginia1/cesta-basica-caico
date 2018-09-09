@@ -14,5 +14,58 @@
 
 
 <ion-content padding>
+    <form [formGroup]="form">
+        <ion-item>
+          <ion-input type="text" formControlName="nomeSupermercado" placeholder="Nome do Supermercado"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!form.controls.nomeSupermercado.valid && (form.controls.nomeSupermercado.dirty || form.controls.nomeSupermercado.touched)" color="danger">
+          <div [hidden]="!form.controls.nomeSupermercado.errors.required">
+            O campo é obrigatório
+          </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-datetime displayFormat="DD/MM/YYYY" formControlName="data_realizacao" placeholder="Data"></ion-datetime>
+          </ion-item>
+            <ion-item *ngIf="!form.controls.data_realizacao.valid && (form.controls.data_realizacao.dirty || form.controls.data_realizacao.touched)" color="danger">
+                <div [hidden]="!form.controls.data_realizacao.errors.required">
+                  O campo é obrigatório
+                </div>
+          </ion-item>
+          <ion-item>
+            <ion-list>
+                <button ion-item *ngFor="let p of produtos">
+                  <div class="item-nome" item-start>
+                  {{p.nome}}
+                  </div>
+                  <div class="item-marca">
+                    {{p.marca}}
+                  </div>
+                  <div class="item-medida">
+                    {{p.medida}}
+                  </div>
+                  <div class="item-preco" item-end>
+                    {{p.preco}}
+                  </div>
+                </button>
+              </ion-list>
+            </ion-item>
+            <ion-item>
+            <div padding>
+              <br>
+                <ion-fab bottom right >
+                    <button ion-fab><ion-icon name="add"></ion-icon></button>
+                </ion-fab>
+            </div>
+            </ion-item>
+
+            <ion-item>
+            <div padding>
+                <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Realizar Pesquisa</button>
+            </div>
+            </ion-item>
+    </form>
+
+
 
 </ion-content>
