@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ItemSliding, NavParams, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProvedorProvider } from '../../providers/provedor/provedor';
+import firebase from 'firebase';
 
 /**
  * Generated class for the RealizarPesquisaPage page.
@@ -18,10 +19,17 @@ import { ProvedorProvider } from '../../providers/provedor/provedor';
 export class RealizarPesquisaPage {
   nomeSupermercado: string;
   data_realizacao: string;
-  produtos: Array<{nome: string, marca:string, medida: string, preco: string}>;
+  nomeProduto: string;
+  marca: string;
+  preco: number;
+  medida: string;
   form: FormGroup;
   message_success: string;
+  isVisible=false;
   public pesquisa: any;
+  produtos: Array<{nome: string, marca:string, medida: string, preco: string}>;
+  public items: Array<any> = [];
+  public itemRef: firebase.database.Reference = firebase.database().ref('/items');
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProvedorProvider,
@@ -46,9 +54,36 @@ export class RealizarPesquisaPage {
       key: [this.pesquisa.key],
       nomeSupermercado: [this.pesquisa.nomeSupermercado, Validators.required],
       data_realizacao: [this.pesquisa.data_realizacao, Validators.required],
+      nomeProduto: [this.pesquisa.nomeProduto, Validators.required],
+      marca: [this.pesquisa.marca, Validators.required],
+      medida: [this.pesquisa.medida, Validators.required],
+      preco: [this.pesquisa.preco, Validators.required],
       produtos: [this.pesquisa.produtos],
       ativo: false
     });
+  }
+
+  delete(slidingItem: ItemSliding) {
+    slidingItem.close();
+  }
+
+  getMarca(){
+  	this.marca = this.form.get('marca').value;
+  	if(this.marca == 'O')
+  	{
+  		this.isVisible = true;
+    } else {
+      this.isVisible = false;
+    }
+  }
+
+  setVisible(){
+  	if(this.marca != null){
+  		this.isVisible = true;
+  	} else {
+  		this.isVisible = false;
+  	}
+
   }
 
   onSubmit() {
@@ -70,5 +105,6 @@ export class RealizarPesquisaPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RealizarPesquisaPage');
   }
+
 
 }
