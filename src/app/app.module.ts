@@ -26,6 +26,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { CadastrarProdutoPage } from '../pages/cadastrar-produto/cadastrar-produto';
 import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadastrar-supermercado';
+import firebase from 'firebase';
 
 @NgModule({
   declarations: [

@@ -14,8 +14,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'detalhes-aluno.html',
 })
 export class DetalhesAlunoPage {
-
+  selectedItem: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	this.selectedItem = navParams.get('push_item');
   }
 
   ionViewDidLoad() {

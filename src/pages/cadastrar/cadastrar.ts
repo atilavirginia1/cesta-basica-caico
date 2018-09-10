@@ -35,7 +35,8 @@ export class CadastrarPage {
       nome: [this.usuario.nome, Validators.required],
       cargo: [this.usuario.cargo, Validators.required],
       mat_siape: [this.usuario.mat_siape, Validators.required],
-      email: [this.usuario.email],
+      email: [this.usuario.email, Validators.compose([
+        Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
       usuario: [this.usuario.usuario, Validators.required],
       senha: [this.usuario.senha, Validators.required],
       ativo: false

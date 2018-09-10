@@ -7,12 +7,83 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Pesquisar</ion-title>
+    <ion-title>Buscar</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
 
+	<ion-segment  class="SwipedTabs-tabs"  >
+		<ion-segment-button *ngFor='let tab of tabs ; let i = index ' value="IngoreMe" (click)="selectTab(i)"
+		[ngClass]='{ "SwipedTabs-activeTab" : ( this.SwipedTabsSlider  && ( this.SwipedTabsSlider.getActiveIndex() === i || (  tabs.length -1 === i&& this.SwipedTabsSlider.isEnd()))) }' >
+			{{tab}}
+		</ion-segment-button>
+	</ion-segment>
+
+	<!-- here is our dynamic line  "indicator"-->
+	<div id='indicator' class="SwipedTabs-indicatorSegment" [ngStyle]="{'width.%': (100/this.tabs.length)}"></div>
+
+	<ion-slides #SwipedTabsSlider  (ionSlideDrag)="animateIndicator($event)"
+							(ionSlideWillChange)="updateIndicatorPosition()"
+							(ionSlideDidChange)="updateIndicatorPosition()"
+							(pan)="updateIndicatorPosition()"
+							[pager]="false">
+		<ion-slide>
+			<form [formGroup]="form">
+				<ion-item>
+				  <ion-label>Supermercado</ion-label>
+				  <ion-select [(ngModel)]="supermercado" placeholder="Selecionar" formControlName="supermercado">
+				    <ion-option value="to">Todos</ion-option>
+				    <ion-option value="s1">Supermercado 1</ion-option>
+				    <ion-option value="s2">Supermercado 2</ion-option>
+				    <ion-option value="s3">Supermercado 3</ion-option>
+				  </ion-select>
+				</ion-item>
+
+				<ion-item>
+				  <ion-label>Período</ion-label>
+				  <ion-datetime displayFormat="MMMM/YYYY" [(ngModel)]="dataPesquisa" placeholder="Selecionar" formControlName="dataPesquisa"></ion-datetime>
+				</ion-item>
+
+			    <div padding>
+			     <button ion-button block type="submit" (click)="onSubmit()">Buscar</button>
+			    </div>
+			</form>
+		  <ion-list>
+			<button [hidden]="!isVisible" ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
+		      <div class="item-datarealizacao" item-start>
+		      {{p.data_realizacao}}
+		      </div>
+		      <div class="item-pesquisa">
+		        {{p.pesquisa}}
+		      </div>
+		      <div class="item-aluno">
+		        {{p.aluno}}
+		      </div>
+		      <div class="item-supermercado" item-end>
+		        {{p.supermercado}}
+		      </div>
+		    </button>
+		  </ion-list>
+		</ion-slide>
+
+		<ion-slide>
+			<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+			<ion-list>
+			<button ion-item *ngFor="let aluno of alunosList" (click)="itemAlunoTapped($event, aluno)">
+		      <div class="aluno-nome">
+		      <h2> {{ aluno.nome }} </h2>
+		      </div>
+		      <div class="aluno-mat_siape" item-end>
+		        <h3><strong> Matrícula: </strong>{{ aluno.mat_siape }}</h3>
+		      </div>
+		      <div class="aluno-email">
+		        <h3><strong> Email: </strong>{{ aluno.email }}</h3>
+		      </div>
+		    </button>
+		  </ion-list>
+
+		</ion-slide>
+	</ion-slides>
 </ion-content>

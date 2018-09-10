@@ -7,12 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>detalhes-aluno</ion-title>
+    <ion-title>Detalhes do Aluno </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <div *ngIf="selectedItem" padding>
+    Detalhes sobre <b>{{selectedItem.nome}}</b> serão exibidos. (A implementar)
+  </div>
 </ion-content>
