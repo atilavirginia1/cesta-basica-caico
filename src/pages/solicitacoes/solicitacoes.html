@@ -7,12 +7,47 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>solicitacoes</ion-title>
+    <ion-title>Solicitações</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-list>
+        <ion-item-sliding #slidingItem *ngFor="let p of alunos">
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="/www/assets/imgs/cbc_splash.png">
+            </ion-avatar>
+                <div class="item-nome">
+                {{p.nome}}
+                </div>
+                <div class="item-matricula">
+                  {{p.matricula}}
+                </div>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="secondary">
+                <div>
+                    <div>
+                        <ion-icon name="checkmark"></ion-icon>
+                    </div>
+                    <label>Aceitar</label>
+                </div>
+            </button>
+            <button ion-button color="danger">
+                <div>
+                    <div>
+                        <ion-icon name="trash"></ion-icon>
+                    </div>
+                    <label>Deletar</label>
+                </div>
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
 
 </ion-content>
