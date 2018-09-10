@@ -7,12 +7,48 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>relatorios</ion-title>
+    <ion-title>Relatórios</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item-sliding #slidingItem *ngFor="let p of pesquisas">
+        <button ion-item>
+                <div class="item-datarealizacao" item-start>
+                {{p.data_realizacao}}
+                </div>
+                <div class="item-pesquisa">
+                  {{p.pesquisa}}
+                </div>
+                <div class="item-aluno">
+                  {{p.aluno}}
+                </div>
+                <div class="item-supermercado" item-end>
+                  {{p.supermercado}}
+                </div>
+        </button>
+        <ion-item-options side="right">
+          <button ion-button color="secondary">
+              <div>
+                  <div>
+                      <ion-icon name="download"></ion-icon>
+                  </div>
+                  <label>Exportar</label>
+              </div>
+          </button>
+          <button ion-button color="primary">
+              <div>
+                  <div>
+                      <ion-icon name="share-alt"></ion-icon>
+                  </div>
+                  <label>Compartilhar</label>
+              </div>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
 
 </ion-content>
