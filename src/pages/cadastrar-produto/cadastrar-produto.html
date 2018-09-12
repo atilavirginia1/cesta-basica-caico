@@ -35,10 +35,10 @@
       </ion-item>
 
       <ion-item>
-        <ion-input type="text" formControlName="marcas" placeholder="Marcas"></ion-input>
+        <ion-input type="text" formControlName="marca" placeholder="Marca"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!form.controls.marcas.valid && (form.controls.marcas.dirty || form.controls.marcas.touched)" color="danger">
-        <div [hidden]="!form.controls.marcas.errors.required">
+      <ion-item *ngIf="!form.controls.marca.valid && (form.controls.marca.dirty || form.controls.marca.touched)" color="danger">
+        <div [hidden]="!form.controls.marca.errors.required">
           O campo é obrigatório
         </div>
       </ion-item>

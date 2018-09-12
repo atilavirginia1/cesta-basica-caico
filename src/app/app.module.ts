@@ -27,6 +27,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { CadastrarProdutoPage } from '../pages/cadastrar-produto/cadastrar-produto';
 import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadastrar-supermercado';
 import firebase from 'firebase';
+import { ProdutosProvider } from '../providers/produtos/produtos';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import firebase from 'firebase';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProvedorProvider
+    ProvedorProvider,
+    ProdutosProvider
   ]
 })
 export class AppModule {}

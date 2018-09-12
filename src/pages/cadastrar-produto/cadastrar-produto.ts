@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProvedorProvider } from '../../providers/provedor/provedor';
+import { ProdutosProvider } from '../../providers/produtos/produtos';
 
 /**
  * Generated class for the CadastrarProdutoPage page.
@@ -18,14 +18,14 @@ import { ProvedorProvider } from '../../providers/provedor/provedor';
 export class CadastrarProdutoPage {
   nomeProduto: string;
   medida: string;
-  marcas: string;
+  marca: string;
   form: FormGroup;
   isVisible: boolean = false;
   message_success: string;
   public produto: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private formBuilder: FormBuilder, private provider: ProvedorProvider,
+    private formBuilder: FormBuilder, private provider: ProdutosProvider,
     private toast: ToastController) {
       this.produto = this.navParams.data.produto || { };
       this.createForm();
@@ -36,7 +36,7 @@ export class CadastrarProdutoPage {
       key: [this.produto.key],
       nomeProduto: [this.produto.nomeProduto, Validators.required],
       medida: [this.produto.medida, Validators.required],
-      marcas: [this.produto.marcas, Validators.required],
+      marca: [this.produto.marca, Validators.required],
       ativo: false
     });
   }
