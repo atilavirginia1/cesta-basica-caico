@@ -24,18 +24,26 @@ export class ProdutosProvider {
       });
   }
 
+  getAll() {
+    return this.db.list(this.PATH, ref => ref.orderByChild('nome'))
+      .snapshotChanges()
+      .map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      })
+  }
+
   save(produtos: any) {
 
     return new Promise((resolve, reject) => {
 
       if (produtos.key) {
         this.db.list(this.PATH)
-          .update(produtos.key, { nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida,  ativo: produtos.ativo })
+          .update(produtos.key, { nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida })
           .then(() => resolve())
           .catch((e) => reject(e));
       } else {
         this.db.list(this.PATH)
-          .push({ nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida,  ativo: produtos.ativo })
+          .push({ nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida })
           .then(() => resolve());
       }
     })

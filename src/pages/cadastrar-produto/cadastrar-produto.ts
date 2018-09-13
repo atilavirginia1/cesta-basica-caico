@@ -36,8 +36,7 @@ export class CadastrarProdutoPage {
       key: [this.produto.key],
       nomeProduto: [this.produto.nomeProduto, Validators.required],
       medida: [this.produto.medida, Validators.required],
-      marca: [this.produto.marca, Validators.required],
-      ativo: false
+      marca: [this.produto.marca, Validators.required]
     });
   }
 
