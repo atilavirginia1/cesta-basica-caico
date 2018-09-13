@@ -84,6 +84,23 @@
 		    </button>
 		  </ion-list>
 
-		</ion-slide>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list radio-group class="radio">
+          <ion-item>
+              <ion-label>Supermercados</ion-label>
+              <ion-radio checked="true" value="supermercados"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Produtos</ion-label>
+              <ion-radio value="produtos"></ion-radio>
+            </ion-item>
+      </ion-list>
+
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
+    </ion-slide>
 	</ion-slides>
 </ion-content>

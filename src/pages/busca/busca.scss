@@ -27,5 +27,9 @@ page-busca {
     }
     ion-slide.swiper-slide {
     	align-items: flex-start;
-	}
+  }
+  ion-list.radio{
+    display: inline-flex;
+    width: 105%;
+  }
 }

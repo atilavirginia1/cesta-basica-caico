@@ -54,7 +54,7 @@ export class BuscaPage {
 		  this.loadedAlunosList = alunos;
 		});
 
-	  	this.tabs=["Pesquisa","Aluno"];
+	  	this.tabs=["Pesquisa","Aluno", "Parâmetros"];
 	  	this.createForm();
 
 	}
@@ -98,7 +98,7 @@ export class BuscaPage {
     this.SwipedTabsIndicator = document.getElementById("indicator");
   }
 
-  selectTab(index) {    
+  selectTab(index) {
     this.SwipedTabsIndicator.style.webkitTransform = 'translate3d('+(100*index)+'%,0,0)';
     this.SwipedTabsSlider.slideTo(index, 500);
   }
@@ -109,7 +109,7 @@ export class BuscaPage {
   	{
   		this.SwipedTabsIndicator.style.webkitTransform = 'translate3d('+(this.SwipedTabsSlider.getActiveIndex() * 100)+'%,0,0)';
   	}
-    
+
     }
 
   animateIndicator($event) {
