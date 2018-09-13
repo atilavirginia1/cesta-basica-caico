@@ -16,10 +16,10 @@
 <ion-content padding>
   <form [formGroup]="form">
     <ion-item>
-      <ion-input type="text" formControlName="nome_supermercado" placeholder="Nome do Supermercado"></ion-input>
+      <ion-input type="text" formControlName="nomeSupermercado" placeholder="Nome do Supermercado"></ion-input>
     </ion-item>
-    <ion-item *ngIf="!form.controls.nome_supermercado.valid && (form.controls.nome_supermercado.dirty || form.controls.nome_supermercado.touched)" color="danger">
-      <div [hidden]="!form.controls.nome_supermercado.errors.required">
+    <ion-item *ngIf="!form.controls.nomeSupermercado.valid && (form.controls.nomeSupermercado.dirty || form.controls.nomeSupermercado.touched)" color="danger">
+      <div [hidden]="!form.controls.nomeSupermercado.errors.required">
         O campo é obrigatório
       </div>
     </ion-item>

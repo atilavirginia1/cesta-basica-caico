@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProvedorProvider } from '../../providers/provedor/provedor';
+import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
 
 /**
  * Generated class for the CadastrarSupermercadoPage page.
@@ -16,7 +16,7 @@ import { ProvedorProvider } from '../../providers/provedor/provedor';
   templateUrl: 'cadastrar-supermercado.html',
 })
 export class CadastrarSupermercadoPage {
-  nome_supermercado:string;
+  nomeSupermercado:string;
   endereco:string;
   bairro:string;
   form:FormGroup;
@@ -24,7 +24,7 @@ export class CadastrarSupermercadoPage {
   message_success: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private formBuilder: FormBuilder, private provider: ProvedorProvider,
+    private formBuilder: FormBuilder, private provider: SupermercadosProvider,
     private toast: ToastController) {
       this.supermercado=this.navParams.data.supermercado || {};
       this.createForm()
@@ -32,10 +32,10 @@ export class CadastrarSupermercadoPage {
 
   createForm() {
     this.form = this.formBuilder.group({
-    key: [this.supermercado.key],
-    nome_supermercado: [this.supermercado.nome_supermercado, Validators.required],
-    endereco: [this.supermercado.endereco, Validators.required],
-    bairro: [this.supermercado.bairro, Validators.required],
+      key: [this.supermercado.key],
+      nomeSupermercado: [this.supermercado.nomeSupermercado, Validators.required],
+      endereco: [this.supermercado.endereco, Validators.required],
+      bairro: [this.supermercado.bairro, Validators.required],
     });
   }
 

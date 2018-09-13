@@ -28,6 +28,7 @@ import { CadastrarProdutoPage } from '../pages/cadastrar-produto/cadastrar-produ
 import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadastrar-supermercado';
 import firebase from 'firebase';
 import { ProdutosProvider } from '../providers/produtos/produtos';
+import { SupermercadosProvider } from '../providers/supermercados/supermercados';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProvedorProvider,
-    ProdutosProvider
+    ProdutosProvider,
+    SupermercadosProvider
   ]
 })
 export class AppModule {}
