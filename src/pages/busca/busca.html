@@ -116,19 +116,37 @@
         </ion-list>
 
         <ion-list>
-          <button ion-item *ngFor="let produtos of produtosList" (click)="itemProdutoTapped($event, produtos)">
-              <div class="produto-nome">
-              <h2> {{ produtos.nomeProduto }} </h2>
-              </div>
-              <div class="produto-marca">
-                <h3><strong> Marca: </strong>{{ produtos.marca }}</h3>
-              </div>
-              <div class="supermercado-bairro">
-                <h3><strong> Medida: </strong>{{ produtos.medida }}</h3>
-              </div>
-            </button>
-          </ion-list>
 
+          <ion-item-sliding #slidingItem *ngFor="let produtos of produtosList">
+            <ion-item>
+              <button ion-item (click)="itemProdutoTapped($event, produtos)">
+                <div class="produto-nome">
+                  <h2> {{ produtos.nomeProduto }} </h2>
+                </div>
+                <div class="produto-marca">
+                  <h3><strong> Marca: </strong>{{ produtos.marca }}</h3>
+                </div>
+                <div class="supermercado-bairro">
+                  <h3><strong> Medida: </strong>{{ produtos.medida }}</h3>
+                </div>
+              </button>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="secondary">
+                        <div>
+                            <ion-icon name="create"></ion-icon>
+                        </div>
+                        <label>Editar</label>
+                </button>
+                <button ion-button color="danger">
+                        <div>
+                            <ion-icon name="close"></ion-icon>
+                        </div>
+                        <label>Excluir</label>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
     </ion-slide>
 	</ion-slides>
 </ion-content>
