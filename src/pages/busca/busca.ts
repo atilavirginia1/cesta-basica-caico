@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { DetalhesAlunoPage } from '../detalhes-aluno/detalhes-aluno';
 import firebase from 'firebase';
+import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -36,7 +37,8 @@ export class BuscaPage {
 	public loadedprodutosList:Array<any>;
 	public produtosRef:firebase.database.Reference;
 	pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
-	constructor(public navCtrl: NavController, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
+    private providerS: SupermercadosProvider, private toast: ToastController) {
 
 		this.pesquisas = [];
 	    for (let p = 1; p < 6; p++) {
@@ -130,6 +132,7 @@ export class BuscaPage {
 
 	createForm() {
 	    this.form = this.formBuilder.group({
+        key: this.supermercado.key,
 	      supermercado: this.supermercado,
 	      dataPesquisa: this.dataPesquisa
 	    });
@@ -194,5 +197,15 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-
+  removeSupermercado(key: string) {
+    if (key) {
+      this.providerS.remove(key)
+        .then(() => {
+          this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
+        })
+        .catch(() => {
+          this.toast.create({ message: 'Erro ao remover o supermercado.', duration: 3000 }).present();
+        });
+    }
+  }
 }
