@@ -28,7 +28,13 @@ export class BuscaPage {
   	isVisible: boolean = false;
   	public alunosList:Array<any>;
 	public loadedAlunosList:Array<any>;
-	public alunosRef:firebase.database.Reference;
+  public alunosRef:firebase.database.Reference;
+  public supermercadoList:Array<any>;
+	public loadedSupermercadosList:Array<any>;
+  public supermercadosRef:firebase.database.Reference;
+  public produtosList:Array<any>;
+	public loadedprodutosList:Array<any>;
+	public produtosRef:firebase.database.Reference;
 	pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 	constructor(public navCtrl: NavController, private formBuilder: FormBuilder) {
 
@@ -52,7 +58,31 @@ export class BuscaPage {
 
 		  this.alunosList = alunos;
 		  this.loadedAlunosList = alunos;
-		});
+    });
+
+    this.supermercadosRef = firebase.database().ref('/supermercados');
+	  	this.supermercadosRef.orderByChild("nomeSupermercado").on('value', supermercadosList => {
+			let supermercados = [];
+			supermercadosList.forEach( supermercado => {
+		    supermercados.push(supermercado.val());
+			return false;
+		  });
+
+		  this.supermercadoList = supermercados;
+		  this.loadedSupermercadosList = supermercados;
+    });
+
+    this.produtosRef = firebase.database().ref('/produtos');
+	  	this.produtosRef.orderByChild("nomeProduto").on('value', produtosList => {
+			let produtos = [];
+			produtosList.forEach( produto => {
+		    produtos.push(produto.val());
+			return false;
+		  });
+
+		  this.produtosList = produtos;
+		  this.loadedSupermercadosList = produtos;
+    });
 
 	  	this.tabs=["Pesquisa","Aluno", "Parâmetros"];
 	  	this.createForm();
@@ -60,7 +90,9 @@ export class BuscaPage {
 	}
 
 	initializeItems(): void {
-	  this.alunosList = this.loadedAlunosList;
+    this.alunosList = this.loadedAlunosList;
+    this.supermercadoList = this.loadedSupermercadosList;
+    this.produtosList = this.loadedprodutosList;
 	}
 
 	getItems(searchbar) {
@@ -79,6 +111,15 @@ export class BuscaPage {
 	  this.alunosList = this.alunosList.filter((v) => {
 	    if(v.nome && q) {
 	      if (v.nome.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+	        return true;
+	      }
+	      return false;
+	    }
+    });
+
+    this.supermercadoList = this.supermercadoList.filter((v) => {
+	    if(v.nomeSupermercado && q) {
+	      if (v.nomeSupermercado.toLowerCase().indexOf(q.toLowerCase()) > -1) {
 	        return true;
 	      }
 	      return false;
@@ -132,6 +173,20 @@ export class BuscaPage {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(DetalhesAlunoPage, {
       push_item: aluno
+    });
+  }
+
+  itemSupermercadoTapped(event, supermercado) {
+    // That's right, we're pushing to ourselves!
+    this.navCtrl.push(DetalhesAlunoPage, {
+      push_item: supermercado
+    });
+  }
+
+  itemProdutoTapped(event, produto) {
+    // That's right, we're pushing to ourselves!
+    this.navCtrl.push(DetalhesAlunoPage, {
+      push_item: produto
     });
   }
 
