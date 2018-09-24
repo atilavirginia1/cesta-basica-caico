@@ -17,4 +17,8 @@
   <div *ngIf="selectedItem" padding>
     Detalhes sobre <b>{{selectedItem.nome}}</b> serão exibidos. (A implementar)
   </div>
+  <button ion-button color="danger" (click)="removerAluno()" icon-end>
+	  Remover Aluno
+	<ion-icon name="trash"></ion-icon>
+  </button>
 </ion-content>

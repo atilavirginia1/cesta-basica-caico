@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { RealizarPesquisaPage } from '../realizar-pesquisa/realizar-pesquisa';
 import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
 import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-supermercado';
+import { ProvedorProvider } from './../../providers/provedor/provedor';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
+  public user: any;
   pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public provider: ProvedorProvider) {
+    this.user = this.navParams.get('data');
+    this.provider.setEmail(this.user);
     this.pesquisas = [];
     for (let p = 1; p < 6; p++) {
       this.pesquisas.push({

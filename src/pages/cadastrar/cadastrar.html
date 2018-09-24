@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Cadastrar</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -79,7 +79,7 @@
     </ion-item>
 
     <div padding>
-     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Cadastrar</button>
+     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">{{buttonName}}</button>
     </div>
 
  </form>

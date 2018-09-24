@@ -16,9 +16,11 @@ import { RealizarPesquisaPage } from '../pages/realizar-pesquisa/realizar-pesqui
 import { ListPage } from '../pages/list/list';
 import { BuscaPage } from '../pages/busca/busca';
 import { RelatoriosPage } from '../pages/relatorios/relatorios';
+import { EditarUsuarioPage } from '../pages/editar-usuario/editar-usuario';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AuthService } from '../services/auth.service';
 
 import { ProvedorProvider } from '../providers/provedor/provedor';
 import { AngularFireModule } from 'angularfire2';
@@ -26,7 +28,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { CadastrarProdutoPage } from '../pages/cadastrar-produto/cadastrar-produto';
 import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadastrar-supermercado';
-import firebase from 'firebase';
+
 import { ProdutosProvider } from '../providers/produtos/produtos';
 import { SupermercadosProvider } from '../providers/supermercados/supermercados';
 
@@ -46,7 +48,8 @@ import { SupermercadosProvider } from '../providers/supermercados/supermercados'
     RelatoriosPage,
     RealizarPesquisaPage,
     CadastrarProdutoPage,
-    CadastrarSupermercadoPage
+    CadastrarSupermercadoPage,
+    EditarUsuarioPage
 
   ],
   imports: [
@@ -80,7 +83,8 @@ import { SupermercadosProvider } from '../providers/supermercados/supermercados'
     RelatoriosPage,
     RealizarPesquisaPage,
     CadastrarProdutoPage,
-    CadastrarSupermercadoPage
+    CadastrarSupermercadoPage,
+    EditarUsuarioPage
   ],
   providers: [
     StatusBar,
@@ -88,7 +92,8 @@ import { SupermercadosProvider } from '../providers/supermercados/supermercados'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProvedorProvider,
     ProdutosProvider,
-    SupermercadosProvider
+    SupermercadosProvider,
+    AuthService
   ]
 })
 export class AppModule {}

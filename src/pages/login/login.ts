@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HomeAlunoPage } from '../home-aluno/home-aluno';
 import { HomeProfessorPage } from '../home-professor/home-professor';
 import { CadastrarPage } from '../cadastrar/cadastrar';
-
+import { AuthService } from '../../services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 /**
  * Generated class for the LoginPage page.
  *
@@ -18,12 +19,37 @@ import { CadastrarPage } from '../cadastrar/cadastrar';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  loginForm: FormGroup;
+  loginError: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+             private auth: AuthService, fb: FormBuilder,
+             private toast: ToastController) {
+        this.loginForm = fb.group({
+          email: ['', Validators.compose([Validators.required, Validators.email])],
+          password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+        });
   }
 
   login(){
-  	this.navCtrl.setRoot(HomePage);
+    let data = this.loginForm.value;
+
+    if (!data.email) {
+      return;
+    }
+
+    let credentials = {
+      email: data.email,
+      password: data.password
+    };
+    this.auth.signInWithEmail(credentials)
+      .then(
+        () => this.navCtrl.setRoot(HomePage, {
+          data: credentials.email
+          }),
+        error => this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present()
+      );
+  	this.navCtrl.setRoot(LoginPage);
   }
 
   cadastrar(){

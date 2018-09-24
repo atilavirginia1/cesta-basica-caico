@@ -1,7 +1,9 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
+import { AuthService } from '../../services/auth.service';
+import { LoginPage } from '../login/login';
 /**
  * Generated class for the CadastrarPage page.
  *
@@ -10,6 +12,7 @@ import { ProvedorProvider } from './../../providers/provedor/provedor';
  */
 
 @IonicPage()
+
 @Component({
   selector: 'page-cadastrar',
   templateUrl: 'cadastrar.html'
@@ -21,28 +24,53 @@ export class CadastrarPage {
 	isVisible: boolean = false;
 	showEmail: boolean = false;
 	message_success: string;
-	public usuario: any;
+  email: string;
+  usuario: any;
+  signupError: any;
+  title: string;  
+  buttonName: string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 	private formBuilder: FormBuilder, private provider: ProvedorProvider,
-    	private toast: ToastController) {
+    	private toast: ToastController,
+      private auth: AuthService) {
+
   	this.usuario = this.navParams.data.usuario || { };
-  	this.createForm();
+    console.log(this.provider.getEmail());
+    if (this.provider.getEmail() != null) {
+        this.usuario = this.provider.getUser();
+
+    //   const subscribe = this.provider.get(this.navParams.data.email).subscribe((c: any) => {
+     //    subscribe.unsubscribe();
+ 
+     //    this.usuario = c;
+   //      this.createForm();
+   //    })
+
+     }
+    this.setupPageTitle();
+    this.createForm();
   }
 
   createForm() {
-    this.form = this.formBuilder.group({
-      key: [this.usuario.key],
-      nome: [this.usuario.nome, Validators.required],
-      cargo: [this.usuario.cargo, Validators.required],
-      mat_siape: [this.usuario.mat_siape, Validators.required],
-      email: [this.usuario.email, Validators.compose([
-        Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
-      usuario: [this.usuario.usuario, Validators.required],
-      senha: [this.usuario.senha, Validators.required],
-      ativo: false
-    });
+      this.form = this.formBuilder.group({
+        key: [this.usuario.key],
+        nome: [this.usuario.nome, Validators.required],
+        cargo: [this.usuario.cargo, Validators.required],
+        mat_siape: [this.usuario.mat_siape, Validators.required],
+        email: [this.usuario.email, Validators.compose([
+          Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
+        usuario: [this.usuario.usuario, Validators.required],
+        senha: [this.usuario.senha, Validators.required],
+        ativo: [this.usuario.ativo ? this.usuario.ativo : false]
+      });     
   }
  
+   private setupPageTitle() {
+    this.title = this.provider.getEmail() ? 'Editar usuário' : 'Cadastrar';
+    this.buttonName = this.provider.getEmail() ? 'Salvar' : 'Cadastrar';
+  }
+
    onSubmit() {
     console.log(this.form);
     if (this.form.valid) {
@@ -53,6 +81,7 @@ export class CadastrarPage {
       }
       this.provider.save(this.form.value)
         .then(() => {
+            this.signup();
           	this.toast.create({ message: this.message_success, duration: 3000 }).present();
           	this.navCtrl.pop();
         })
@@ -61,6 +90,18 @@ export class CadastrarPage {
           console.error(e)
         })
   	 }
+  }
+
+  signup() {
+      let data = this.form.value;
+      let credentials = {
+        email: data.email,
+        password: data.senha
+      };
+      this.auth.signUp(credentials).then(
+        () => this.navCtrl.setRoot(LoginPage),
+        error => this.signupError = error.message
+      );
   }
 
   getCargo(){

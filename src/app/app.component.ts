@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { SolicitacoesPage } from '../pages/solicitacoes/solicitacoes';
 import { BuscaPage } from '../pages/busca/busca';
 import { RelatoriosPage } from '../pages/relatorios/relatorios';
+import { CadastrarPage } from '../pages/cadastrar/cadastrar';
 import firebase from 'firebase';
 
 @Component({
@@ -20,7 +21,9 @@ export class MyApp {
 
   pages: Array<{icon: string, title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  user: any;
+  constructor(public platform: Platform, public statusBar: StatusBar,
+    public splashScreen: SplashScreen) {
 
     firebase.initializeApp({
       apiKey: "AIzaSyBX-_z8fwzAY0AHVHnv2wYZNIIKP6cq2-g",
@@ -35,6 +38,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { icon: 'home', title: 'Home', component: HomePage },
+      { icon: 'create', title: 'Editar Perfil', component: CadastrarPage },
       { icon: 'person-add', title: 'Solicitações', component: SolicitacoesPage },
       { icon: 'search', title: 'Buscar', component: BuscaPage },
       { icon: 'pie', title: 'Relatórios', component: RelatoriosPage },

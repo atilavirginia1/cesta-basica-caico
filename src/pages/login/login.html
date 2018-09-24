@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Login</ion-title>
   </ion-navbar>
@@ -14,25 +13,26 @@
 
 
 <ion-content padding>
+<form (ngSubmit)="login()" [formGroup]="loginForm">
 	<img class="image" src="assets/imgs/cbc_splash.png" alt="logo">
 	<ion-list no-lines class="inputs">
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="person"></ion-icon></ion-label>
-			<ion-input fixed type="text" required placeholder="Username"></ion-input>
+			<ion-input fixed type="email" required placeholder="Email" formControlName="email"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="lock"></ion-icon></ion-label>
-			<ion-input type="password" placeholder="Password"></ion-input>
+			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 		</ion-item>
 		<ion-item>
-			<button ion-button class="button" round (click)="login()" ion-button>
+			<button ion-button class="button" round type="submit" (click)="login()" ion-button>
 			Entrar</button>
 		</ion-item>
 	</ion-list>
 
 	<p class="bottom">Não tem uma conta? <a  (click)="cadastrar()" tappable color="primary">
 	Criar uma</a></p>
-
+</form>
 </ion-content>

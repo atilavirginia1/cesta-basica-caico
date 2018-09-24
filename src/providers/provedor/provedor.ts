@@ -13,12 +13,31 @@ import firebase from 'firebase';
 @Injectable()
 export class ProvedorProvider {
 	users: any;
+  email: string;
+  key: any;
   private PATH = 'usuarios/';
 	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
   }
 
+  setEmail(email: string)
+  {
+    this.email = email; 
+  }
+
+  getEmail()
+  {
+    return this.email; 
+  }
+
+  getUser()
+  {
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
+     return  query.on("child_added", function(snapshot) {
+          console.log(snapshot.val());
+      });
+  }
+
   get(key: string) {
-    console.log(key);
     return this.db.object(this.PATH + key).snapshotChanges()
       .map(c => {
         return { key: c.key, ...c.payload.val() };
@@ -42,7 +61,14 @@ export class ProvedorProvider {
     })
   }
 
- remove(key: string) {
-    return this.db.list(this.PATH).remove(key);
+ remove(email: string) {
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(email);
+    var key = query.on("child_added", function(snapshot) {
+      console.log(snapshot.key)
+      this.key = snapshot.key;
+    });
+    //return this.db.list(this.PATH).remove(key);
+    console.log(this.key)
+   return this.db.list(this.PATH).remove(this.key);
   }
 }

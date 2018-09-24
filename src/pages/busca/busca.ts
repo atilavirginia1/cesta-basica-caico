@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { DetalhesAlunoPage } from '../detalhes-aluno/detalhes-aluno';
+
 import firebase from 'firebase';
 /**
  * Generated class for the BuscaPage page.
@@ -138,6 +139,5 @@ export class BuscaPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuscaPage');
   }
-
 
 }

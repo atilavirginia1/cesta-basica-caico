@@ -71,7 +71,7 @@
 		<ion-slide>
 			<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 			<ion-list>
-			<button ion-item *ngFor="let aluno of alunosList" (click)="itemAlunoTapped($event, aluno)">
+			<button ion-item *ngFor="let aluno of alunosList"  (click)="itemAlunoTapped($event, aluno)">
 		      <div class="aluno-nome">
 		      <h2> {{ aluno.nome }} </h2>
 		      </div>
@@ -83,24 +83,21 @@
 		      </div>
 		    </button>
 		  </ion-list>
-
     </ion-slide>
 
     <ion-slide>
+
       <ion-list radio-group class="radio">
           <ion-item>
               <ion-label>Supermercados</ion-label>
-              <ion-radio checked="true" value="supermercados"></ion-radio>
+              <ion-radio value="supermercados" checked></ion-radio>
             </ion-item>
-
             <ion-item>
               <ion-label>Produtos</ion-label>
               <ion-radio value="produtos"></ion-radio>
             </ion-item>
       </ion-list>
-
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-
     </ion-slide>
 	</ion-slides>
 </ion-content>
