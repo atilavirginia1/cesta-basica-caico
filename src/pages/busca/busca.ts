@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, ToastController } from 'ionic-angular';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { IonicPage, NavController, Slides, ToastController } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { DetalhesAlunoPage } from '../detalhes-aluno/detalhes-aluno';
 import firebase from 'firebase';
 import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
+import { ProdutosProvider } from '../../providers/produtos/produtos';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -28,26 +29,27 @@ export class BuscaPage {
   	dataPesquisa: any;
   	isVisible: boolean = false;
   	public alunosList:Array<any>;
-	public loadedAlunosList:Array<any>;
-  public alunosRef:firebase.database.Reference;
-  public supermercadoList:Array<any>;
-	public loadedSupermercadosList:Array<any>;
-  public supermercadosRef:firebase.database.Reference;
-  public produtosList:Array<any>;
-	public loadedprodutosList:Array<any>;
-	public produtosRef:firebase.database.Reference;
-	pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
-    private providerS: SupermercadosProvider, private toast: ToastController) {
+    public loadedAlunosList:Array<any>;
+    public alunosRef:firebase.database.Reference;
+    public supermercadoList:Array<any>;
+    public loadedSupermercadosList:Array<any>;
+    public supermercadosRef:firebase.database.Reference;
+    public produtosList:Array<any>;
+    public loadedprodutosList:Array<any>;
+    public produtosRef:firebase.database.Reference;
+    pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
+    constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
+      private providerS: SupermercadosProvider, private toast: ToastController,
+      private providerP: ProdutosProvider) {
 
-		this.pesquisas = [];
-	    for (let p = 1; p < 6; p++) {
-	      this.pesquisas.push({
-	      	data_realizacao: 'dd/mm/aa',
-	        pesquisa: 'Pesquisa ' + p,
-	        aluno: 'Aluno ' + p,
-	        supermercado: 'Supermercado ' + p,
-	      });
+      this.pesquisas = [];
+        for (let p = 1; p < 6; p++) {
+          this.pesquisas.push({
+            data_realizacao: 'dd/mm/aa',
+            pesquisa: 'Pesquisa ' + p,
+            aluno: 'Aluno ' + p,
+            supermercado: 'Supermercado ' + p,
+          });
 	    }
 
 	  	this.alunosRef = firebase.database().ref('/usuarios');
@@ -132,7 +134,6 @@ export class BuscaPage {
 
 	createForm() {
 	    this.form = this.formBuilder.group({
-        key: this.supermercado.key,
 	      supermercado: this.supermercado,
 	      dataPesquisa: this.dataPesquisa
 	    });
@@ -197,9 +198,10 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-  removeSupermercado(key: string) {
-    if (key) {
-      this.providerS.remove(key)
+  removeSupermercado(supermercado) {
+    console.log(this.supermercadoList);
+    if (supermercado.key) {
+      this.providerS.remove(supermercado.key)
         .then(() => {
           this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
         })
