@@ -98,6 +98,73 @@
             </ion-item>
       </ion-list>
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<<<<<<< HEAD
+=======
+
+      <ion-list>
+        <ion-item-sliding #slidingItem *ngFor="let supermercados of supermercadoList">
+          <ion-item>
+            <button ion-item (click)="itemSupermercadoTapped($event, supermercados)">
+              <div class="supermercado-nome">
+                <h2> {{ supermercados.nomeSupermercado }} </h2>
+              </div>
+              <div class="supermercado-endereco">
+                <h3><strong> Endereço: </strong>{{ supermercados.endereco }}</h3>
+              </div>
+              <div class="supermercado-bairro">
+                <h3><strong> Bairro: </strong>{{ supermercados.bairro }}</h3>
+              </div>
+            </button>
+          </ion-item>
+          <ion-item-options side="right">
+              <button ion-button color="secondary">
+                      <div>
+                          <ion-icon name="create"></ion-icon>
+                      </div>
+                      <label>Editar</label>
+              </button>
+              <button ion-button (click) = "removeSupermercado(supermercado.key)" color="danger">
+                      <div>
+                          <ion-icon name="close"></ion-icon>
+                      </div>
+                      <label>Excluir</label>
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <ion-list>
+          <ion-item-sliding #slidingItem *ngFor="let produtos of produtosList">
+            <ion-item>
+              <button ion-item (click)="itemProdutoTapped($event, produtos)">
+                <div class="produto-nome">
+                  <h2> {{ produtos.nomeProduto }} </h2>
+                </div>
+                <div class="produto-marca">
+                  <h3><strong> Marca: </strong>{{ produtos.marca }}</h3>
+                </div>
+                <div class="supermercado-bairro">
+                  <h3><strong> Medida: </strong>{{ produtos.medida }}</h3>
+                </div>
+              </button>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="secondary">
+                        <div>
+                            <ion-icon name="create"></ion-icon>
+                        </div>
+                        <label>Editar</label>
+                </button>
+                <button ion-button color="danger">
+                        <div>
+                            <ion-icon name="close"></ion-icon>
+                        </div>
+                        <label>Excluir</label>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+>>>>>>> origin/master
     </ion-slide>
 	</ion-slides>
 </ion-content>
