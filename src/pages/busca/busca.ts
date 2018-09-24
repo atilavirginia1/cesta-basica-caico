@@ -199,8 +199,6 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-<<<<<<< HEAD
-=======
   removeSupermercado(supermercado) {
     console.log(this.supermercadoList);
     if (supermercado.key) {
@@ -213,5 +211,17 @@ export class BuscaPage {
         });
     }
   }
->>>>>>> origin/master
+
+  removeProduto(produto) {
+    console.log(this.produtosList);
+    if (produto.key) {
+      this.providerS.remove(produto.key)
+        .then(() => {
+          this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
+        })
+        .catch(() => {
+          this.toast.create({ message: 'Erro ao remover o produto.', duration: 3000 }).present();
+        });
+    }
+  }
 }

@@ -98,8 +98,6 @@
             </ion-item>
       </ion-list>
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-<<<<<<< HEAD
-=======
 
       <ion-list>
         <ion-item-sliding #slidingItem *ngFor="let supermercados of supermercadoList">
@@ -155,7 +153,7 @@
                         </div>
                         <label>Editar</label>
                 </button>
-                <button ion-button color="danger">
+                <button ion-button color="danger" (click)="removeProduto(produtos)">
                         <div>
                             <ion-icon name="close"></ion-icon>
                         </div>
@@ -164,7 +162,6 @@
               </ion-item-options>
             </ion-item-sliding>
           </ion-list>
->>>>>>> origin/master
     </ion-slide>
 	</ion-slides>
 </ion-content>
