@@ -212,7 +212,7 @@ export class BuscaPage {
     console.log(this.supermercadoList);
       this.providerS.remove(supermercado)
         .then(() => {
-          this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
+          this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
         })
         .catch(() => {
           this.toast.create({ message: 'Erro ao remover o supermercado.', duration: 3000 }).present();
@@ -223,7 +223,7 @@ export class BuscaPage {
     console.log(this.produtosList);
       this.providerP.remove(key)
         .then(() => {
-          this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
+          this.toast.create({ message: 'Produto removido com sucesso.', duration: 3000 }).present();
         })
         .catch(() => {
           this.toast.create({ message: 'Erro ao remover o produto.', duration: 3000 }).present();
