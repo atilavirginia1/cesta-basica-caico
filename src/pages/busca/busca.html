@@ -86,7 +86,6 @@
     </ion-slide>
 
     <ion-slide>
-
       <ion-list radio-group class="radio">
           <ion-item>
               <ion-label>Supermercados</ion-label>
@@ -121,7 +120,7 @@
                       </div>
                       <label>Editar</label>
               </button>
-              <button ion-button (click) = "removeSupermercado(supermercado.key)" color="danger">
+              <button ion-button (click) = "removeSupermercado(supermercados.key)" color="danger">
                       <div>
                           <ion-icon name="close"></ion-icon>
                       </div>
@@ -153,7 +152,7 @@
                         </div>
                         <label>Editar</label>
                 </button>
-                <button ion-button color="danger" (click)="removeProduto(produtos)">
+                <button ion-button color="danger" (click)="removeProduto(produtos.key)">
                         <div>
                             <ion-icon name="close"></ion-icon>
                         </div>

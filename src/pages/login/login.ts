@@ -49,11 +49,12 @@ export class LoginPage {
           }),
         error => this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present()
       );
+     // this.navCtrl.setRoot(HomePage);
   	this.navCtrl.setRoot(LoginPage);
   }
 
   cadastrar(){
-  	this.navCtrl.push(CadastrarPage);	
+  	this.navCtrl.push(CadastrarPage);
   }
 
   ionViewDidLoad() {

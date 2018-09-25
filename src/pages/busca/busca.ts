@@ -201,27 +201,23 @@ export class BuscaPage {
 
   removeSupermercado(supermercado) {
     console.log(this.supermercadoList);
-    if (supermercado.key) {
-      this.providerS.remove(supermercado.key)
+      this.providerS.remove(supermercado)
         .then(() => {
           this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
         })
         .catch(() => {
           this.toast.create({ message: 'Erro ao remover o supermercado.', duration: 3000 }).present();
         });
-    }
   }
 
-  removeProduto(produto) {
+  removeProduto(key) {
     console.log(this.produtosList);
-    if (produto.key) {
-      this.providerS.remove(produto.key)
+      this.providerP.remove(key)
         .then(() => {
           this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
         })
         .catch(() => {
           this.toast.create({ message: 'Erro ao remover o produto.', duration: 3000 }).present();
         });
-    }
   }
 }
