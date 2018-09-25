@@ -16,6 +16,9 @@ import { ProdutosProvider } from '../../providers/produtos/produtos';
   templateUrl: 'cadastrar-produto.html',
 })
 export class CadastrarProdutoPage {
+  selectedItem: any;
+  buttonName: string;
+  title: string;
   nomeProduto: string;
   medida: string;
   marca: string;
@@ -27,8 +30,19 @@ export class CadastrarProdutoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProdutosProvider,
     private toast: ToastController) {
+      this.selectedItem = navParams.get('push_item');
+      console.log(this.provider.getNome());
       this.produto = this.navParams.data.produto || { };
+      if (this.provider.getNome() != null) {
+        this.produto = this.provider.getProduto();
+      }
+      this.setupPageTitle();
       this.createForm();
+  }
+
+  private setupPageTitle() {
+    this.title = this.provider.getNome() ? 'Editar Produto' : 'Cadastrar';
+    this.buttonName = this.provider.getNome() ? 'Salvar' : 'Cadastrar';
   }
 
   createForm() {

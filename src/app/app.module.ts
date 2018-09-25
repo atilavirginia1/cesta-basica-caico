@@ -31,6 +31,8 @@ import { CadastrarSupermercadoPage } from '../pages/cadastrar-supermercado/cadas
 
 import { ProdutosProvider } from '../providers/produtos/produtos';
 import { SupermercadosProvider } from '../providers/supermercados/supermercados';
+import { DetalhesSupermercadoPage } from '../pages/detalhes-supermercado/detalhes-supermercado';
+import { DetalhesProdutoPage } from '../pages/detalhes-produto/detalhes-produto';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { SupermercadosProvider } from '../providers/supermercados/supermercados'
     CadastrarPage,
     DetalhesPesquisaPage,
     DetalhesAlunoPage,
+    DetalhesSupermercadoPage,
+    DetalhesProdutoPage,
     SolicitacoesPage,
     BuscaPage,
     RelatoriosPage,
@@ -78,6 +82,8 @@ import { SupermercadosProvider } from '../providers/supermercados/supermercados'
     CadastrarPage,
     DetalhesPesquisaPage,
     DetalhesAlunoPage,
+    DetalhesSupermercadoPage,
+    DetalhesProdutoPage,
     SolicitacoesPage,
     BuscaPage,
     RelatoriosPage,

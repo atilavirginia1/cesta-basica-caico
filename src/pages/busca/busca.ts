@@ -7,6 +7,9 @@ import { DetalhesAlunoPage } from '../detalhes-aluno/detalhes-aluno';
 import firebase from 'firebase';
 import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
 import { ProdutosProvider } from '../../providers/produtos/produtos';
+import { DetalhesSupermercadoPage } from '../detalhes-supermercado/detalhes-supermercado';
+import { DetalhesProdutoPage } from '../detalhes-produto/detalhes-produto';
+import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -183,20 +186,26 @@ export class BuscaPage {
 
   itemSupermercadoTapped(event, supermercado) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(DetalhesAlunoPage, {
+    this.navCtrl.push(DetalhesSupermercadoPage, {
       push_item: supermercado
     });
   }
 
   itemProdutoTapped(event, produto) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(DetalhesAlunoPage, {
+    this.navCtrl.push(DetalhesProdutoPage, {
       push_item: produto
     });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuscaPage');
+  }
+
+  editProduto(produto){
+    this.navCtrl.push(CadastrarProdutoPage, {
+      push_item: produto.nome
+    });
   }
 
   removeSupermercado(supermercado) {
