@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import firebase from 'firebase';
 
 /*
   Generated class for the ProdutosProvider provider.
@@ -12,10 +13,29 @@ import { AngularFireModule } from 'angularfire2';
 @Injectable()
 export class ProdutosProvider {
   produtos: any;
+  nome: string;
+  key: any;
   private PATH = 'produtos/';
 	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
   }
 
+  setNome(nome: string)
+  {
+    this.nome = nome;
+  }
+
+  getNome()
+  {
+    return this.nome;
+  }
+
+  getProduto()
+  {
+    var query = firebase.database().ref(this.PATH).orderByChild("nome").equalTo(this.nome);
+     return  query.on("child_added", function(snapshot) {
+          console.log(snapshot.val());
+      });
+  }
   get(key: string) {
     console.log(key);
     return this.db.object(this.PATH + key).snapshotChanges()
