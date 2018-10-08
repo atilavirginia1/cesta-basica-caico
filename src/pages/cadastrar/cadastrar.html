@@ -24,7 +24,7 @@
       </div>
     </ion-item>
 
-     <ion-item>
+     <ion-item [hidden]="!hidden">
       <ion-label>Cargo</ion-label>
       <ion-select [(ngModel)]="cargo" placeholder="Selecionar" formControlName="cargo">
         <ion-option value="P">Professor</ion-option>
@@ -48,7 +48,7 @@
       </div>
     </ion-item>
 
-     <ion-item>
+     <ion-item [hidden]="!hidden">
       <ion-input type="text" formControlName="email" type="email" placeholder="Email"></ion-input>
     </ion-item>
     <ion-item *ngIf="!form.controls.email.valid && (form.controls.email.dirty || form.controls.email.touched)" color="danger">

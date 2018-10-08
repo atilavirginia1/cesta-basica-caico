@@ -13,11 +13,13 @@ import { ProvedorProvider } from './../../providers/provedor/provedor';
 
 export class HomePage {
   public user: any;
+  public usuario: any;
   pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: ProvedorProvider) {
     this.user = this.navParams.get('data');
     this.provider.setEmail(this.user);
+    this.usuario = this.provider.getUser();
     this.pesquisas = [];
     for (let p = 1; p < 6; p++) {
       this.pesquisas.push({

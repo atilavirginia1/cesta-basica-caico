@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import firebase from 'firebase';
 
+
 /*
   Generated class for the ProvedorProvider provider.
 
@@ -13,10 +14,10 @@ import firebase from 'firebase';
 @Injectable()
 export class ProvedorProvider {
 	users: any;
+  user: any;
   email: string;
-  key: any;
   private PATH = 'usuarios/';
-	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
+	constructor(private db: AngularFireDatabase) {
   }
 
   setEmail(email: string)
@@ -37,6 +38,11 @@ export class ProvedorProvider {
       });
   }
 
+  setUser(user: any)
+  {
+    this.user = user;
+  }
+
   get(key: string) {
     return this.db.object(this.PATH + key).snapshotChanges()
       .map(c => {
@@ -45,12 +51,15 @@ export class ProvedorProvider {
   }
 
   save(usuario: any) {
-
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
+    var key = query.on("child_added", function(snapshot) {
+          usuario.key = snapshot.key;
+    });
     return new Promise((resolve, reject) => {
 
       if (usuario.key) {
         this.db.list(this.PATH)
-          .update(usuario.key, { nome: usuario.nome, cargo: usuario.cargo, mat_siape: usuario.mat_siape, usuario: usuario.usuario, senha: usuario.senha, email: usuario.email, ativo: usuario.ativo})
+          .update(usuario.key, { nome: usuario.nome, usuario: usuario.usuario })
           .then(() => resolve())
           .catch((e) => reject(e));
       } else {
@@ -60,15 +69,11 @@ export class ProvedorProvider {
       }
     })
   }
-
- remove(email: string) {
-    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(email);
+ 
+ remove(usuario: any) {
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(usuario.email);
     var key = query.on("child_added", function(snapshot) {
-      console.log(snapshot.key)
-      this.key = snapshot.key;
+      snapshot.ref.remove();
     });
-    //return this.db.list(this.PATH).remove(key);
-    console.log(this.key)
-   return this.db.list(this.PATH).remove(this.key);
   }
 }

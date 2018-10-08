@@ -29,7 +29,6 @@ export class CadastrarPage {
   signupError: any;
   title: string;  
   buttonName: string;
-
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 	private formBuilder: FormBuilder, private provider: ProvedorProvider,
     	private toast: ToastController,

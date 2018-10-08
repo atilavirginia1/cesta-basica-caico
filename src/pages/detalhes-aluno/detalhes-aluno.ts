@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
+import { AngularFireDatabase } from 'angularfire2/database';
+
 /**
  * Generated class for the DetalhesAlunoPage page.
  *
@@ -15,27 +17,23 @@ import { ProvedorProvider } from './../../providers/provedor/provedor';
 })
 export class DetalhesAlunoPage {
   selectedItem: any;
+  usuarios: FirebaseListObservable<any[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController,
-  	private provider: ProvedorProvider) {
+  	private provider: ProvedorProvider, public db: AngularFireDatabase) {
   	this.selectedItem = navParams.get('push_item');
+  	this.usuarios = db.list('/usuarios');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetalhesAlunoPage');
   }
 
-  removerAluno(){
-  	console.log(this.selectedItem)
-  	if (this.selectedItem.email) {
-      this.provider.remove(this.selectedItem.email)
-        .then(() => {
-          this.toast.create({ message: 'Contato removido sucesso.', duration: 3000 }).present();
-            	  this.navCtrl.pop();
-        })
-        .catch(() => {
-          this.toast.create({ message: 'Erro ao remover o contato.', duration: 3000 }).present();
-        });
-    }
+  removerAluno(selectedItem){
+	if (selectedItem.email) {
+	      this.provider.remove(selectedItem)
+	      this.toast.create({ message: 'Contato removido sucesso.', duration: 3000 }).present();
+	      this.navCtrl.pop();
+	    }
   }
 
 }
