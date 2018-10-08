@@ -19,26 +19,29 @@ export class EditarUsuarioPage {
   usuario: any;  
   public nome: any;
   public username: any;
+  key: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  	 	private formBuilder: FormBuilder,
-  	    private provider: ProvedorProvider,
+  	 private formBuilder: FormBuilder,
+  	 private provider: ProvedorProvider,
     	private toast: ToastController) {
   	this.usuario = this.navParams.data.usuario || { };
     if (this.provider.getEmail() != null) {
-        this.usuario = this.provider.getUser();
-        this.nome = this.usuario.nome;
-        this.username = this.usuario.usuario;
+        this.usuario = this.provider.get(this.key);
+        console.log(this.usuario)
+      //  var value = this.usuario.val();
+       this.nome = this.usuario.nome;
+       this.username = this.usuario.usuario;
      }
      this.createForm();
   }
 
   createForm() {
+    
       this.form = this.formBuilder.group({
         key: this.usuario.key,
         nome: this.usuario.nome,
         usuario: this.usuario.usuario,
       });  
-      console.log(this.form)
   }
 
   onSubmit() {

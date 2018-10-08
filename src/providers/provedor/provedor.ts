@@ -15,6 +15,7 @@ import firebase from 'firebase';
 export class ProvedorProvider {
 	users: any;
   user: any;
+  key: any;
   email: string;
   private PATH = 'usuarios/';
 	constructor(private db: AngularFireDatabase) {
@@ -33,21 +34,17 @@ export class ProvedorProvider {
   getUser()
   {
     var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
-     return  query.on("child_added", function(snapshot) {
-          console.log(snapshot.val());
+    return query.on("child_added", function(snapshot) {
       });
   }
 
-  setUser(user: any)
-  {
-    this.user = user;
-  }
+  get(key: any) {
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
+    var key2 = query.on("child_added", function(snapshot) {
+      key = snapshot.val();
+    });
 
-  get(key: string) {
-    return this.db.object(this.PATH + key).snapshotChanges()
-      .map(c => {
-        return { key: c.key, ...c.payload.val() };
-      });
+    return key;
   }
 
   save(usuario: any) {

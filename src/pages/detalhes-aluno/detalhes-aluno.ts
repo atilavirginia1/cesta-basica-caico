@@ -17,7 +17,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class DetalhesAlunoPage {
   selectedItem: any;
-  usuarios: FirebaseListObservable<any[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController,
   	private provider: ProvedorProvider, public db: AngularFireDatabase) {
   	this.selectedItem = navParams.get('push_item');
