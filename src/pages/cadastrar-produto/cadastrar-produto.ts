@@ -50,14 +50,16 @@ export class CadastrarProdutoPage {
       key: [this.produto.key],
       nomeProduto: [this.produto.nomeProduto, Validators.required],
       medida: [this.produto.medida, Validators.required],
-      marca: [this.produto.marca, Validators.required]
+      marca: [this.produto.marca, Validators.required],
+      id: ['']
     });
   }
 
 
   onSubmit() {
-    console.log(this.form);
+    console.log(this.produto);
     if (this.form.valid) {
+      this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
       this.message_success = 'Cadastro de produto realizado com sucesso';
       this.provider.save(this.form.value)
         .then(() => {

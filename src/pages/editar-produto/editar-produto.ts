@@ -27,7 +27,6 @@ export class EditarProdutoPage {
   	 private provider: ProdutosProvider,
     	private toast: ToastController) {
       this.selectedItem = navParams.get('push_item');
-      console.log(this.provider.getNome());
       this.produto = this.navParams.data.produto || { };
       if (this.provider.getNome() != null) {
         this.produto = this.provider.getProduto();
@@ -37,16 +36,18 @@ export class EditarProdutoPage {
        this.nomeProduto = this.selectedItem.nomeProduto;
        this.marca = this.selectedItem.marca;
        this.medida = this.selectedItem.medida;
+       this.id = this.selectedItem.id;
      }
      this.createForm();
   }
 
   createForm() {
       this.form = this.formBuilder.group({
-        key: this.produto.key,
+        key: this.selectedItem.key,
         nomeProduto: this.produto.nome,
         marca: this.produto.marca,
         medida: this.produto.medida,
+        id: this.produto.id
       });
   }
 

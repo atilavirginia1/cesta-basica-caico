@@ -31,7 +31,7 @@ export class ProdutosProvider {
 
   getProduto()
   {
-    var query = firebase.database().ref(this.PATH).orderByChild("nome").equalTo(this.nome);
+    var query = firebase.database().ref(this.PATH).orderByChild("nomeProduto").equalTo(this.nome);
      return  query.on("child_added", function(snapshot) {
           console.log(snapshot.val());
       });
@@ -45,7 +45,7 @@ export class ProdutosProvider {
   }
 
   getAll() {
-    return this.db.list(this.PATH, ref => ref.orderByChild('nome'))
+    return this.db.list(this.PATH, ref => ref.orderByChild('nomeProduto'))
       .snapshotChanges()
       .map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
@@ -54,16 +54,21 @@ export class ProdutosProvider {
 
   save(produtos: any) {
 
+    var query = firebase.database().ref(this.PATH).orderByChild("id").equalTo(produtos.id);
+    var key = query.on("child_added", function(snapshot) {
+          produtos.key = snapshot.key;
+      });
+
     return new Promise((resolve, reject) => {
 
       if (produtos.key) {
         this.db.list(this.PATH)
-          .update(produtos.key, { nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida })
+          .update(produtos.key, { nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida, id: produtos.id })
           .then(() => resolve())
           .catch((e) => reject(e));
       } else {
         this.db.list(this.PATH)
-          .push({ nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida })
+          .push({ nomeProduto: produtos.nomeProduto, marca: produtos.marca, medida: produtos.medida, id: produtos.id })
           .then(() => resolve());
       }
     })
