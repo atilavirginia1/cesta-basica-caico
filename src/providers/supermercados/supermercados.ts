@@ -12,22 +12,22 @@ import firebase from 'firebase';
 @Injectable()
 export class SupermercadosProvider {
   supermercados: any;
-  nomeSupermercado: any;
+  nome: any;
   private PATH = 'supermercados/';
 	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
   }
 
-  getnomeSupermercado(){
-    return this.nomeSupermercado;
+  getNome(){
+    return this.nome;
   }
 
-  setnomeSupermercado(nomeSupermercado:String){
-    this.nomeSupermercado = nomeSupermercado;
+  setNome(nome:String){
+    this.nome = nome;
   }
 
   getSupermercado()
   {
-    var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(this.nomeSupermercado);
+    var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(this.nome);
      return  query.on("child_added", function(snapshot) {
           console.log(snapshot.val());
       });

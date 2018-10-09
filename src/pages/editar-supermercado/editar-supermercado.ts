@@ -29,8 +29,8 @@ export class EditarSupermercadoPage {
   	 private provider: SupermercadosProvider,
     	private toast: ToastController) {
       this.selectedItem = navParams.get('push_item');
-      this.nomeSupermercado = this.navParams.data.supermercados || { };
-      if (this.provider.getnomeSupermercado() != null) {
+      this.supermercado = this.navParams.data.supermercados || { };
+      if (this.provider.getNome() != null) {
         this.supermercado = this.provider.getSupermercado();
 
       //  var value = this.produto.val();
@@ -39,10 +39,12 @@ export class EditarSupermercadoPage {
        this.endereco = this.selectedItem.endereco;
        this.bairro = this.selectedItem.bairro;
      }
+     console.log(this.selectedItem.nomeSupermercado)
      this.createForm();
   }
 
   createForm() {
+
       this.form = this.formBuilder.group({
         key: this.selectedItem.key,
         nomeSupermercado: this.supermercado.nomeSupermercado,
