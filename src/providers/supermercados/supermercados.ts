@@ -43,6 +43,12 @@ export class SupermercadosProvider {
 
   save(supermercados: any) {
 
+    var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(supermercados.nomeSupermercado);
+    var key = query.on("child_added", function(snapshot) {
+          supermercados.key = snapshot.key;
+      });
+
+
     return new Promise((resolve, reject) => {
 
       if (supermercados.key) {
