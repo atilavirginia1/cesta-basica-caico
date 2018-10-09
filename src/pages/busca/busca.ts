@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
 import { DetalhesSupermercadoPage } from '../detalhes-supermercado/detalhes-supermercado';
 import { DetalhesProdutoPage } from '../detalhes-produto/detalhes-produto';
+import { EditarSupermercadoPage } from '../editar-supermercado/editar-supermercado';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -227,11 +228,16 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-  removeSupermercado(supermercado) {
-  	if (supermercado.key) {
-	    this.providerS.remove(supermercado)
-	    this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
-	    this.navCtrl.pop();
-	  }
+  removeSupermercado(event, selectedItem){
+    if (selectedItem.nomeSupermercado) {
+          this.providerS.remove(selectedItem)
+          this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
+    }
+  }
+
+  editarSupermercado(event, selectedItem){
+    this.navCtrl.push(EditarSupermercadoPage, {
+      push_item: selectedItem
+    });
   }
 }

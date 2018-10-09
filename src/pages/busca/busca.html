@@ -114,13 +114,13 @@
             </button>
           </ion-item>
           <ion-item-options side="right">
-              <button ion-button color="secondary">
+              <button ion-button (click) = "editarSupermercado($event, supermercados)" color="secondary">
                       <div>
                           <ion-icon name="create"></ion-icon>
                       </div>
                       <label>Editar</label>
               </button>
-              <button ion-button (click) = "removeSupermercado(supermercados)" color="danger">
+              <button ion-button (click) = "removeSupermercado($event, supermercados)" color="danger">
                       <div>
                           <ion-icon name="close"></ion-icon>
                       </div>
