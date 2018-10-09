@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import firebase from 'firebase';
 
 /*
   Generated class for the SupermercadosProvider provider.
@@ -40,7 +41,10 @@ export class SupermercadosProvider {
     })
   }
 
- remove(key: string) {
-    return this.db.list(this.PATH).remove(key);
+ remove(supermercados: any) {
+  var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(supermercados.nomeSupermercado);
+  var key = query.on("child_added", function(snapshot) {
+    snapshot.ref.remove();
+    });
   }
 }
