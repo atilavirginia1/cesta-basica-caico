@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Detalhes {{selectedItem.produto}}</ion-title>
+    <ion-title>Detalhes {{selectedItem.nomeProduto}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,6 +15,14 @@
 
 <ion-content padding>
   <div *ngIf="selectedItem" padding>
-    Detalhes sobre <b>{{selectedItem.produto}}</b> serão exibidos. (A implementar)
+    Detalhes sobre <b>{{selectedItem.nomeProduto}}</b> serão exibidos. (A implementar)
   </div>
+  <button ion-button color="secondary" (click)="editProduto($event, selectedItem)" icon-end>
+    Editar Produto
+  <ion-icon name="create"></ion-icon>
+</button>
+  <button ion-button color="danger" (click)="removeProduto($event, selectedItem)" icon-end>
+	  Remover Produto
+	<ion-icon name="trash"></ion-icon>
+  </button>
 </ion-content>

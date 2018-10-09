@@ -38,16 +38,7 @@ export class CadastrarPage {
     console.log(this.provider.getEmail());
     if (this.provider.getEmail() != null) {
         this.usuario = this.provider.getUser();
-
-    //   const subscribe = this.provider.get(this.navParams.data.email).subscribe((c: any) => {
-     //    subscribe.unsubscribe();
- 
-     //    this.usuario = c;
-   //      this.createForm();
-   //    })
-
      }
-    this.setupPageTitle();
     this.createForm();
   }
 
@@ -65,11 +56,6 @@ export class CadastrarPage {
       });     
   }
  
-   private setupPageTitle() {
-    this.title = this.provider.getEmail() ? 'Editar usuário' : 'Cadastrar';
-    this.buttonName = this.provider.getEmail() ? 'Salvar' : 'Cadastrar';
-  }
-
    onSubmit() {
     console.log(this.form);
     if (this.form.valid) {

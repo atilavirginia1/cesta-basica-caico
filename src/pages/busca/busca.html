@@ -86,19 +86,19 @@
     </ion-slide>
 
     <ion-slide>
-      <ion-list radio-group class="radio">
-          <ion-item>
+      <!-- <ion-list radio-group [(ngModel)]="radio">
+          <ion-item item-start>
               <ion-label>Supermercados</ion-label>
               <ion-radio value="supermercados" checked></ion-radio>
             </ion-item>
-            <ion-item>
+            <ion-item item-end>
               <ion-label>Produtos</ion-label>
               <ion-radio value="produtos"></ion-radio>
             </ion-item>
-      </ion-list>
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+      </ion-list> -->
 
       <ion-list>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-item-sliding #slidingItem *ngFor="let supermercados of supermercadoList">
           <ion-item>
             <button ion-item (click)="itemSupermercadoTapped($event, supermercados)">
@@ -120,7 +120,7 @@
                       </div>
                       <label>Editar</label>
               </button>
-              <button ion-button (click) = "removeSupermercado(supermercados.key)" color="danger">
+              <button ion-button (click) = "removeSupermercado(supermercados)" color="danger">
                       <div>
                           <ion-icon name="close"></ion-icon>
                       </div>
@@ -131,8 +131,7 @@
         </ion-list>
 
         <ion-list>
-          <ion-item-sliding #slidingItem *ngFor="let produtos of produtosList">
-            <ion-item>
+            <ion-item *ngFor="let produtos of produtosList">
               <button ion-item (click)="itemProdutoTapped($event, produtos)">
                 <div class="produto-nome">
                   <h2> {{ produtos.nomeProduto }} </h2>
@@ -145,22 +144,7 @@
                 </div>
               </button>
             </ion-item>
-            <ion-item-options side="right">
-                <button ion-button color="secondary" (click)="editProduto(produtos)">
-                        <div>
-                            <ion-icon name="create"></ion-icon>
-                        </div>
-                        <label>Editar</label>
-                </button>
-                <button ion-button color="danger" (click)="removeProduto(produtos.key)">
-                        <div>
-                            <ion-icon name="close"></ion-icon>
-                        </div>
-                        <label>Excluir</label>
-                </button>
-              </ion-item-options>
-            </ion-item-sliding>
-          </ion-list>
+            </ion-list>
     </ion-slide>
 	</ion-slides>
 </ion-content>

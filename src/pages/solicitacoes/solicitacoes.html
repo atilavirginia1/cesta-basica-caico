@@ -29,7 +29,7 @@
                 </div>
           </ion-item>
           <ion-item-options side="right">
-            <button ion-button color="secondary">
+            <button ion-button color="secondary" (click)="aceitar()">
                 <div>
                     <div>
                         <ion-icon name="checkmark"></ion-icon>
@@ -37,7 +37,7 @@
                     <label>Aceitar</label>
                 </div>
             </button>
-            <button ion-button color="danger">
+            <button ion-button color="danger" (click)="recusar()">
                 <div>
                     <div>
                         <ion-icon name="close"></ion-icon>
