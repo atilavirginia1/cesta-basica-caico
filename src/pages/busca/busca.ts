@@ -216,6 +216,7 @@ export class BuscaPage {
   }
 
   itemProdutoTapped(event, produto) {
+
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(DetalhesProdutoPage, {
       push_item: produto

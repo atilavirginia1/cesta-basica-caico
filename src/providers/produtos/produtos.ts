@@ -14,9 +14,17 @@ import firebase from 'firebase';
 export class ProdutosProvider {
   produtos: any;
   nome: string;
+  id: any;
   key: any;
   private PATH = 'produtos/';
 	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
+  }
+
+  getId() {
+    return this.id;
+  }
+  setId(id: any) {
+    this.id = id;
   }
 
   setNome(nome: string)
@@ -74,7 +82,10 @@ export class ProdutosProvider {
     })
   }
 
- remove(key: string) {
-    return this.db.list(this.PATH).remove(key);
+ remove(id: string) {
+  var query = firebase.database().ref(this.PATH).orderByChild("id").equalTo(id);
+  var key = query.on("child_added", function(snapshot) {
+    snapshot.ref.remove();
+  });
   }
 }

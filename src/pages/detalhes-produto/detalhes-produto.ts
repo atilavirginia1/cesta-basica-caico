@@ -23,8 +23,7 @@ export class DetalhesProdutoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController,
   	private provider: ProdutosProvider, public db: AngularFireDatabase) {
     this.selectedItem = navParams.get('push_item');
-    // this.produtos = this.selectedItem;
-    // this.produtos = db.list('/produtos');
+    console.log(this.selectedItem)
   }
 
   ionViewDidLoad() {
@@ -38,10 +37,10 @@ export class DetalhesProdutoPage {
   }
 
   removeProduto(event, produtos) {
-    console.log(produtos.key)
     if (produtos) {
-	    this.provider.remove(produtos.key);
-	    this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
+	    this.provider.remove(produtos.id);
+      this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
+      this.navCtrl.getPrevious();
 	  }
   }
 }

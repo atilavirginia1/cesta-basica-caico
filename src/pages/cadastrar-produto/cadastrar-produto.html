@@ -1,8 +1,5 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
         <ion-title>{{title}}</ion-title>
       </ion-navbar>
 </ion-header>
@@ -11,6 +8,9 @@
 <ion-content padding>
 
   <form [formGroup]="form">
+    <ion-item>
+      <ion-input type="number" formControlName="id" placeholder="ID" value="{{nomeProduto + marca}}"></ion-input>
+    </ion-item>
     <ion-item>
       <ion-input type="text" formControlName="nomeProduto" placeholder="Nome do Produto"></ion-input>
     </ion-item>
@@ -44,7 +44,7 @@
       </ion-item>
 
     <div padding>
-     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Cadastrar</button>
+     <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">{{buttonName}}</button>
     </div>
 
  </form>
