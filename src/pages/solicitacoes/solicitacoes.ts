@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, ToastController, NavController } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import firebase from 'firebase';
 
@@ -23,7 +23,7 @@ export class SolicitacoesPage {
   alunos: Array<{nome: string, matricula: string}>;
 
 
-  constructor(public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
     this.alunos = [];
 	    for (let p = 1; p < 6; p++) {
 	      this.alunos.push({
@@ -54,4 +54,10 @@ export class SolicitacoesPage {
     console.log('ionViewDidLoad SolicitacoesPage');
   }
 
+  aceitar() {
+    this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
+  }
+  recusar() {
+    this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
+  }
 }
