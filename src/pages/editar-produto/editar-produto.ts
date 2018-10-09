@@ -21,6 +21,7 @@ export class EditarProdutoPage {
   public nomeProduto: any;
   public marca: any;
   public medida: any;
+  public id: any;
   key: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 private formBuilder: FormBuilder,
