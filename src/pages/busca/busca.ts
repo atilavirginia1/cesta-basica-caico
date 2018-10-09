@@ -6,10 +6,8 @@ import { DetalhesAlunoPage } from '../detalhes-aluno/detalhes-aluno';
 
 import firebase from 'firebase';
 import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
-import { ProdutosProvider } from '../../providers/produtos/produtos';
 import { DetalhesSupermercadoPage } from '../detalhes-supermercado/detalhes-supermercado';
 import { DetalhesProdutoPage } from '../detalhes-produto/detalhes-produto';
-import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -32,7 +30,8 @@ export class BuscaPage {
   	supermercado: any;
   	dataPesquisa: any;
   	isVisible: boolean = false;
-  	public alunosList:Array<any>;
+
+    public alunosList:Array<any>;
     public loadedAlunosList:Array<any>;
     public alunosRef:firebase.database.Reference;
     public supermercadoList:Array<any>;
@@ -41,10 +40,11 @@ export class BuscaPage {
     public produtosList:Array<any>;
     public loadedprodutosList:Array<any>;
     public produtosRef:firebase.database.Reference;
+
     pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
+
     constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
-      private providerS: SupermercadosProvider, private toast: ToastController,
-      private providerP: ProdutosProvider) {
+      private providerS: SupermercadosProvider, private toast: ToastController) {
 
       this.pesquisas = [];
         for (let p = 1; p < 6; p++) {
@@ -125,16 +125,40 @@ export class BuscaPage {
 	    }
     });
 
+
+  }
+
+  getItemsParameters(searchbar) {
+     // Reset items back to all of the items
+	  this.initializeItems();
+
+	  // set q to the value of the searchbar
+	  var q = searchbar.srcElement.value;
+
+
+	  // if the value is an empty string don't filter the items
+	  if (!q) {
+	    return;
+	  }
+
     this.supermercadoList = this.supermercadoList.filter((v) => {
 	    if(v.nomeSupermercado && q) {
-	      if (v.nomeSupermercado.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+	      if (v.nomeSupermercado.toLowerCase().indexOf(q.toLowerCase()) > -2) {
 	        return true;
 	      }
 	      return false;
 	    }
 	  });
 
-	}
+    /* this.produtosList = this.produtosList.filter((v) => {
+	    if(v.nomeProduto && q) {
+	      if (v.nomeProduto.toLowerCase().indexOf(q.toLowerCase()) > -3) {
+	        return true;
+	      }
+	      return false;
+	    }
+	  });*/
+  }
 
 	createForm() {
 	    this.form = this.formBuilder.group({
@@ -202,31 +226,11 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-  editProduto(produto){
-    this.navCtrl.push(CadastrarProdutoPage, {
-      push_item: produto.nome
-    });
-  }
-
   removeSupermercado(supermercado) {
-    console.log(this.supermercadoList);
-      this.providerS.remove(supermercado)
-        .then(() => {
-          this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
-        })
-        .catch(() => {
-          this.toast.create({ message: 'Erro ao remover o supermercado.', duration: 3000 }).present();
-        });
-  }
-
-  removeProduto(key) {
-    console.log(this.produtosList);
-      this.providerP.remove(key)
-        .then(() => {
-          this.toast.create({ message: 'Produto removido com sucesso.', duration: 3000 }).present();
-        })
-        .catch(() => {
-          this.toast.create({ message: 'Erro ao remover o produto.', duration: 3000 }).present();
-        });
+  	if (supermercado.key) {
+	    this.providerS.remove(supermercado)
+	    this.toast.create({ message: 'Supermercado removido sucesso.', duration: 3000 }).present();
+	    this.navCtrl.pop();
+	  }
   }
 }
