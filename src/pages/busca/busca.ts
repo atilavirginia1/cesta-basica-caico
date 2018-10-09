@@ -9,6 +9,8 @@ import { SupermercadosProvider } from '../../providers/supermercados/supermercad
 import { DetalhesSupermercadoPage } from '../detalhes-supermercado/detalhes-supermercado';
 import { DetalhesProdutoPage } from '../detalhes-produto/detalhes-produto';
 import { EditarSupermercadoPage } from '../editar-supermercado/editar-supermercado';
+import { ProdutosProvider } from '../../providers/produtos/produtos';
+import { EditarProdutoPage } from '../editar-produto/editar-produto';
 /**
  * Generated class for the BuscaPage page.
  *
@@ -45,7 +47,8 @@ export class BuscaPage {
     pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
     constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
-      private providerS: SupermercadosProvider, private toast: ToastController) {
+      private providerS: SupermercadosProvider, private toast: ToastController,
+      private providerP: ProdutosProvider) {
 
       this.pesquisas = [];
         for (let p = 1; p < 6; p++) {
@@ -235,9 +238,22 @@ export class BuscaPage {
     }
   }
 
-  editarSupermercado(event, selectedItem){
+  editarSupermercado(event, supermercado){
     this.navCtrl.push(EditarSupermercadoPage, {
-      push_item: selectedItem
+      push_item: supermercado
     });
+  }
+
+  editProduto(event, produto){
+    this.navCtrl.push(EditarProdutoPage, {
+      push_item: produto
+    });
+  }
+
+  removeProduto(event, produtos) {
+    if (produtos) {
+	    this.providerP.remove(produtos.id);
+      this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
+	  }
   }
 }

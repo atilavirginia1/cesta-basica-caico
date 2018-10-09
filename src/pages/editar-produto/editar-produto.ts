@@ -54,6 +54,7 @@ export class EditarProdutoPage {
 
   onSubmit() {
     console.log(this.form);
+    this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
     this.provider.save(this.form.value)
         .then(() => {
           	this.toast.create({ message: 'Alteração realizada com sucesso', duration: 3000 }).present();
