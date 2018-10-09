@@ -31,7 +31,7 @@
                 </div>
         </button>
         <ion-item-options side="right">
-          <button ion-button color="secondary">
+          <button ion-button color="secondary" (click)="exportar()">
               <div>
                   <div>
                       <ion-icon name="download"></ion-icon>
@@ -39,7 +39,7 @@
                   <label>Exportar</label>
               </div>
           </button>
-          <button ion-button color="primary">
+          <button ion-button color="primary" (click)="compartilhar()">
               <div>
                   <div>
                       <ion-icon name="share-alt"></ion-icon>

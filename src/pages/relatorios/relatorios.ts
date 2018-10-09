@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 
 /**
@@ -17,7 +17,7 @@ import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 export class RelatoriosPage {
   pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
 
     this.pesquisas = [];
     for (let p = 1; p < 6; p++) {
@@ -39,6 +39,14 @@ export class RelatoriosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RelatoriosPage');
+  }
+
+  exportar() {
+    this.toast.create({ message: 'Arquivo exportado, verifique seus arquivos.', duration: 3000 }).present();
+  }
+
+  compartilhar() {
+    this.toast.create({ message: 'Pesquisa compartilhada com sucesso', duration: 3000 }).present();
   }
 
 }
