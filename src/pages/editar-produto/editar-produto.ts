@@ -48,13 +48,16 @@ export class EditarProdutoPage {
         nomeProduto: this.produto.nome,
         marca: this.produto.marca,
         medida: this.produto.medida,
-        id: this.produto.id
+        id: this.selectedItem.id
       });
   }
 
   onSubmit() {
     console.log(this.form);
-    this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
+    if(!this.form.value.id){
+      this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
+    }
+    // this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
     this.provider.save(this.form.value)
         .then(() => {
           	this.toast.create({ message: 'Alteração realizada com sucesso', duration: 3000 }).present();

@@ -73,7 +73,6 @@ export class CadastrarProdutoPage {
   	 }
   }
 
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrarProdutoPage');
   }
