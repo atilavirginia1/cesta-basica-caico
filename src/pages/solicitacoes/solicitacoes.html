@@ -16,20 +16,20 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-item-sliding #slidingItem *ngFor="let p of alunos">
+        <ion-item-sliding #slidingItem *ngFor="let aluno of alunosList">
           <ion-item>
             <ion-avatar item-start>
               <img src="assets/imgs/cbc_splash.png" alt="avatar">
             </ion-avatar>
                 <div class="item-nome">
-                {{p.nome}}
+                {{aluno.nome}}
                 </div>
                 <div class="item-matricula">
-                  {{p.matricula}}
+                  {{aluno.matricula}}
                 </div>
           </ion-item>
           <ion-item-options side="right">
-            <button ion-button color="secondary" (click)="aceitar()">
+            <button ion-button color="secondary" (click)="aceitar($event, aluno)">
                 <div>
                     <div>
                         <ion-icon name="checkmark"></ion-icon>
@@ -37,7 +37,7 @@
                     <label>Aceitar</label>
                 </div>
             </button>
-            <button ion-button color="danger" (click)="recusar()">
+            <button ion-button color="danger" (click)="recusar($event, aluno)">
                 <div>
                     <div>
                         <ion-icon name="close"></ion-icon>

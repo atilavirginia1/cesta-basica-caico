@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, ToastController, NavController } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import firebase from 'firebase';
+import { ProvedorProvider } from '../../providers/provedor/provedor';
 
 /**
  * Generated class for the SolicitacoesPage page.
@@ -23,17 +24,18 @@ export class SolicitacoesPage {
   alunos: Array<{nome: string, matricula: string}>;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
-    this.alunos = [];
-	    for (let p = 1; p < 6; p++) {
-	      this.alunos.push({
-	        nome: 'Nome ' + p,
-	        matricula: 'Matricula ' + p,
-	      });
-	    }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private provider: ProvedorProvider, private toast: ToastController) {
+    // this.alunos = [];
+	  //   for (let p = 1; p < 6; p++) {
+	  //     this.alunos.push({
+	  //       nome: 'Nome ' + p,
+	  //       matricula: 'Matricula ' + p,
+	  //     });
+	  //   }
 
 	  	this.alunosRef = firebase.database().ref('/usuarios');
-	  	this.alunosRef.orderByChild("cargo").equalTo("A").on('value', alunosList => {
+	    this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
 			let alunos = [];
 			alunosList.forEach( aluno => {
 		    alunos.push(aluno.val());
@@ -54,10 +56,17 @@ export class SolicitacoesPage {
     console.log('ionViewDidLoad SolicitacoesPage');
   }
 
-  aceitar() {
-    this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
+  aceitar(event, selectedItem) {
+    if(selectedItem.id) {
+      selectedItem.ativo = true;
+      this.provider.save(selectedItem);
+      this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
+    }
   }
-  recusar() {
-    this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
+  recusar(event, selectedItem) {
+    if (selectedItem.id) {
+      this.provider.remove(selectedItem);
+      this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
+    }
   }
 }
