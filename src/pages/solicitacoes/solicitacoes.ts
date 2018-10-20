@@ -18,24 +18,24 @@ import { ProvedorProvider } from '../../providers/provedor/provedor';
 })
 export class SolicitacoesPage {
   form: FormGroup;
-  public alunosList:Array<any>;
-	public loadedAlunosList:Array<any>;
-  public alunosRef:firebase.database.Reference;
+  public alunosList: Array<any>;
+	public loadedAlunosList: Array<any>;
+  public alunosRef: firebase.database.Reference;
   alunos: Array<{nome: string, matricula: string}>;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private provider: ProvedorProvider, private toast: ToastController) {
-    // this.alunos = [];
-	  //   for (let p = 1; p < 6; p++) {
-	  //     this.alunos.push({
-	  //       nome: 'Nome ' + p,
-	  //       matricula: 'Matricula ' + p,
-	  //     });
-	  //   }
+    this.alunos = [];
+	    for (let p = 1; p < 6; p++) {
+	      this.alunos.push({
+	        nome: 'Nome ' + p,
+	        matricula: 'Matricula ' + p,
+	      });
+	    }
 
 	  	this.alunosRef = firebase.database().ref('/usuarios');
-	    this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
+	  	this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
 			let alunos = [];
 			alunosList.forEach( aluno => {
 		    alunos.push(aluno.val());
@@ -44,7 +44,7 @@ export class SolicitacoesPage {
 
 		  this.alunosList = alunos;
 		  this.loadedAlunosList = alunos;
-		});
+    });
   }
 
   initializeItems(): void {
