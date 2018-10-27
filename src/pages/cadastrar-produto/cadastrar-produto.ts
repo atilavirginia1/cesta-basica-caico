@@ -41,7 +41,7 @@ export class CadastrarProdutoPage {
   }
 
   private setupPageTitle() {
-    this.title = this.provider.getNome() ? 'Editar Produto' : 'Cadastrar';
+    this.title = this.provider.getNome() ? 'Editar Produto' : 'Cadastrar Produto';
     this.buttonName = this.provider.getNome() ? 'Salvar' : 'Cadastrar';
   }
 

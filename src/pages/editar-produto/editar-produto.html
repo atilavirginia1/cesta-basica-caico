@@ -25,8 +25,22 @@
         </ion-item>
 
         <ion-item>
-            <ion-input type="text" [(ngModel)]="medida" formControlName="medida" type="text" placeholder="Medida" value="{{selectedItem.medida}}"></ion-input>
+          <ion-label>Medida</ion-label>
+          <ion-select [(ngModel)]="medida" placeholder="Selecionar" formControlName="medida">
+            <ion-option value="U">Unidade</ion-option>
+            <ion-option value="Kg">Quilogramas</ion-option>
+            <ion-option value="Mg">Miligramas</ion-option>
+          </ion-select>
+        </ion-item>
+          <ion-item *ngIf="!form.controls.medida.valid && (form.controls.medida.dirty || form.controls.medida.touched)" color="danger">
+            <div [hidden]="!form.controls.medida.errors.required">
+              O campo é obrigatório
+            </div>
           </ion-item>
+
+        <!-- <ion-item>
+            <ion-input type="text" [(ngModel)]="medida" formControlName="medida" type="text" placeholder="Medida" value="{{selectedItem.medida}}"></ion-input>
+          </ion-item> -->
 
         <div padding>
          <button ion-button block type="submit" (click)="onSubmit()">Salvar</button>
