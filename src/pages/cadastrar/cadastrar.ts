@@ -66,7 +66,9 @@ export class CadastrarPage {
       }
       this.provider.save(this.form.value)
         .then(() => {
+          if(this.cargo == 'P'){
             this.signup();
+          }
           	this.toast.create({ message: this.message_success, duration: 3000 }).present();
           	this.navCtrl.pop();
         })

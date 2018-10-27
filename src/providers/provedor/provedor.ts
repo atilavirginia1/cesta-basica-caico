@@ -48,10 +48,13 @@ export class ProvedorProvider {
   }
 
   save(usuario: any) {
-    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
-    var key = query.on("child_added", function(snapshot) {
-          usuario.key = snapshot.key;
-    });
+    if(this.email){
+      var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
+      var key = query.on("child_added", function(snapshot) {
+            usuario.key = snapshot.key;
+      });
+    }
+
     return new Promise((resolve, reject) => {
 
       if (usuario.key) {

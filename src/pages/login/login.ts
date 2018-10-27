@@ -26,6 +26,7 @@ export class LoginPage {
              private auth: AuthService, fb: FormBuilder,
              private toast: ToastController) {
         this.loginForm = fb.group({
+          cargo: ['', Validators.required],
           email: ['', Validators.compose([Validators.required, Validators.email])],
           password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
         });
@@ -42,15 +43,27 @@ export class LoginPage {
       email: data.email,
       password: data.password
     };
-    this.auth.signInWithEmail(credentials)
-      .then(
-        () => this.navCtrl.setRoot(HomePage, {
-          data: credentials.email
-          }),
-        error => this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present()
-      );
+
+    if(data.cargo == 'P'){
+      this.auth.signInWithEmail(credentials)
+        .then(
+          () => this.navCtrl.setRoot(HomePage, {
+            data: credentials.email
+            }),
+          error => this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present()
+        );
      // this.navCtrl.setRoot(HomePage);
-  	this.navCtrl.setRoot(LoginPage);
+      this.navCtrl.setRoot(LoginPage);
+    }else if(data.cargo == 'A'){
+      if(this.auth.signInAluno(credentials)){
+        this.navCtrl.setRoot(HomePage, {
+        data: credentials.email});
+      }else{
+          this.navCtrl.setRoot(LoginPage);
+          this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present();
+      }
+    }
+
   }
 
   cadastrar(){

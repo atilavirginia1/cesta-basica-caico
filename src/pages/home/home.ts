@@ -15,6 +15,7 @@ export class HomePage {
   public user: any;
   public usuario: any;
   email: any;
+  show_menu: boolean = false;
   pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: ProvedorProvider) {
@@ -23,6 +24,7 @@ export class HomePage {
       this.provider.setEmail(this.user);
       this.usuario = this.provider.getUser();
       console.log(this.usuario)
+      this.showMenu();
     }
     
     this.pesquisas = [];
@@ -46,6 +48,15 @@ export class HomePage {
 
   adicionarSupermercado(){
     this.navCtrl.push(CadastrarSupermercadoPage);
+  }
+
+  showMenu(){
+    console.log(this.user)
+    if(this.usuario.cargo == 'A'){
+      this.show_menu = true;
+    }else{
+      this.show_menu = false;
+    }
   }
 
   itemTapped(event, p) {

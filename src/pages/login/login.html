@@ -13,9 +13,21 @@
 
 
 <ion-content padding>
-<form (ngSubmit)="login()" [formGroup]="loginForm">
+<form [formGroup]="loginForm">
 	<img class="image" src="assets/imgs/cbc_splash.png" alt="logo">
 	<ion-list no-lines class="inputs">
+	    <ion-item>
+	      <ion-label>Perfil</ion-label>
+	      <ion-select [(ngModel)]="cargo" placeholder="Selecionar" formControlName="cargo">
+	        <ion-option value="A">Aluno</ion-option>
+	        <ion-option value="P">Professor</ion-option>
+	      </ion-select>
+    	</ion-item>
+	    <ion-item *ngIf="!loginForm.controls.cargo.valid && (loginForm.controls.cargo.dirty || loginForm.controls.cargo.touched)" color="danger">
+	      <div [hidden]="!loginForm.controls.cargo.errors.required">
+	        O campo é obrigatório
+	      </div>
+	    </ion-item>
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="person"></ion-icon></ion-label>
@@ -23,11 +35,16 @@
 		</ion-item>
 		<ion-item>
 			<ion-label color="light-grey">
-			<ion-icon item-left name="lock"></ion-icon></ion-label>
+			<ion-icon item-left name="lock" minlength="6" ></ion-icon></ion-label>
 			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 		</ion-item>
+		<ion-item *ngIf="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)" color="danger">
+	      <div [hidden]>
+	        Senha deve conter, no mínimo, 6 caracteres.
+	      </div>
+	    </ion-item>
 		<ion-item>
-			<button ion-button class="button" round type="submit" (click)="login()" ion-button>
+			<button ion-button class="button" round type="submit" [disabled]="!loginForm.valid"  (click)="login()" ion-button>
 			Entrar</button>
 		</ion-item>
 	</ion-list>
