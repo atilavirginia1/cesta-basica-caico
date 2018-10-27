@@ -64,7 +64,7 @@ export class CadastrarPage {
       }else{
       	this.message_success = 'Cadastro realizado com sucesso. Confirmar email de verificação.'
       }
-      this.provider.save(this.form.value)
+      this.provider.cadastrar(this.form.value)
         .then(() => {
           if(this.cargo == 'P'){
             this.signup();

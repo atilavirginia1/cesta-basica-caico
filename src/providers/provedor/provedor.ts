@@ -47,6 +47,33 @@ export class ProvedorProvider {
     return key;
   }
 
+
+  cadastrar(usuario: any){
+    return new Promise((resolve, reject) => {
+      this.db.list(this.PATH)
+        .push({ nome: usuario.nome, cargo: usuario.cargo, mat_siape: usuario.mat_siape, usuario: usuario.usuario, senha: usuario.senha, email: usuario.email, ativo: usuario.ativo})
+        .then(() => resolve());
+    })
+  }
+
+  aceitar(usuario: any)
+  {
+    usuario.senha = null;
+    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(usuario.email);
+    var key = query.on("child_added", function(snapshot) {
+      usuario.senha = snapshot.key;
+    });
+
+    if(usuario.senha){
+      return new Promise((resolve, reject) => {
+      this.db.list(this.PATH)
+        .update(usuario.senha, { ativo: usuario.ativo })
+        .then(() => resolve())
+        .catch((e) => reject(e));
+        })
+    }
+  }
+
   save(usuario: any) {
     if(this.email){
       var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(this.email);
@@ -54,7 +81,7 @@ export class ProvedorProvider {
             usuario.key = snapshot.key;
       });
     }
-
+ 
     return new Promise((resolve, reject) => {
 
       if (usuario.key) {

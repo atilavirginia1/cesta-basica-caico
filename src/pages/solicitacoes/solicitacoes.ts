@@ -38,7 +38,9 @@ export class SolicitacoesPage {
 	  	this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
 			let alunos = [];
 			alunosList.forEach( aluno => {
-		    alunos.push(aluno.val());
+        if(aluno.val().ativo == false){
+		      alunos.push(aluno.val());
+        }
 			return false;
 		  });
 
@@ -57,21 +59,21 @@ export class SolicitacoesPage {
   }
 
   aceitar(event, selectedItem) {
-    console.log("ACEITAAR!!");
+
     if(selectedItem) {
+      console.log("entrou")
       selectedItem.ativo = true;
-      this.provider.save(selectedItem);
+      this.provider.aceitar(selectedItem);
       this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
-      console.log("ACEITOU!");
 
     }
   }
   recusar(event, selectedItem) {
-    console.log("REMOVER!!");
+
     if (selectedItem) {
-      this.provider.remove(selectedItem.id);
+      this.provider.remove(selectedItem);
       this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
-      console.log("REMOVEU!!");
+
     }
   }
 }
