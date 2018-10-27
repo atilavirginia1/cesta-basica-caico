@@ -57,16 +57,21 @@ export class SolicitacoesPage {
   }
 
   aceitar(event, selectedItem) {
-    if(selectedItem.id) {
+    console.log("ACEITAAR!!");
+    if(selectedItem) {
       selectedItem.ativo = true;
       this.provider.save(selectedItem);
       this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
+      console.log("ACEITOU!");
+
     }
   }
   recusar(event, selectedItem) {
-    if (selectedItem.id) {
-      this.provider.remove(selectedItem);
+    console.log("REMOVER!!");
+    if (selectedItem) {
+      this.provider.remove(selectedItem.id);
       this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
+      console.log("REMOVEU!!");
     }
   }
 }
