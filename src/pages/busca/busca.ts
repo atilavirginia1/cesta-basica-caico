@@ -231,9 +231,9 @@ export class BuscaPage {
     console.log('ionViewDidLoad BuscaPage');
   }
 
-  removeSupermercado(event, selectedItem){
-    if (selectedItem.nomeSupermercado) {
-          this.providerS.remove(selectedItem)
+  removeSupermercado(event, supermercados){
+    if (supermercados) {
+          this.providerS.remove(supermercados.cnpj)
           this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
     }
   }

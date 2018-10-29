@@ -13,15 +13,24 @@ import firebase from 'firebase';
 export class SupermercadosProvider {
   supermercados: any;
   nome: any;
+  cnpj: string;
   private PATH = 'supermercados/';
 	constructor(private db: AngularFireDatabase, private af: AngularFireModule) {
+  }
+
+  getCnpj() {
+    return this.cnpj;
+  }
+
+  setCnpj(cnpj: string) {
+    this.cnpj = cnpj;
   }
 
   getNome(){
     return this.nome;
   }
 
-  setNome(nome:String){
+  setNome(nome:string){
     this.nome = nome;
   }
 
@@ -43,7 +52,7 @@ export class SupermercadosProvider {
 
   save(supermercados: any) {
 
-    var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(supermercados.nomeSupermercado);
+    var query = firebase.database().ref(this.PATH).orderByChild("cnpj").equalTo(supermercados.cnpj);
     var key = query.on("child_added", function(snapshot) {
           supermercados.key = snapshot.key;
       });
@@ -53,19 +62,19 @@ export class SupermercadosProvider {
 
       if (supermercados.key) {
         this.db.list(this.PATH)
-          .update(supermercados.key, { nomeSupermercado: supermercados.nomeSupermercado, endereco: supermercados.endereco, bairro: supermercados.bairro })
+          .update(supermercados.key, { cnpj: supermercados.cnpj, nomeSupermercado: supermercados.nomeSupermercado, endereco: supermercados.endereco, bairro: supermercados.bairro })
           .then(() => resolve())
           .catch((e) => reject(e));
       } else {
         this.db.list(this.PATH)
-          .push({ nomeSupermercado: supermercados.nomeSupermercado, endereco: supermercados.endereco, bairro: supermercados.bairro })
+          .push({ cnpj: supermercados.cnpj, nomeSupermercado: supermercados.nomeSupermercado, endereco: supermercados.endereco, bairro: supermercados.bairro })
           .then(() => resolve());
       }
     })
   }
 
- remove(supermercados: any) {
-  var query = firebase.database().ref(this.PATH).orderByChild("nomeSupermercado").equalTo(supermercados.nomeSupermercado);
+ remove(cnpj: any) {
+  var query = firebase.database().ref(this.PATH).orderByChild("cnpj").equalTo(cnpj);
   var key = query.on("child_added", function(snapshot) {
     snapshot.ref.remove();
     });

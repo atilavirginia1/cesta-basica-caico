@@ -15,6 +15,15 @@
 
 <ion-content padding>
   <form [formGroup]="form">
+      <ion-item>
+          <ion-input type="text" formControlName="cnpj" placeholder="CNPJ"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!form.controls.cnpj.valid && (form.controls.cnpj.dirty || form.controls.cnpj.touched)" color="danger">
+          <div [hidden]="!form.controls.cnpj.errors.required">
+            O campo é obrigatório
+          </div>
+        </ion-item>
+
     <ion-item>
       <ion-input type="text" formControlName="nomeSupermercado" placeholder="Nome do Supermercado"></ion-input>
     </ion-item>

@@ -16,6 +16,7 @@ import { SupermercadosProvider } from '../../providers/supermercados/supermercad
   templateUrl: 'cadastrar-supermercado.html',
 })
 export class CadastrarSupermercadoPage {
+  cnpj:string;
   nomeSupermercado:string;
   endereco:string;
   bairro:string;
@@ -33,6 +34,7 @@ export class CadastrarSupermercadoPage {
   createForm() {
     this.form = this.formBuilder.group({
       key: [this.supermercado.key],
+      cnpj: [this.supermercado.cnpj, Validators.required],
       nomeSupermercado: [this.supermercado.nomeSupermercado, Validators.required],
       endereco: [this.supermercado.endereco, Validators.required],
       bairro: [this.supermercado.bairro, Validators.required],

@@ -20,6 +20,7 @@ export class EditarSupermercadoPage {
   selectedItem: any;
   form: FormGroup;
   supermercado: any;
+  public cnpj: any;
   public nomeSupermercado: any;
   public endereco: any;
   public bairro: any;
@@ -35,6 +36,7 @@ export class EditarSupermercadoPage {
 
       //  var value = this.produto.val();
        this.key = this.selectedItem.key;
+       this.cnpj = this.selectedItem.cnpj;
        this.nomeSupermercado = this.selectedItem.nomeSupermercado;
        this.endereco = this.selectedItem.endereco;
        this.bairro = this.selectedItem.bairro;
@@ -47,6 +49,7 @@ export class EditarSupermercadoPage {
 
       this.form = this.formBuilder.group({
         key: this.selectedItem.key,
+        cnpj: this.selectedItem.cnpj,
         nomeSupermercado: this.supermercado.nomeSupermercado,
         endereco: this.supermercado.endereco,
         bairro: this.supermercado.bairro
