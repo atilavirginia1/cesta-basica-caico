@@ -1,9 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle [hidden]="!show_menu">
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+      <ion-buttons end> 
+      <button ion-button icon-start (click)="logoff()">
+        <ion-icon name="log-out"></ion-icon>
+          Sair
+      </button>
+    </ion-buttons> 
   </ion-navbar>
 </ion-header>
 

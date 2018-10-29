@@ -10,28 +10,42 @@ export class AuthService {
 	private user: firebase.User;
 	usuario: any;
 	private PATH = 'usuarios/';
+
 	constructor(public afAuth: AngularFireAuth) {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
+		
 	}
-	
+
 	signInWithEmail(credentials) {
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
 	}
 
-	signInAluno(credentials){
-	  var allow;
-	  if(credentials.email){
-	      var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
-	      query.on("child_added", function(snapshot) {
-	      	if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.senha){
-	      		allow = true;
-	      	}
-	      });
+	wait(ms){
+	   var start = new Date().getTime();
+	   var end = start;
+	   while(end < start + ms) {
+	     end = new Date().getTime();
 	  }
-	  return allow;
+	}
+
+	signInAluno(credentials){
+	  if(credentials.email){
+	    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
+		 query.on("child_added", function(snapshot) {
+		   	if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
+		      	&& snapshot.val().ativo == true){
+		     	credentials.allow = true;
+		   	}
+		  });
+	  }
+	  return credentials.allow;
+	}
+
+	logout(){
+	  this.afAuth.auth.signOut();
 	}
 
 	signUp(credentials) {

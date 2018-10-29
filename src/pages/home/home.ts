@@ -5,6 +5,8 @@ import { RealizarPesquisaPage } from '../realizar-pesquisa/realizar-pesquisa';
 import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
 import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-supermercado';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
+import { AuthService } from '../../services/auth.service';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -15,16 +17,15 @@ export class HomePage {
   public user: any;
   public usuario: any;
   email: any;
-  show_menu: boolean = false;
   pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public provider: ProvedorProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+           private auth: AuthService, public provider: ProvedorProvider) {
     this.user = this.navParams.get('data');
     if(this.user){
       this.provider.setEmail(this.user);
       this.usuario = this.provider.getUser();
       console.log(this.usuario)
-      this.showMenu();
     }
     
     this.pesquisas = [];
@@ -50,20 +51,17 @@ export class HomePage {
     this.navCtrl.push(CadastrarSupermercadoPage);
   }
 
-  showMenu(){
-    console.log(this.user)
-    if(this.usuario.cargo == 'A'){
-      this.show_menu = true;
-    }else{
-      this.show_menu = false;
-    }
-  }
-
   itemTapped(event, p) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(DetalhesPesquisaPage, {
       push_item: p
     });
+  }
+
+  logoff(){
+    this.auth.logout();
+    this.navCtrl.push(LoginPage);
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

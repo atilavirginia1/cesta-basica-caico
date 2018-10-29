@@ -1,3 +1,20 @@
 page-home-aluno {
 
 }
+button[ion-fab] {
+    contain:layout;
+    overflow: visible;
+    position: relative;
+
+    ion-label {
+        position: absolute;
+        top: -8px;
+        right: 40px;
+
+        color: black;
+        background-color: rgb(228, 228, 228);
+        line-height: 24px;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+}

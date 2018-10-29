@@ -41,7 +41,8 @@ export class LoginPage {
 
     let credentials = {
       email: data.email,
-      password: data.password
+      password: data.password,
+      allow: null
     };
 
     if(data.cargo == 'P'){
@@ -55,8 +56,11 @@ export class LoginPage {
      // this.navCtrl.setRoot(HomePage);
       this.navCtrl.setRoot(LoginPage);
     }else if(data.cargo == 'A'){
-      if(this.auth.signInAluno(credentials)){
-        this.navCtrl.setRoot(HomePage, {
+
+      credentials.allow = this.auth.signInAluno(credentials);
+
+      if(credentials.allow){
+        this.navCtrl.setRoot(HomeAlunoPage, {
         data: credentials.email});
       }else{
           this.navCtrl.setRoot(LoginPage);

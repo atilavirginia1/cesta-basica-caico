@@ -43,7 +43,6 @@ export class ProvedorProvider {
     var key2 = query.on("child_added", function(snapshot) {
       key = snapshot.val();
     });
-
     return key;
   }
 
@@ -96,7 +95,7 @@ export class ProvedorProvider {
       }
     })
   }
- 
+
  remove(usuario: any) {
     var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(usuario.email);
     var key = query.on("child_added", function(snapshot) {
