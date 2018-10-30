@@ -32,21 +32,10 @@ export class SolicitacoesPage {
 	        nome: 'Nome ' + p,
 	        matricula: 'Matricula ' + p,
 	      });
-	    }
+      }
 
-	  	this.alunosRef = firebase.database().ref('/usuarios');
-	  	this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
-			let alunos = [];
-			alunosList.forEach( aluno => {
-        if(aluno.val().ativo == false){
-		      alunos.push(aluno.val());
-        }
-			return false;
-		  });
+      this.mountList();
 
-		  this.alunosList = alunos;
-		  this.loadedAlunosList = alunos;
-    });
   }
 
   initializeItems(): void {
@@ -58,12 +47,29 @@ export class SolicitacoesPage {
     console.log('ionViewDidLoad SolicitacoesPage');
   }
 
+  mountList(){
+
+    this.alunosRef = firebase.database().ref('/usuarios');
+    this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
+    let alunos = [];
+    alunosList.forEach( aluno => {
+      if(aluno.val().ativo == false){
+        alunos.push(aluno.val());
+      }
+    return false;
+    });
+
+    this.alunosList = alunos;
+    this.loadedAlunosList = alunos;
+  });
+  }
   aceitar(event, selectedItem) {
 
     if(selectedItem) {
       console.log("entrou")
       selectedItem.ativo = true;
       this.provider.aceitar(selectedItem);
+      this.mountList();
       this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
 
     }
