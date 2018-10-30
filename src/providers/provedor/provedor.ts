@@ -18,6 +18,7 @@ export class ProvedorProvider {
   key: any;
   email: string;
   private PATH = 'usuarios/';
+  private PATH_PES = 'pesquisas/';
 	constructor(private db: AngularFireDatabase) {
   }
 
@@ -95,6 +96,31 @@ export class ProvedorProvider {
       }
     })
   }
+
+   savePesquisa(pesquisa: any) {
+      console.log(pesquisa)
+      return new Promise((resolve, reject) => {
+
+        if (pesquisa.key) {
+          this.db.list(this.PATH_PES)
+            .update(pesquisa.key, { email: pesquisa.email,
+                                    supermercado: pesquisa.nomeSupermercado, 
+                                    data: pesquisa.data_realizacao,
+                                    produtos: pesquisa.produto })
+            .then(() => resolve())
+            .catch((e) => reject(e));
+        } else {
+          this.db.list(this.PATH_PES)
+            .push({ email: pesquisa.email,
+                    supermercado: pesquisa.nomeSupermercado, 
+                    data: pesquisa.data_realizacao,
+                    produtos: pesquisa.produtos})
+            .then(() => resolve());
+        }
+      })
+    }
+
+
 
  remove(usuario: any) {
     var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(usuario.email);

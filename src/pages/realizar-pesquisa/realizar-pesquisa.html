@@ -12,9 +12,7 @@
           <ion-item>
             <ion-label>Nome do Supermercado</ion-label>
             <ion-select [(ngModel)]="nomeSupermercado" placeholder="Selecionar Supermercado" formControlName="nomeSupermercado">
-              <ion-option value="P">Paulinos</ion-option>
-              <ion-option value="L">Lig Zarb</ion-option>
-              <ion-option value="S">Santa Rita</ion-option>
+              <ion-option *ngFor="let sup of supermercadosList" [value]="sup">{{ sup }}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="!form.controls.nomeSupermercado.valid && (form.controls.nomeSupermercado.dirty || form.controls.nomeSupermercado.touched)" color="danger">
@@ -34,49 +32,59 @@
                  O campo é obrigatório
              </div>
           </ion-item>
-
+    </form>
+     <form [formGroup]="form2">
           <ion-item>
               <ion-label>Produto</ion-label>
               <ion-select [(ngModel)]="nomeProduto" (ionChange)="setVisible()" placeholder="Selecionar Produto" formControlName="nomeProduto">
                 <ion-option *ngFor="let p of produtosList" [value]="produtoSelecionado">{{ p }}</ion-option>
               </ion-select>
           </ion-item>
-          <ion-item *ngIf="!form.controls.nomeProduto.valid && (form.controls.nomeProduto.dirty || form.controls.nomeProduto.touched)" color="danger">
-              <div [hidden]="!form.controls.nomeProduto.errors.required">
+          <ion-item *ngIf="!form2.controls.nomeProduto.valid && (form2.controls.nomeProduto.dirty || form2.controls.nomeProduto.touched)" color="danger">
+              <div [hidden]="!form2.controls.nomeProduto.errors.required">
                 O campo é obrigatório
               </div>
           </ion-item>
 
           <ion-item [hidden]="!isVisible">
             <ion-label>Marca</ion-label>
-            <ion-select [(ngModel)]="marcaProduto" placeholder="Selecionar Marca" formControlName="marca">
+            <ion-select [(ngModel)]="marcaProduto" (ionChange)="setVisible()" placeholder="Selecionar Marca" formControlName="marca">
               <ion-option *ngFor="let m of marcasList" [value]="m">{{ m }}</ion-option>
             </ion-select>
-            <ion-item *ngIf="!form.controls.marca.valid && (form.controls.marca.dirty || form.controls.marca.touched)" color="danger">
-              <div [hidden]="!form.controls.marca.errors.required">
+            <ion-item *ngIf="!form2.controls.marca.valid && (form2.controls.marca.dirty || form2.controls.marca.touched)" color="danger">
+              <div [hidden]="!form2.controls.marca.errors.required">
                 O campo é obrigatório
               </div>
             </ion-item>
           </ion-item>
 
-          <ion-item [hidden]="!isVisible">
+          <ion-item [hidden]="!isVisibleOutro">
+            <ion-input type="text" formControlName="marca" placeholder="Nome da Marca"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!form2.controls.marca.valid && (form2.controls.marca.dirty || form2.controls.marca.touched)" color="danger">
+            <div [hidden]="!form2.controls.marca.errors.required">
+              O campo é obrigatório
+            </div>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Unidade de Medida</ion-label>
             <ion-select [(ngModel)]="medida" placeholder="Selecionar Unidade" formControlName="medida">
               <ion-option *ngFor="let med of medidasList" [value]="med">{{ med }}</ion-option>
             </ion-select>
-            <ion-item *ngIf="!form.controls.medida.valid && (form.controls.medida.dirty || form.controls.medida.touched)" color="danger">
-              <div [hidden]="!form.controls.medida.errors.required">
+            <ion-item *ngIf="!form2.controls.medida.valid && (form2.controls.medida.dirty || form2.controls.medida.touched)" color="danger">
+              <div [hidden]="!form2.controls.medida.errors.required">
                 O campo é obrigatório
               </div>
             </ion-item>
           </ion-item>
 
-         <ion-item [hidden]="!isVisible">
+         <ion-item>
           <ion-label>Preço</ion-label>
            <ion-input type="number" formControlName="preco" width="20%"></ion-input>
           </ion-item>
-          <ion-item *ngIf="!form.controls.preco.valid && (form.controls.preco.dirty || form.controls.preco.touched)" color="danger">
-           <div [hidden]="!form.controls.preco.errors.required">
+          <ion-item *ngIf="!form2.controls.preco.valid && (form2.controls.preco.dirty || form2.controls.preco.touched)" color="danger">
+           <div [hidden]="!form2.controls.preco.errors.required">
              O campo é obrigatório
            </div>
           </ion-item>
@@ -84,7 +92,7 @@
 
         <div padding>
           <ion-item>
-             <button ion-button color="secondary" class="button-item" [disabled]="!form.valid" type="submit" (click)="addItem()">
+             <button ion-button color="secondary" class="button-item" [disabled]="!form2.valid" type="submit" (click)="addItem()">
               <ion-icon name="add"></ion-icon>
                 Adicionar Item 
              </button>
@@ -96,7 +104,7 @@
                   <ion-item-sliding #slidingItem *ngFor="let p of produtos">
                           <button ion-item>
                               <div class="item-nome" item-start>
-                              {{p.nome}}
+                              {{p.nomeProduto}}
                               </div>
                               <div class="item-marca">
                                 {{p.marca}}
@@ -109,7 +117,7 @@
                               </div>
                           </button>
                         <ion-item-options>
-                        <button ion-button color="danger" (click)="delete(slidingItem, p.nome)">
+                        <button ion-button color="danger" (click)="delete(slidingItem, p)">
                             <div>
                                 <div>
                                     <ion-icon name="trash"></ion-icon>

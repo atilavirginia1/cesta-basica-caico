@@ -39,15 +39,7 @@ export class HomeAlunoPage {
   }
 
   realizarPesquisa(){
-    this.navCtrl.push(RealizarPesquisaPage);
-  }
-
-  adicionarProduto(){
-    this.navCtrl.push(CadastrarProdutoPage);
-  }
-
-  adicionarSupermercado(){
-    this.navCtrl.push(CadastrarSupermercadoPage);
+    this.navCtrl.push(RealizarPesquisaPage, {data: this.user});
   }
 
   itemTapped(event, p) {
