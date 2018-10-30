@@ -23,9 +23,9 @@
     <ion-item>
       <ion-label>Medida</ion-label>
       <ion-select [(ngModel)]="medida" placeholder="Selecionar" formControlName="medida">
-        <ion-option value="U">Unidade</ion-option>
-        <ion-option value="Kg">Quilogramas</ion-option>
-        <ion-option value="Mg">Miligramas</ion-option>
+        <ion-option value="Un">Unidade (Un)</ion-option>
+        <ion-option value="Kg">Quilogramas (Kg)</ion-option>
+        <ion-option value="Mg">Miligramas (Mg)</ion-option>
       </ion-select>
     </ion-item>
       <ion-item *ngIf="!form.controls.medida.valid && (form.controls.medida.dirty || form.controls.medida.touched)" color="danger">

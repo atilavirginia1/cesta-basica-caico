@@ -26,28 +26,31 @@ export class RealizarPesquisaPage {
   form: FormGroup;
   message_success: string;
   isVisible=false;
+  isVisibleOutro=false;
+  isEnabled = false;
   public pesquisa: any;
-  produtos: Array<{nome: string, marca:string, medida: string, preco: string}>;
+ // produtos: Array<{nome: string, marca:string, medida: string, preco: string}>;
+//  produtos: Array<{id: string, marca:string, medida: string, nome: string}>;
   public items: Array<any> = [];
   public itemRef: firebase.database.Reference = firebase.database().ref('/items');
+
+  produtos: Array<any> = [];
+  produtosList: Array<any> = [];
+  marcasList: Array<any> = [];
+  medidasList: Array<any> = [];
+  produtoSelecionado: any;
+  public produtosRef: firebase.database.Reference = firebase.database().ref('/produtos');
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProvedorProvider,
     private toast: ToastController) {
 
     this.pesquisa = this.navParams.data.pesquisa || { };
-    this.createForm();
 
-    this.produtos = [];
-    for (let p = 1; p < 6; p++) {
-      this.produtos.push({
-      	nome: 'Produto ' + p,
-        marca: 'Marca ' + p,
-        medida: p + ' kg',
-        preco: 'R$ ' + p + ',00',
-      });
-    }
+    this.createForm();
   }
+
 
   createForm() {
     this.form = this.formBuilder.group({
@@ -58,8 +61,7 @@ export class RealizarPesquisaPage {
       marca: [this.pesquisa.marca, Validators.required],
       medida: [this.pesquisa.medida, Validators.required],
       preco: [this.pesquisa.preco, Validators.required],
-      produtos: [this.pesquisa.produtos],
-      ativo: false
+      produtos: [this.pesquisa.produtos]
     });
   }
 
@@ -78,11 +80,50 @@ export class RealizarPesquisaPage {
   }
 
   setVisible(){
-  	if(this.marca != null){
-  		this.isVisible = true;
-  	} else {
-  		this.isVisible = false;
-  	}
+    if(this.form.value.nomeProduto == "Outra"){
+      this.isVisibleOutro = true;
+      this.isVisible = false;
+
+    }else if(this.form.value.nomeProduto !=null){
+      this.produtosRef.orderByChild("nomeProduto").equalTo(this.form.value.nomeProduto)
+      .on('value', marcasList => {
+        let marcas = [];
+        marcasList.forEach( produto => {
+          marcas.push(produto.val());
+        return false;
+      });
+
+    let unique_array = [];
+    let unique_array_med = [];
+      for(let i = 0;i < marcas.length; i++){
+          if(unique_array.indexOf(marcas[i].marca) == -1){
+              unique_array.push(marcas[i].marca);
+          }
+      }
+
+      for(let i = 0;i < marcas.length; i++){
+          if(unique_array_med.indexOf(marcas[i].medida) == -1){
+              unique_array_med.push(marcas[i].medida);
+          }
+      }
+
+      unique_array.push("Outra");
+      this.marcasList = unique_array;
+      this.medidasList = unique_array_med;
+     });
+     this.isVisible = true;
+     this.isVisibleOutro = false;
+    }else{
+      this.isVisible = false;
+      this.isVisibleOutro = false;
+    }    
+    console.log(this.marcasList)
+
+  //	if(this.marca != null){
+  //		this.isVisible = true;
+  //	} else {
+ // 		this.isVisible = false;
+  //	}
 
   }
 
@@ -102,8 +143,31 @@ export class RealizarPesquisaPage {
   	 }
   }
 
+  addItem(){
+    this.produtos.push(this.form.value);
+    this.form = null;
+    this.createForm();
+    this.isEnabled = true;
+  }
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RealizarPesquisaPage');
+    this.produtosRef.on('value', produtosList => {
+        let produtos = [];
+        produtosList.forEach( produto => {
+          produtos.push(produto.val());
+        return false;
+      });
+ //     this.produtosList = produtos;
+//      console.log(this.produtosList)
+     let unique_array = [];
+      for(let i = 0;i < produtos.length; i++){
+          if(unique_array.indexOf(produtos[i].nomeProduto) == -1){
+              unique_array.push(produtos[i].nomeProduto);
+          }
+      }
+      this.produtosList = unique_array;
+
+    });
   }
 
 

@@ -9,88 +9,88 @@
 
 <ion-content padding>
     <form [formGroup]="form">
-        <ion-item>
+          <ion-item>
             <ion-label>Nome do Supermercado</ion-label>
-            <ion-select [(ngModel)]="nomeSupermercado" placeholder="Selecionar" formControlName="nomeSupermercado">
+            <ion-select [(ngModel)]="nomeSupermercado" placeholder="Selecionar Supermercado" formControlName="nomeSupermercado">
               <ion-option value="P">Paulinos</ion-option>
               <ion-option value="L">Lig Zarb</ion-option>
               <ion-option value="S">Santa Rita</ion-option>
             </ion-select>
           </ion-item>
-            <ion-item *ngIf="!form.controls.nomeSupermercado.valid && (form.controls.nomeSupermercado.dirty || form.controls.nomeSupermercado.touched)" color="danger">
+          <ion-item *ngIf="!form.controls.nomeSupermercado.valid && (form.controls.nomeSupermercado.dirty || form.controls.nomeSupermercado.touched)" color="danger">
             <div [hidden]="!form.controls.nomeSupermercado.errors.required">
               O campo é obrigatório
             </div>
           </ion-item>
-          <!-- <ion-item *ngIf="getSupermercado()">
-          </ion-item> -->
 
           <ion-item>
-              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="data_realizacao" placeholder="Data"></ion-datetime>
-              <ion-icon name="calendar"></ion-icon>
-            </ion-item>
-              <ion-item *ngIf="!form.controls.data_realizacao.valid && (form.controls.data_realizacao.dirty || form.controls.data_realizacao.touched)" color="danger">
-                  <div [hidden]="!form.controls.data_realizacao.errors.required">
-                    O campo é obrigatório
-                  </div>
-            </ion-item>
+              <ion-label>Data de Realização</ion-label>
+              <ion-datetime #picker displayFormat="DD/MM/YYYY" placeholder="Selecionar Data" formControlName="data_realizacao">
+              </ion-datetime>
+              <ion-icon name="calendar" item-right></ion-icon>
+          </ion-item>
+          <ion-item *ngIf="!form.controls.data_realizacao.valid && (form.controls.data_realizacao.dirty || form.controls.data_realizacao.touched)" color="danger">
+             <div [hidden]="!form.controls.data_realizacao.errors.required">
+                 O campo é obrigatório
+             </div>
+          </ion-item>
 
           <ion-item>
-              <ion-label><h2><strong>Produto</strong></h2></ion-label>
-              <ion-select [(ngModel)]="nomeProduto" placeholder="Nome" formControlName="nomeProduto">
-                <ion-option value="C">Carne</ion-option>
-                <ion-option value="L">Leite</ion-option>
-                <ion-option value="A">Arroz</ion-option>
+              <ion-label>Produto</ion-label>
+              <ion-select [(ngModel)]="nomeProduto" (ionChange)="setVisible()" placeholder="Selecionar Produto" formControlName="nomeProduto">
+                <ion-option *ngFor="let p of produtosList" [value]="produtoSelecionado">{{ p }}</ion-option>
               </ion-select>
-
-
-              <ion-item *ngIf="!form.controls.nomeProduto.valid && (form.controls.nomeProduto.dirty || form.controls.nomeProduto.touched)" color="danger">
+          </ion-item>
+          <ion-item *ngIf="!form.controls.nomeProduto.valid && (form.controls.nomeProduto.dirty || form.controls.nomeProduto.touched)" color="danger">
               <div [hidden]="!form.controls.nomeProduto.errors.required">
                 O campo é obrigatório
               </div>
-            </ion-item>
-            <!-- <ion-item *ngIf="getProduto()">
-            </ion-item> -->
+          </ion-item>
 
-
-                <ion-select [(ngModel)]="marca" placeholder="Marca" formControlName="marca">
-                  <ion-option value="1">Marca 1</ion-option>
-                  <ion-option value="2">Marca 2</ion-option>
-                  <ion-option value="O">Outra</ion-option>
-                </ion-select>
-
+          <ion-item [hidden]="!isVisible">
+            <ion-label>Marca</ion-label>
+            <ion-select [(ngModel)]="marcaProduto" placeholder="Selecionar Marca" formControlName="marca">
+              <ion-option *ngFor="let m of marcasList" [value]="m">{{ m }}</ion-option>
+            </ion-select>
             <ion-item *ngIf="!form.controls.marca.valid && (form.controls.marca.dirty || form.controls.marca.touched)" color="danger">
               <div [hidden]="!form.controls.marca.errors.required">
                 O campo é obrigatório
               </div>
             </ion-item>
-            <ion-item *ngIf="getMarca()"></ion-item>
-
-            <ion-item [hidden]="!isVisible">
-                <ion-input type="text" formControlName="marca" placeholder="Marca"></ion-input>
-              </ion-item>
-              <ion-item *ngIf="!form.controls.marca.valid && (form.controls.marca.dirty || form.controls.marca.touched)" color="danger">
-                <div [hidden]="!form.controls.marca.errors.required">
-                  O campo é obrigatório
-                </div>
-              </ion-item>
-
-
-              <ion-input type="text" formControlName="preco" placeholder="Preço" width="20%"></ion-input>
-
-                <ion-item *ngIf="!form.controls.preco.valid && (form.controls.preco.dirty || form.controls.preco.touched)" color="danger">
-                  <div [hidden]="!form.controls.preco.errors.required">
-                    O campo é obrigatório
-                  </div>
-                </ion-item>
-                <ion-item ion-start>
-                    <div>
-                        <button>
-                            <ion-icon name="add-circle"></ion-icon>
-                        </button>
-                      </div>
-                  </ion-item>
           </ion-item>
+
+          <ion-item [hidden]="!isVisible">
+            <ion-label>Unidade de Medida</ion-label>
+            <ion-select [(ngModel)]="medida" placeholder="Selecionar Unidade" formControlName="medida">
+              <ion-option *ngFor="let med of medidasList" [value]="med">{{ med }}</ion-option>
+            </ion-select>
+            <ion-item *ngIf="!form.controls.medida.valid && (form.controls.medida.dirty || form.controls.medida.touched)" color="danger">
+              <div [hidden]="!form.controls.medida.errors.required">
+                O campo é obrigatório
+              </div>
+            </ion-item>
+          </ion-item>
+
+         <ion-item [hidden]="!isVisible">
+          <ion-label>Preço</ion-label>
+           <ion-input type="number" formControlName="preco" width="20%"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!form.controls.preco.valid && (form.controls.preco.dirty || form.controls.preco.touched)" color="danger">
+           <div [hidden]="!form.controls.preco.errors.required">
+             O campo é obrigatório
+           </div>
+          </ion-item>
+    </form>
+
+        <div padding>
+          <ion-item>
+             <button ion-button color="secondary" class="button-item" [disabled]="!form.valid" type="submit" (click)="addItem()">
+              <ion-icon name="add"></ion-icon>
+                Adicionar Item 
+             </button>
+          </ion-item>
+        </div>
+
           <ion-item>
               <ion-list>
                   <ion-item-sliding #slidingItem *ngFor="let p of produtos">
@@ -122,10 +122,6 @@
                 </ion-list>
             </ion-item>
             <div padding>
-                <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Finalizar Pesquisa</button>
+                <button ion-button block type="submit" class="button-pesquisa" [disabled]="!isEnabled" (click)="onSubmit()">Finalizar Pesquisa</button>
             </div>
-    </form>
-
-
-
 </ion-content>
