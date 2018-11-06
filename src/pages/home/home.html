@@ -17,16 +17,15 @@
   <ion-list>
     <h3>Últimas pesquisas realizadas</h3>
     <button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
-      <div class="item-datarealizacao" item-start>
-      {{p.data_realizacao}}
-      </div>
-      <div class="item-pesquisa">
-        {{p.pesquisa}}
+      <ion-icon item-left large name="clipboard"></ion-icon>
+      <div class="item-datarealizacao">
+      <strong>Realizada em: </strong> {{p.data}}
       </div>
       <div class="item-aluno">
-        {{p.aluno}}
+        <strong>Email do responsável: </strong> {{p.email}}
       </div>
       <div class="item-supermercado" item-end>
+        <strong>Supermercado:</strong><br>
         {{p.supermercado}}
       </div>
     </button>

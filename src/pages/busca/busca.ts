@@ -35,14 +35,17 @@ export class BuscaPage {
   	isVisible: boolean = false;
 
     public alunosList:Array<any>;
+    public pesquisasList:Array<any>;
     public loadedAlunosList:Array<any>;
     public alunosRef:firebase.database.Reference;
     public supermercadoList:Array<any>;
+    public supermercadosDropList:Array<any>;
     public loadedSupermercadosList:Array<any>;
     public supermercadosRef:firebase.database.Reference;
     public produtosList:Array<any>;
     public loadedprodutosList:Array<any>;
     public produtosRef:firebase.database.Reference;
+    public pesquisasRef:firebase.database.Reference;
 
     pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
 
@@ -50,15 +53,17 @@ export class BuscaPage {
       private providerS: SupermercadosProvider, private toast: ToastController,
       private providerP: ProdutosProvider) {
 
-      this.pesquisas = [];
-        for (let p = 1; p < 6; p++) {
-          this.pesquisas.push({
-            data_realizacao: 'dd/mm/aa',
-            pesquisa: 'Pesquisa ' + p,
-            aluno: 'Aluno ' + p,
-            supermercado: 'Supermercado ' + p,
-          });
-	    }
+
+      this.pesquisasRef = firebase.database().ref('/pesquisas');
+      this.pesquisasRef.orderByChild("data || supermercado").on('value', pesquisasList => {
+      let pesquisas = [];
+      pesquisasList.forEach( pesquisa => {
+        pesquisas.push(pesquisa.val());
+      return false;
+      });
+
+      this.pesquisasList = pesquisas;
+      });
 
 	  	this.alunosRef = firebase.database().ref('/usuarios');
 	  	this.alunosRef.orderByChild("cargo").equalTo("A").on('value', alunosList => {
@@ -194,8 +199,37 @@ export class BuscaPage {
    	    this.SwipedTabsIndicator.style.webkitTransform = 'translate3d(' + (($event.progress* (this.SwipedTabsSlider.length()-1))*100) + '%,0,0)';
   }
 
-   onSubmit() {
-   	this.isVisible  = true;
+  onSubmit() {
+
+    if(this.dataPesquisa == null){
+      this.pesquisas = this.pesquisasList;
+    }else{
+      let unique_array = [];
+      for(let i = 0;i < this.pesquisasList.length; i++){
+        const formatedDate = this.pesquisasList[i].data.toString().substring(0, 7);
+        if(formatedDate == this.dataPesquisa.toString()){
+            unique_array.push(this.pesquisasList[i]);
+        }
+      }
+      this.pesquisas = unique_array;
+    }
+
+    if(this.supermercado == null){
+      // nothing to do
+    }else{
+      let unique_array_super = [];
+      for(let i = 0;i < this.pesquisas.length; i++){
+        if(this.pesquisas[i].supermercado.toString() == this.supermercado.toString()){
+            unique_array_super.push(this.pesquisas[i]);
+        }
+      }
+      this.pesquisas = unique_array_super;
+
+    }
+          console.log(this.pesquisas)
+    if(this.pesquisas.length == 0){
+      this.toast.create({ message: 'Nenhum resultado encontrado.', duration: 3000 }).present();
+    }
   }
 
   itemTapped(event, p) {
@@ -228,7 +262,21 @@ export class BuscaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BuscaPage');
+      this.supermercadosRef.on('value', supermercadosList => {
+              let supermercados = [];
+              supermercadosList.forEach( sup => {
+                supermercados.push(sup.val());
+              return false;
+            });
+
+           let unique_array_sup = [];
+            for(let i = 0;i < supermercados.length; i++){
+                if(unique_array_sup.indexOf(supermercados[i].nomeSupermercado) == -1){
+                    unique_array_sup.push(supermercados[i].nomeSupermercado);
+                }
+            }
+            this.supermercadosDropList = unique_array_sup;
+        });
   }
 
   removeSupermercado(event, supermercados){

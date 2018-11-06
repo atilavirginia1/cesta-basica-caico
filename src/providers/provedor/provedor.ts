@@ -58,18 +58,12 @@ export class ProvedorProvider {
 
   aceitar(usuario: any)
   {
-    usuario.senha = null;
-    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(usuario.email);
-    var key = query.on("child_added", function(snapshot) {
-      usuario.senha = snapshot.key;
-    });
-
     if(usuario.senha){
       return new Promise((resolve, reject) => {
-      this.db.list(this.PATH)
-        .update(usuario.senha, { ativo: usuario.ativo })
-        .then(() => resolve())
-        .catch((e) => reject(e));
+        this.db.list(this.PATH)
+          .update(usuario.senha, { ativo: usuario.ativo })
+          .then(() => resolve())
+          .catch((e) => reject(e));
         })
     }
   }

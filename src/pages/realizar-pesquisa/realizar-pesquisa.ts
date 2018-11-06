@@ -141,7 +141,6 @@ export class RealizarPesquisaPage {
      this.isVisible = true;
      this.isVisibleOutro = false;
     }else{
-            console.log("entrou3")
       this.isVisible = false;
       this.isVisibleOutro = false;
     }    

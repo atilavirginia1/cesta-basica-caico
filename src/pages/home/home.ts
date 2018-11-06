@@ -7,6 +7,7 @@ import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-s
 import { ProvedorProvider } from './../../providers/provedor/provedor';
 import { AuthService } from '../../services/auth.service';
 import { LoginPage } from '../login/login';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +18,8 @@ export class HomePage {
   public user: any;
   public usuario: any;
   email: any;
-  pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
+  pesquisas: Array<any>;
+  public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
            private auth: AuthService, public provider: ProvedorProvider) {
@@ -27,17 +29,24 @@ export class HomePage {
       this.usuario = this.provider.getUser();
       console.log(this.usuario)
     }
-    
-    this.pesquisas = [];
-    for (let p = 1; p < 6; p++) {
-      this.pesquisas.push({
-      	data_realizacao: 'dd/mm/aa',
-        pesquisa: 'Pesquisa ' + p,
-        aluno: 'Aluno ' + p,
-        supermercado: 'Supermercado ' + p,
-      });
-    }
+    this.initializePesquisas();
   }
+
+  initializePesquisas(){
+      this.pesquisasRef = firebase.database().ref('/pesquisas');
+      this.pesquisasRef.orderByChild("data").on("value", pesquisasList => {
+      let pesquisas = [];
+      pesquisasList.forEach( pesquisa => {
+        pesquisas.push(pesquisa.val());
+      return false;
+      });
+
+      this.pesquisas = pesquisas;
+      this.pesquisas.reverse();
+      });
+
+  }
+
 
   realizarPesquisa(){
     this.navCtrl.push(RealizarPesquisaPage);

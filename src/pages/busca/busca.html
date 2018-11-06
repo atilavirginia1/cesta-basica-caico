@@ -33,12 +33,9 @@
 			<form [formGroup]="form">
 				<ion-item>
 				  <ion-label>Supermercado</ion-label>
-				  <ion-select [(ngModel)]="supermercado" placeholder="Selecionar" formControlName="supermercado">
-				    <ion-option value="to">Todos</ion-option>
-				    <ion-option value="s1">Supermercado 1</ion-option>
-				    <ion-option value="s2">Supermercado 2</ion-option>
-				    <ion-option value="s3">Supermercado 3</ion-option>
-				  </ion-select>
+            <ion-select [(ngModel)]="supermercado" placeholder="Todos" formControlName="supermercado">
+              <ion-option *ngFor="let sup of supermercadosDropList" [value]="sup">{{ sup }}</ion-option>
+            </ion-select>
 				</ion-item>
 
 				<ion-item>
@@ -51,15 +48,12 @@
 			    </div>
 			</form>
 		  <ion-list>
-			<button [hidden]="!isVisible" ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
-		      <div class="item-datarealizacao" item-start>
-		      {{p.data_realizacao}}
-		      </div>
-		      <div class="item-pesquisa">
-		        {{p.pesquisa}}
+			<button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
+		      <div class="item-datarealizacao">
+		      {{p.data}}
 		      </div>
 		      <div class="item-aluno">
-		        {{p.aluno}}
+		        {{p.email}}
 		      </div>
 		      <div class="item-supermercado" item-end>
 		        {{p.supermercado}}

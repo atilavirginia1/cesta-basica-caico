@@ -19,7 +19,7 @@ import { ProvedorProvider } from '../../providers/provedor/provedor';
 export class SolicitacoesPage {
   form: FormGroup;
   public alunosList: Array<any>;
-	public loadedAlunosList: Array<any>;
+  public alunosKeyList: Array<any> = [];
   public alunosRef: firebase.database.Reference;
   alunos: Array<{nome: string, matricula: string}>;
 
@@ -34,34 +34,42 @@ export class SolicitacoesPage {
 	      });
 	    }
 
-	  	this.alunosRef = firebase.database().ref('/usuarios');
-	  	this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
-			let alunos = [];
-			alunosList.forEach( aluno => {
-        if(aluno.val().ativo == false){
-		      alunos.push(aluno.val());
-        }
-			return false;
-		  });
+      this.loadAlunosList();
 
-		  this.alunosList = alunos;
-		  this.loadedAlunosList = alunos;
-    });
   }
-
-  initializeItems(): void {
-	  this.alunosList = this.loadedAlunosList;
-	}
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SolicitacoesPage');
   }
 
-  aceitar(event, selectedItem) {
+  loadAlunosList(){
+    this.alunosList = [];
+    this.alunosRef = firebase.database().ref('/usuarios');
+    this.alunosRef.orderByChild("cargo" || "ativo").equalTo("A" || "false").on('value', alunosList => {
+    let alunos = [];
+    let alunosKey = [];
+    alunosList.forEach( aluno => {
+      if(aluno.val().ativo == false){
+        alunos.push(aluno.val());
+        alunosKey.push(aluno.key);
+      }
+    return false;
+    });
+    this.alunosList = alunos;
+    for(var i = 0; i < this.alunosList.length; i++){
+      this.alunosList[i].senha = alunosKey[i];
+    }
 
+   });
+  
+
+
+
+  }
+  aceitar(event, selectedItem) {
+      console.log(this.alunosList)
+    console.log(selectedItem)
     if(selectedItem) {
-      console.log("entrou")
       selectedItem.ativo = true;
       this.provider.aceitar(selectedItem);
       this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();

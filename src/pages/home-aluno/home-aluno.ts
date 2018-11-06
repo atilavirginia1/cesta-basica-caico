@@ -7,6 +7,7 @@ import { LoginPage } from '../login/login';
 import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-supermercado';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
 import { AuthService } from '../../services/auth.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-home-aluno',
@@ -17,7 +18,8 @@ export class HomeAlunoPage {
   public user: any;
   public usuario: any;
   email: any;
-  pesquisas: Array<{pesquisa: string, aluno: string, supermercado: string, data_realizacao: string}>;
+  pesquisas: Array<any>;
+  public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
    private auth: AuthService, public provider: ProvedorProvider) {
@@ -26,16 +28,23 @@ export class HomeAlunoPage {
       this.provider.setEmail(this.user);
       this.usuario = this.provider.getUser();
     }
-    
-    this.pesquisas = [];
-    for (let p = 1; p < 6; p++) {
-      this.pesquisas.push({
-      	data_realizacao: 'dd/mm/aa',
-        pesquisa: 'Pesquisa ' + p,
-        aluno: 'Aluno ' + p,
-        supermercado: 'Supermercado ' + p,
+
+    this.initializePesquisas();
+  }
+
+  initializePesquisas(){
+      this.pesquisasRef = firebase.database().ref('/pesquisas');
+      this.pesquisasRef.orderByChild("email").equalTo(this.user).on("value", pesquisasList => {
+      let pesquisas = [];
+      pesquisasList.forEach( pesquisa => {
+        pesquisas.push(pesquisa.val());
+      return false;
       });
-    }
+
+      this.pesquisas = pesquisas;
+      this.pesquisas.reverse();
+      });
+
   }
 
   realizarPesquisa(){
@@ -51,5 +60,9 @@ export class HomeAlunoPage {
   logoff(){
     this.navCtrl.push(LoginPage);
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  ionViewDidLoad() {
+
   }
 }
