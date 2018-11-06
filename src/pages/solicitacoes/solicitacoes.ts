@@ -59,10 +59,10 @@ export class SolicitacoesPage {
     for(var i = 0; i < this.alunosList.length; i++){
       this.alunosList[i].senha = alunosKey[i];
     }
+    });
   }
+
   aceitar(event, selectedItem) {
-      console.log(this.alunosList)
-    console.log(selectedItem)
     if(selectedItem) {
       selectedItem.ativo = true;
       this.provider.aceitar(selectedItem);
