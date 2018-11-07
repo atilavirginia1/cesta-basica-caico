@@ -38,6 +38,7 @@ export class AuthService {
 		   	if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
 		      	&& snapshot.val().ativo == true){
 		     	credentials.allow = true;
+	  			console.log(credentials.allow)
 		   	}
 		  });
 	  }

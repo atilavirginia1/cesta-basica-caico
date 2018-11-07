@@ -19,6 +19,7 @@ export class HomeAlunoPage {
   public usuario: any;
   email: any;
   pesquisas: Array<any>;
+  noresult: boolean = false;
   public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -44,6 +45,10 @@ export class HomeAlunoPage {
       this.pesquisas = pesquisas;
       this.pesquisas.reverse();
       });
+
+      if(this.pesquisas == null){
+        this.noresult = true;
+      }
 
   }
 

@@ -21,7 +21,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginPage {
   loginForm: FormGroup;
   loginError: string;
-
+  public allow: boolean;
+  cargo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
              private auth: AuthService, fb: FormBuilder,
              private toast: ToastController) {
@@ -44,7 +45,6 @@ export class LoginPage {
       password: data.password,
       allow: null
     };
-
     if(data.cargo == 'P'){
       this.auth.signInWithEmail(credentials)
         .then(
@@ -56,9 +56,7 @@ export class LoginPage {
      // this.navCtrl.setRoot(HomePage);
       this.navCtrl.setRoot(LoginPage);
     }else if(data.cargo == 'A'){
-
       credentials.allow = this.auth.signInAluno(credentials);
-
       if(credentials.allow){
         this.navCtrl.setRoot(HomeAlunoPage, {
         data: credentials.email});
@@ -74,7 +72,7 @@ export class LoginPage {
   	this.navCtrl.push(CadastrarPage);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(){
     console.log('ionViewDidLoad LoginPage');
   }
 

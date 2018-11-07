@@ -50,12 +50,13 @@
 		  <ion-list>
 			<button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
 		      <div class="item-datarealizacao">
-		      {{p.data}}
+           <strong>Realizada em: </strong>{{p.data}}
 		      </div>
 		      <div class="item-aluno">
-		        {{p.email}}
+           <strong>Email do responsável: </strong> {{p.email}}
 		      </div>
 		      <div class="item-supermercado" item-end>
+           <strong>Supermercado:</strong><br>
 		        {{p.supermercado}}
 		      </div>
 		    </button>
