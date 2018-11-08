@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Detalhes {{selectedItem.pesquisa}}</ion-title>
+    <ion-title>Detalhes {{selectedItem.supermercado}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,6 +15,38 @@
 
 <ion-content padding>
   <div *ngIf="selectedItem" padding>
-    Detalhes sobre <b>{{selectedItem.pesquisa}}</b> serão exibidos. (A implementar)
+    <div class="supermercado">
+      <h1>{{selectedItem.supermercado}}</h1>
+    </div>
+    <div class="data">
+      <ion-label><strong>Data: </strong>
+      {{selectedItem.data}}</ion-label>
+    </div>
+    <div class="email">
+      <ion-label><strong>E-mail do responsável: </strong>
+        {{selectedItem.email}}
+      </ion-label>
+    </div>
+    <ion-item>
+        <ion-list *ngFor="let p of selectedItem.produtos">
+            <button ion-item>
+              <div class="item-nome" item-start>
+                <h2>{{p.nomeProduto}}</h2>
+              </div>
+              <div class="item-marca">
+                <strong>Marca/Tipo: </strong>
+                {{p.marca}}
+              </div>
+              <div class="item-medida">
+                <strong>Medida: </strong>
+                {{p.medida}}
+              </div>
+              <div class="item-preco" item-end>
+                R$ {{p.preco}}
+              </div>
+            </button>
+        </ion-list>
+      </ion-item>
+
   </div>
 </ion-content>
