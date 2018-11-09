@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
+import { EditarSupermercadoPage } from '../editar-supermercado/editar-supermercado';
 
 /**
  * Generated class for the DetalhesSupermercadoPage page.
@@ -16,7 +18,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class DetalhesSupermercadoPage {
   selectedItem: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public providerS: SupermercadosProvider, private toast: ToastController) {
     this.selectedItem = navParams.get('push_item');
   }
 
@@ -24,4 +27,16 @@ export class DetalhesSupermercadoPage {
     console.log('ionViewDidLoad DetalhesSupermercadoPage');
   }
 
+  removeSupermercado(event, supermercados){
+    if (supermercados) {
+          this.providerS.remove(supermercados.cnpj)
+          this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
+    }
+  }
+
+  editarSupermercado(event, supermercado){
+    this.navCtrl.push(EditarSupermercadoPage, {
+      push_item: supermercado
+    });
+  }
 }

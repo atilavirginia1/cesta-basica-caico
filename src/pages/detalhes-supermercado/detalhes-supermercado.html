@@ -7,15 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Detalhes {{selectedItem.supermercado}}</ion-title>
+    <ion-title>Detalhes {{selectedItem.nomeSupermercado}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <div *ngIf="selectedItem" padding>
-        Detalhes sobre <b>{{selectedItem.supermercado}}</b> serão exibidos. (A implementar)
-      </div>
+  <div *ngIf="selectedItem" padding>
+    <div class="supermercado">
+      <h1>{{selectedItem.nomeSupermercado}}</h1>
+    </div>
+    <div class="cnpj">
+      <ion-label><strong>CNPJ: </strong>
+      {{selectedItem.cnpj}}</ion-label>
+    </div>
+    <div class="endereco">
+      <ion-label><strong>Endereço: </strong>
+        {{selectedItem.endereco}}
+      </ion-label>
+    </div>
+    <div class="bairro">
+      <ion-label><strong>Bairro: </strong>
+        {{selectedItem.bairro}}
+      </ion-label>
+    </div>
+</div>
 
+<button ion-button color="secondary" (click)="editarSupermercado($event, selectedItem)" icon-end>
+  Editar Supermercado
+<ion-icon name="create"></ion-icon>
+</button>
+<button ion-button color="danger" (click)="removeSupermercado($event, selectedItem)" icon-end>
+  Remover Supermercado
+<ion-icon name="trash"></ion-icon>
+</button>
 </ion-content>
