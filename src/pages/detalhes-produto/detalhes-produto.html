@@ -15,7 +15,19 @@
 
 <ion-content padding>
   <div *ngIf="selectedItem" padding>
-    Detalhes sobre <b>{{selectedItem.nomeProduto}}</b> serão exibidos. (A implementar)
+      <div class="produto">
+      <h1>{{selectedItem.nomeProduto}}</h1>
+    </div>
+    <div class="medida">
+      <ion-label><strong>Medida: </strong>
+      {{selectedItem.medida}}</ion-label>
+    </div>
+    <div class="marca">
+      <ion-label><strong>Marca: </strong>
+        {{selectedItem.marca}}
+      </ion-label>
+    </div>
+
   </div>
   <button ion-button color="secondary" (click)="editProduto($event, selectedItem)" icon-end>
     Editar Produto
