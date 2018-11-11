@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Detalhes do Aluno </ion-title>
+    <ion-title>Detalhes de {{selectedItem.nome}} </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,11 +15,39 @@
 
 <ion-content padding>
   <div *ngIf="selectedItem" padding>
-    Detalhes sobre <b>{{selectedItem.nome}}</b> serão exibidos. (A implementar)
+    <div class="nome">
+      <h1>{{selectedItem.nome}}</h1>
+    </div>
+    <div class="mat">
+      <ion-label><b>Matrícula: </b>{{selectedItem.mat_siape}}</ion-label>
+    </div>
+    <div class="email">
+      <ion-label><b>E-mail: </b>{{selectedItem.email}}</ion-label>
+    </div>
+    <br><br>
+  <ion-list>
+    <h3>Pesquisas realizadas</h3>
+    <button [hidden]="!noresult" ion-item *ngFor="let p of pesquisasList" (click)="itemTapped($event, p)">
+        <ion-icon item-left large name="clipboard"></ion-icon>
+        <div class="item-datarealizacao">
+        <strong>Realizada em: </strong> {{p.data}}
+        </div>
+        <div class="item-supermercado" item-end>
+          <strong>Supermercado:</strong><br>
+          {{p.supermercado}}
+        </div>
+      </button>
+    </ion-list>
+  <ion-label [hidden]="noresult">Não há pesquisas a serem exibidas.</ion-label>
+
+
+    <button ion-button item-end color="danger" (click)="removerAluno(selectedItem)" icon-end>
+        Remover Aluno
+      <ion-icon name="trash"></ion-icon>
+    </button>
   </div>
-  <button ion-button color="danger" (click)="removerAluno(selectedItem)" icon-end>
-	  Remover Aluno
-	<ion-icon name="trash"></ion-icon>
-  </button>
-  
+
+
+
+
 </ion-content>
