@@ -97,11 +97,15 @@ export class RealizarPesquisaPage {
   }
 
   setVisible(){
+
     if(this.form2.value.marca == "Outra"){
       this.isVisibleOutro = true;
-      this.isVisible = false;
+      console.log("entrou em outro")
+    }else{
+      this.isVisibleOutro = false;
+    }
 
-    }else if(this.form2.value.nomeProduto !=null){
+    if(this.form2.value.nomeProduto !=null){
       this.produtosRef.orderByChild("nomeProduto").equalTo(this.form2.value.nomeProduto)
       .on('value', marcasList => {
         console.log("entrou2")
@@ -139,13 +143,12 @@ export class RealizarPesquisaPage {
       this.medidasList = unique_array_med;
      });
      this.isVisible = true;
-     this.isVisibleOutro = false;
     }else{
       this.isVisible = false;
-      this.isVisibleOutro = false;
     }    
     console.log(this.marcasList)
   }
+
 
   onSubmit() {
     console.log(this.form.value);

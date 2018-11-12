@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { ProvedorProvider } from './../../providers/provedor/provedor';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
+import { AlertController } from 'ionic-angular';
 import firebase from 'firebase';
 
 /**
@@ -24,13 +25,14 @@ export class DetalhesAlunoPage {
   email: any;
   pesquisas: any;
   // pesquisas: Array<any>;
-  noresult: boolean = false;
+  noresult: boolean = true;
+  qtde: number;
   public loadedPesquisasList:Array<any>;
   public pesquisasList:Array<any>;
   public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController,
-  	private provider: ProvedorProvider, public db: AngularFireDatabase) {
+  	private provider: ProvedorProvider, public db: AngularFireDatabase, private alertCtrl: AlertController) {
   	this.selectedItem = navParams.get('push_item');
     this.usuarios = db.list('/usuarios');
     this.pesquisas = db.list('/pesquisas');
@@ -51,14 +53,12 @@ export class DetalhesAlunoPage {
       pesquisas.push(pesquisa.val());
     return false;
     });
-
     this.pesquisasList = pesquisas;
-    this.loadedPesquisasList = pesquisas;
     this.pesquisasList.reverse();
     });
-
-    if(this.pesquisasList == null){
-      this.noresult = true;
+    this.qtde = this.pesquisasList.length;
+    if(this.pesquisasList.length == 0){
+      this.noresult = false;
     }
 
   }
@@ -74,11 +74,27 @@ export class DetalhesAlunoPage {
   }
 
   removerAluno(selectedItem){
-	if (selectedItem.email) {
-	      this.provider.remove(selectedItem)
-	      this.toast.create({ message: 'Contato removido sucesso.', duration: 3000 }).present();
-	      this.navCtrl.pop();
-	    }
-  }
+      let alert = this.alertCtrl.create({
+        title: 'Remover Aluno',
+        message: 'Tem certeza que deseja remover o aluno?',
+        buttons: [
+          {
+            text: 'Não',
+            role: 'cancel',
+            handler: () => {
 
+            }
+          },
+          {
+            text: 'Sim',
+            handler: () => {
+              this.provider.remove(selectedItem);
+              this.toast.create({ message: 'Aluno removido com sucesso.', duration: 3000 }).present();
+              this.navCtrl.pop();
+            }
+          }
+        ]
+      });
+      alert.present();
+  }
 }
