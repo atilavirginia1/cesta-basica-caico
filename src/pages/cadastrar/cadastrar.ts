@@ -27,7 +27,7 @@ export class CadastrarPage {
   email: string;
   usuario: any;
   signupError: any;
-  title: string;  
+  title: string;
   buttonName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 	private formBuilder: FormBuilder, private provider: ProvedorProvider,
@@ -50,12 +50,12 @@ export class CadastrarPage {
         mat_siape: [this.usuario.mat_siape, Validators.required],
         email: [this.usuario.email, Validators.compose([
           Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
-        usuario: [this.usuario.usuario, Validators.required],
-        senha: [this.usuario.senha, Validators.required],
+        senha: [this.usuario.senha, Validators.compose([
+          Validators.required, Validators.minLength(6)])],
         ativo: [this.usuario.ativo ? this.usuario.ativo : false]
-      });     
+      });
   }
- 
+
    onSubmit() {
     console.log(this.form);
     if (this.form.valid) {

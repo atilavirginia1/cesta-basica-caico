@@ -16,7 +16,7 @@
 <ion-content padding>
   <form [formGroup]="form">
       <ion-item>
-          <ion-input type="text" formControlName="cnpj" placeholder="CNPJ"></ion-input>
+          <ion-input type="tel" [(ngModel)]="cnpj"  maxLength="14" formControlName="cnpj" (ionBlur)="cnpj = format(cnpj)" placeholder="CNPJ (Somente números)" name="cnpj"></ion-input>
         </ion-item>
         <ion-item *ngIf="!form.controls.cnpj.valid && (form.controls.cnpj.dirty || form.controls.cnpj.touched)" color="danger">
           <div [hidden]="!form.controls.cnpj.errors.required">

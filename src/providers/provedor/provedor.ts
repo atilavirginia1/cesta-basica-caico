@@ -24,12 +24,12 @@ export class ProvedorProvider {
 
   setEmail(email: string)
   {
-    this.email = email; 
+    this.email = email;
   }
 
   getEmail()
   {
-    return this.email; 
+    return this.email;
   }
 
   getUser()
@@ -75,7 +75,7 @@ export class ProvedorProvider {
             usuario.key = snapshot.key;
       });
     }
- 
+
     return new Promise((resolve, reject) => {
 
       if (usuario.key) {
@@ -85,7 +85,7 @@ export class ProvedorProvider {
           .catch((e) => reject(e));
       } else {
         this.db.list(this.PATH)
-          .push({ nome: usuario.nome, cargo: usuario.cargo, mat_siape: usuario.mat_siape, usuario: usuario.usuario, senha: usuario.senha, email: usuario.email, ativo: usuario.ativo})
+          .push({ nome: usuario.nome, cargo: usuario.cargo, mat_siape: usuario.mat_siape, senha: usuario.senha, email: usuario.email, ativo: usuario.ativo})
           .then(() => resolve());
       }
     })
@@ -98,7 +98,7 @@ export class ProvedorProvider {
         if (pesquisa.key) {
           this.db.list(this.PATH_PES)
             .update(pesquisa.key, { email: pesquisa.email,
-                                    supermercado: pesquisa.nomeSupermercado, 
+                                    supermercado: pesquisa.nomeSupermercado,
                                     data: pesquisa.data_realizacao,
                                     produtos: pesquisa.produto })
             .then(() => resolve())
@@ -106,7 +106,7 @@ export class ProvedorProvider {
         } else {
           this.db.list(this.PATH_PES)
             .push({ email: pesquisa.email,
-                    supermercado: pesquisa.nomeSupermercado, 
+                    supermercado: pesquisa.nomeSupermercado,
                     data: pesquisa.data_realizacao,
                     produtos: pesquisa.produtos})
             .then(() => resolve());
