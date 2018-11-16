@@ -33,7 +33,10 @@ export class BuscaPage {
   	supermercado: any;
   	dataPesquisa: any;
   	isVisible: boolean = false;
-
+    radio: any;
+    showSuper: boolean = false;
+    showProd: boolean = false;
+    showSearch: boolean = false;
     public alunosList:Array<any>;
     public pesquisasList:Array<any>;
     public loadedAlunosList:Array<any>;
@@ -98,7 +101,7 @@ export class BuscaPage {
 		  });
 
 		  this.produtosList = produtos;
-		  this.loadedSupermercadosList = produtos;
+		  this.loadedprodutosList = produtos;
     });
 
 	  	this.tabs=["Pesquisa","Aluno", "Parâmetros"];
@@ -150,23 +153,27 @@ export class BuscaPage {
 	    return;
 	  }
 
-    this.supermercadoList = this.supermercadoList.filter((v) => {
-	    if(v.nomeSupermercado && q) {
-	      if (v.nomeSupermercado.toLowerCase().indexOf(q.toLowerCase()) > -2) {
-	        return true;
-	      }
-	      return false;
-	    }
-	  });
+    if(this.showSuper){
+      this.supermercadoList = this.supermercadoList.filter((v) => {
+        if(v.nomeSupermercado && q) {
+          if (v.nomeSupermercado.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+            return true;
+          }
+          return false;
+        }
+      });
+    }
 
-    /* this.produtosList = this.produtosList.filter((v) => {
-	    if(v.nomeProduto && q) {
-	      if (v.nomeProduto.toLowerCase().indexOf(q.toLowerCase()) > -3) {
-	        return true;
-	      }
-	      return false;
-	    }
-	  });*/
+    if(this.showProd){
+      this.produtosList = this.produtosList.filter((v) => {
+        if(v.nomeProduto && q) {
+            if (v.nomeProduto.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+              return true;
+            }
+            return false;
+          }
+        });
+    }
   }
 
 	createForm() {
@@ -192,7 +199,7 @@ export class BuscaPage {
   		this.SwipedTabsIndicator.style.webkitTransform = 'translate3d('+(this.SwipedTabsSlider.getActiveIndex() * 100)+'%,0,0)';
   	}
 
-    }
+  }
 
   animateIndicator($event) {
   	if(this.SwipedTabsIndicator)
@@ -277,31 +284,23 @@ export class BuscaPage {
             }
             this.supermercadosDropList = unique_array_sup;
         });
+    console.log(this.supermercadosDropList)
   }
+  
+  buscarParam(value){
 
-  removeSupermercado(event, supermercados){
-    if (supermercados) {
-          this.providerS.remove(supermercados.cnpj)
-          this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
+    console.log(this.showSuper)
+    console.log(this.showProd)
+    this.showSearch = true;
+    if(value == "super")
+    {
+      this.showSuper = true;
+      this.showProd = false;
+    }else{
+      this.showProd = true;
+      this.showSuper = false;
     }
-  }
 
-  editarSupermercado(event, supermercado){
-    this.navCtrl.push(EditarSupermercadoPage, {
-      push_item: supermercado
-    });
-  }
+  }  
 
-  editProduto(event, produto){
-    this.navCtrl.push(EditarProdutoPage, {
-      push_item: produto
-    });
-  }
-
-  removeProduto(event, produtos) {
-    if (produtos) {
-	    this.providerP.remove(produtos.id);
-      this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
-	  }
-  }
 }

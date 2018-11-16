@@ -26,8 +26,8 @@
     </div>
     <br><br>
   <ion-list>
-    <h3>Pesquisas realizadas</h3>
-    <button [hidden]="!noresult" ion-item *ngFor="let p of pesquisasList" (click)="itemTapped($event, p)">
+    <h3>Pesquisas realizadas: {{qtde}}</h3>
+    <button ion-item *ngFor="let p of pesquisasList" (click)="itemTapped($event, p)">
         <ion-icon item-left large name="clipboard"></ion-icon>
         <div class="item-datarealizacao">
         <strong>Realizada em: </strong> {{p.data}}
@@ -41,7 +41,7 @@
   <ion-label [hidden]="noresult">Não há pesquisas a serem exibidas.</ion-label>
 
 
-    <button ion-button item-end color="danger" (click)="removerAluno(selectedItem)" icon-end>
+    <button ion-button full color="danger" (click)="removerAluno(selectedItem)" icon-end>
         Remover Aluno
       <ion-icon name="trash"></ion-icon>
     </button>

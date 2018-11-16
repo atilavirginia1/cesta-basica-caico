@@ -39,7 +39,7 @@
 			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 		</ion-item>
 		<ion-item *ngIf="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)" color="danger">
-	      <div [hidden]>
+	      <div class="senha" [hidden]>
 	        Senha deve conter, no mínimo, 6 caracteres.
 	      </div>
 	    </ion-item>

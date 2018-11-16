@@ -61,22 +61,19 @@
     </ion-item>
 
      <ion-item>
-      <ion-input type="text" formControlName="usuario" type="text" placeholder="Username"></ion-input>
+      <ion-input formControlName="senha" type="password" placeholder="Senha"></ion-input>
     </ion-item>
-    <ion-item *ngIf="!form.controls.usuario.valid && (form.controls.usuario.dirty || form.controls.usuario.touched)" color="danger">
-      <div [hidden]="!form.controls.usuario.errors.required">
-        O campo é obrigatório
-      </div>
-    </ion-item>
-
-     <ion-item>
-      <ion-input type="text" formControlName="senha" type="password" placeholder="Senha"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="!form.controls.senha.valid && (form.controls.usuario.dirty || form.controls.senha.touched)" color="danger">
+    <ion-item *ngIf="!form.controls.senha.valid && (form.controls.senha.dirty || form.controls.senha.touched)" color="danger">
       <div [hidden]="!form.controls.senha.errors.required">
         O campo é obrigatório
       </div>
+
+      <div [hidden]="!form.controls.senha.errors.minLength">
+        Senha deve conter, no mínimo, 6 caracteres.
+      </div>
+
     </ion-item>
+
 
     <div padding>
      <button ion-button block type="submit" [disabled]="!form.valid" (click)="onSubmit()">Cadastrar</button>
