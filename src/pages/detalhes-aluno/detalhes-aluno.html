@@ -26,7 +26,7 @@
     </div>
     <br><br>
   <ion-list>
-    <h3>Pesquisas realizadas: {{qtde}}</h3>
+    <h3>Pesquisas realizadas: {{ qtde }}</h3>
     <button ion-item *ngFor="let p of pesquisasList" (click)="itemTapped($event, p)">
         <ion-icon item-left large name="clipboard"></ion-icon>
         <div class="item-datarealizacao">
