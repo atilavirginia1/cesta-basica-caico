@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
+import { MenuController } from 'ionic-angular';
+
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { RealizarPesquisaPage } from '../realizar-pesquisa/realizar-pesquisa';
-import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
 import { LoginPage } from '../login/login';
-import { CadastrarSupermercadoPage } from '../cadastrar-supermercado/cadastrar-supermercado';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
+
 import { AuthService } from '../../services/auth.service';
 import firebase from 'firebase';
+
 
 @Component({
   selector: 'page-home-aluno',
@@ -23,7 +25,8 @@ export class HomeAlunoPage {
   public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-   private auth: AuthService, public provider: ProvedorProvider) {
+   private auth: AuthService, public provider: ProvedorProvider, public menuCtrl: MenuController) {
+    menuCtrl.enable(false);
     this.user = this.navParams.get('data');
     if(this.user){
       this.provider.setEmail(this.user);
