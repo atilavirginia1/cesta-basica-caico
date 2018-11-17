@@ -68,7 +68,7 @@
         O campo é obrigatório
       </div>
 
-      <div [hidden]="!form.controls.senha.errors.minLength">
+      <div *ngIf="!form.controls.senha.errors.minLength">
         Senha deve conter, no mínimo, 6 caracteres.
       </div>
 

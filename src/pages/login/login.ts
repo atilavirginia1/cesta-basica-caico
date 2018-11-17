@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ToastController, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HomeAlunoPage } from '../home-aluno/home-aluno';
 import { HomeProfessorPage } from '../home-professor/home-professor';
@@ -23,14 +23,21 @@ export class LoginPage {
   loginError: string;
   public allow: boolean;
   cargo: any;
+  email: any;
+  password: any;
+  private menu: MenuController;
   constructor(public navCtrl: NavController, public navParams: NavParams,
              private auth: AuthService, fb: FormBuilder,
-             private toast: ToastController) {
+             private toast: ToastController, menu: MenuController) {
+        if(this.cargo == null){
+          this.cargo = "A";
+        }
         this.loginForm = fb.group({
-          cargo: ['', Validators.required],
-          email: ['', Validators.compose([Validators.required, Validators.email])],
-          password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+          email: [this.email, Validators.compose([Validators.required, Validators.email])],
+          password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])]
         });
+        this.menu = menu;
+        this.menu.enable(false);
   }
 
   login(){
@@ -45,7 +52,7 @@ export class LoginPage {
       password: data.password,
       allow: null
     };
-    if(data.cargo == 'P'){
+    if(this.cargo == 'P'){
       this.auth.signInWithEmail(credentials)
         .then(
           () => this.navCtrl.setRoot(HomePage, {
@@ -55,7 +62,7 @@ export class LoginPage {
         );
      // this.navCtrl.setRoot(HomePage);
       this.navCtrl.setRoot(LoginPage);
-    }else if(data.cargo == 'A'){
+    }else if(this.cargo == 'A'){
       credentials.allow = this.auth.signInAluno(credentials);
       if(credentials.allow){
         this.navCtrl.setRoot(HomeAlunoPage, {

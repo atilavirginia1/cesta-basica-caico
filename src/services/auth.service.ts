@@ -18,17 +18,13 @@ export class AuthService {
 		
 	}
 
+	get authenticated(): boolean {
+  		return this.user !== null;
+	}
+
 	signInWithEmail(credentials) {
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
-	}
-
-	wait(ms){
-	   var start = new Date().getTime();
-	   var end = start;
-	   while(end < start + ms) {
-	     end = new Date().getTime();
-	  }
 	}
 
 	signInAluno(credentials){

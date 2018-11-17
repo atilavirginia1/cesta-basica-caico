@@ -13,30 +13,45 @@
 
 
 <ion-content padding>
-<form [formGroup]="loginForm">
 	<img class="image" src="assets/imgs/cbc_splash.png" alt="logo">
-	<ion-list no-lines class="inputs">
-	    <ion-item>
-	      <ion-label>Perfil</ion-label>
+
+	 <ion-list radio-group [(ngModel)]="cargo">
+	 	<ion-item>
+	 		<ion-label><strong>Perfil:</strong></ion-label>
+	   </ion-item>
+        <ion-item>
+              <ion-label>Aluno</ion-label>
+              <ion-radio value="A" checked></ion-radio>
+        </ion-item>
+	     <ion-item>
+	 		 <ion-label>Professor</ion-label>
+	         <ion-radio value="P"></ion-radio>
+		 </ion-item>
+	</ion-list> 
+<form [formGroup]="loginForm">
+	   <ion-list no-lines class="inputs">
+
+	 <!--   <ion-item>
 	      <ion-select [(ngModel)]="cargo" placeholder="Selecionar" formControlName="cargo">
 	        <ion-option value="A">Aluno</ion-option>
 	        <ion-option value="P">Professor</ion-option>
 	      </ion-select>
-    	</ion-item>
+    	</ion-item>    
 	    <ion-item *ngIf="!loginForm.controls.cargo.valid && (loginForm.controls.cargo.dirty || loginForm.controls.cargo.touched)" color="danger">
 	      <div [hidden]="!loginForm.controls.cargo.errors.required">
 	        O campo é obrigatório
 	      </div>
-	    </ion-item>
+	    </ion-item> -->
+
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="person"></ion-icon></ion-label>
-			<ion-input fixed type="email" required placeholder="Email" formControlName="email"></ion-input>
+			<ion-input fixed type="email" required [(ngModel)]="email" placeholder="Email" formControlName="email"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="lock" minlength="6" ></ion-icon></ion-label>
-			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+			<ion-input type="password" [(ngModel)]="password" placeholder="Password" formControlName="password"></ion-input>
 		</ion-item>
 		<ion-item *ngIf="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)" color="danger">
 	      <div class="senha" [hidden]>

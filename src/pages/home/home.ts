@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { DetalhesPesquisaPage } from '../detalhes-pesquisa/detalhes-pesquisa';
 import { RealizarPesquisaPage } from '../realizar-pesquisa/realizar-pesquisa';
 import { CadastrarProdutoPage } from '../cadastrar-produto/cadastrar-produto';
@@ -21,15 +21,18 @@ export class HomePage {
   pesquisas: Array<any>;
   noresult: boolean = false;
   public pesquisasRef:firebase.database.Reference;
+  private menu: MenuController;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-           private auth: AuthService, public provider: ProvedorProvider) {
+           private auth: AuthService, public provider: ProvedorProvider, menu: MenuController) {
     this.user = this.navParams.get('data');
     if(this.user){
       this.provider.setEmail(this.user);
       this.usuario = this.provider.getUser();
       console.log(this.usuario)
     }
+    this.menu = menu;
+    this.menu.enable(true);
     this.initializePesquisas();
   }
 
