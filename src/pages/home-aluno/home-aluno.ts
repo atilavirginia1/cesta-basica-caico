@@ -19,25 +19,28 @@ export class HomeAlunoPage {
   public usuario: any;
   email: any;
   pesquisas: Array<any>;
-  noresult: boolean = false;
+  noresult: boolean;
   private menu: MenuController;
   public pesquisasRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
    private auth: AuthService, public provider: ProvedorProvider, menu: MenuController) {
-
     this.user = this.navParams.get('data');
     if(this.user){
       this.provider.setEmail(this.user);
       this.usuario = this.provider.getUser();
+    }else{
+      this.user = this.provider.getEmail();
     }
-    this.menu = menu;
-    this.menu.enable(false);
 
+    this.menu = menu;
+    this.enableMenu();
     this.initializePesquisas();
+    console.log("é " + this.noresult)
   }
 
   initializePesquisas(){
+      this.pesquisas = [];
       this.pesquisasRef = firebase.database().ref('/pesquisas');
       this.pesquisasRef.orderByChild("email").equalTo(this.user).on("value", pesquisasList => {
       let pesquisas = [];
@@ -49,11 +52,12 @@ export class HomeAlunoPage {
       this.pesquisas = pesquisas;
       this.pesquisas.reverse();
       });
-
-      if(this.pesquisas == null){
+      console.log(this.pesquisas)
+      if(this.pesquisas.length == 0){
         this.noresult = true;
+      }else{
+        this.noresult = false;
       }
-
   }
 
   realizarPesquisa(){
@@ -74,4 +78,10 @@ export class HomeAlunoPage {
   ionViewDidLoad() {
 
   }
+
+  enableMenu() {
+    this.menu.enable(true, 'aluno');
+    this.menu.enable(false, 'professor');
+  }
+
 }

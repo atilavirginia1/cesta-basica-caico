@@ -7,6 +7,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Login</ion-title>
+     <ion-buttons end> 
+      <button ion-button icon-start (click)="information()">
+        <ion-icon color="primary" name="information-circle"></ion-icon>
+      </button>
+    </ion-buttons> 
   </ion-navbar>
 
 </ion-header>
@@ -14,8 +19,8 @@
 
 <ion-content padding>
 	<img class="image" src="assets/imgs/cbc_splash.png" alt="logo">
-
-	 <ion-list radio-group [(ngModel)]="cargo">
+<
+	 <ion-list no-lines radio-group [(ngModel)]="cargo">
 	 	<ion-item>
 	 		<ion-label><strong>Perfil:</strong></ion-label>
 	   </ion-item>
@@ -28,10 +33,11 @@
 	         <ion-radio value="P"></ion-radio>
 		 </ion-item>
 	</ion-list> 
+
 <form [formGroup]="loginForm">
 	   <ion-list no-lines class="inputs">
-
-	 <!--   <ion-item>
+<!--
+	    <ion-item>
 	      <ion-select [(ngModel)]="cargo" placeholder="Selecionar" formControlName="cargo">
 	        <ion-option value="A">Aluno</ion-option>
 	        <ion-option value="P">Professor</ion-option>
@@ -41,8 +47,8 @@
 	      <div [hidden]="!loginForm.controls.cargo.errors.required">
 	        O campo é obrigatório
 	      </div>
-	    </ion-item> -->
-
+	    </ion-item>
+-->
 		<ion-item>
 			<ion-label color="light-grey">
 			<ion-icon item-left name="person"></ion-icon></ion-label>

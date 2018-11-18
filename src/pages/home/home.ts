@@ -19,7 +19,7 @@ export class HomePage {
   public usuario: any;
   email: any;
   pesquisas: Array<any>;
-  noresult: boolean = false;
+  noresult: boolean;
   public pesquisasRef:firebase.database.Reference;
   private menu: MenuController;
 
@@ -31,12 +31,14 @@ export class HomePage {
       this.usuario = this.provider.getUser();
       console.log(this.usuario)
     }
-    this.menu = menu;
-    this.menu.enable(true);
     this.initializePesquisas();
+    this.menu = menu;
+    this.menu.enable(true, 'professor');
+    this.menu.enable(false, 'aluno');
   }
 
   initializePesquisas(){
+      this.pesquisas = [];
       this.pesquisasRef = firebase.database().ref('/pesquisas');
       this.pesquisasRef.orderByChild("data").on("value", pesquisasList => {
       let pesquisas = [];
@@ -48,11 +50,16 @@ export class HomePage {
       this.pesquisas = pesquisas;
       this.pesquisas.reverse();
       });
-      if(this.pesquisas == null){
+      if(this.pesquisas.length == 0 ){
         this.noresult = true;
+      }else{
+        this.noresult = false;
       }
   }
 
+  ionViewDidLoad() {
+    this.initializePesquisas();
+  }
 
   realizarPesquisa(){
     this.navCtrl.push(RealizarPesquisaPage);

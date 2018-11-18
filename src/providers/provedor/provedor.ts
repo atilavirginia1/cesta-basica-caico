@@ -20,7 +20,7 @@ export class ProvedorProvider {
   private PATH = 'usuarios/';
   private PATH_PES = 'pesquisas/';
 	constructor(private db: AngularFireDatabase) {
-    
+
   }
 
   setEmail(email: string)

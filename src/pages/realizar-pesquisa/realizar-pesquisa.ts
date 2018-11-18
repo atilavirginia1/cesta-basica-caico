@@ -53,9 +53,6 @@ export class RealizarPesquisaPage {
     this.pesquisa = this.navParams.data.pesquisa || { };
     this.email = this.provider.getEmail();
     console.log(this.email)
-    if(this.email == null){
-      console.log("entrou"+this.email)
-    }
     this.createForm();
     this.createForm2();
   }
@@ -167,7 +164,21 @@ export class RealizarPesquisaPage {
   }
 
   addItem(){
-    this.produtos.push(this.form2.value);
+    var existe = false;
+    for(let i = 0;i < this.produtos.length; i++){
+
+      if(this.form2.value.marca.toString() === this.produtos[i].marca.toString()){
+        this.toast.create({ message: this.form2.value.nomeProduto.toString() 
+          + " " + this.form2.value.marca.toString() + ' já está na lista de itens.', duration: 3000 }).present();
+        existe = true;
+      }
+     }
+
+     if(existe == false){
+      console.log("nao existe")
+        this.produtos.push(this.form2.value);
+     }
+
     this.form2 = null;
     this.createForm2();
     this.isEnabled = true;

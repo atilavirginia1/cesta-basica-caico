@@ -15,6 +15,8 @@ import { SolicitacoesPage } from '../pages/solicitacoes/solicitacoes';
 import { RealizarPesquisaPage } from '../pages/realizar-pesquisa/realizar-pesquisa';
 import { ListPage } from '../pages/list/list';
 import { BuscaPage } from '../pages/busca/busca';
+import { SobrePage } from '../pages/sobre/sobre';
+import { AjudaPage } from '../pages/ajuda/ajuda';
 import { RelatoriosPage } from '../pages/relatorios/relatorios';
 import { EditarUsuarioPage } from '../pages/editar-usuario/editar-usuario';
 
@@ -57,7 +59,9 @@ import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supe
     CadastrarSupermercadoPage,
     EditarUsuarioPage,
     EditarProdutoPage,
-    EditarSupermercadoPage
+    EditarSupermercadoPage,
+    AjudaPage,
+    SobrePage
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,9 @@ import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supe
     CadastrarSupermercadoPage,
     EditarUsuarioPage,
     EditarProdutoPage,
-    EditarSupermercadoPage
+    EditarSupermercadoPage,
+    AjudaPage,
+    SobrePage
   ],
   providers: [
     StatusBar,

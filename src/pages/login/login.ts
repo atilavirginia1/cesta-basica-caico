@@ -6,6 +6,8 @@ import { HomeProfessorPage } from '../home-professor/home-professor';
 import { CadastrarPage } from '../cadastrar/cadastrar';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AjudaPage } from '../ajuda/ajuda';
+import { SobrePage } from '../sobre/sobre';
 /**
  * Generated class for the LoginPage page.
  *
@@ -37,7 +39,8 @@ export class LoginPage {
           password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])]
         });
         this.menu = menu;
-        this.menu.enable(false);
+        this.menu.enable(false, 'aluno');
+        this.menu.enable(false, 'professor');
   }
 
   login(){
@@ -81,6 +84,11 @@ export class LoginPage {
 
   ionViewDidLoad(){
     console.log('ionViewDidLoad LoginPage');
+  }
+
+
+  information(){
+    this.navCtrl.push(SobrePage);
   }
 
 }
