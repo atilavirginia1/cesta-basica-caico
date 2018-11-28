@@ -23,7 +23,7 @@ import { EditarUsuarioPage } from '../pages/editar-usuario/editar-usuario';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../services/auth.service';
-
+import { File } from '@ionic-native/file';
 import { ProvedorProvider } from '../providers/provedor/provedor';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -37,6 +37,7 @@ import { DetalhesSupermercadoPage } from '../pages/detalhes-supermercado/detalhe
 import { DetalhesProdutoPage } from '../pages/detalhes-produto/detalhes-produto';
 import { EditarProdutoPage } from '../pages/editar-produto/editar-produto';
 import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supermercado';
+
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supe
     ProvedorProvider,
     ProdutosProvider,
     SupermercadosProvider,
-    AuthService
+    AuthService,
+    File
   ]
 })
 export class AppModule {}

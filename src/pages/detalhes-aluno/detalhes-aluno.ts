@@ -79,18 +79,18 @@ export class DetalhesAlunoPage {
         message: 'Tem certeza que deseja remover o aluno?',
         buttons: [
           {
-            text: 'Não',
-            role: 'cancel',
-            handler: () => {
-
-            }
-          },
-          {
             text: 'Sim',
             handler: () => {
               this.provider.remove(selectedItem);
               this.toast.create({ message: 'Aluno removido com sucesso.', duration: 3000 }).present();
               this.navCtrl.pop();
+            }
+          },
+          {
+            text: 'Não',
+            role: 'cancel',
+            handler: () => {
+
             }
           }
         ]

@@ -17,6 +17,7 @@
 <ion-content padding>
   <ion-list>
     <h3>Pesquisas realizadas</h3>
+     
     <button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
       <ion-icon item-left large name="clipboard"></ion-icon>
       <div class="item-datarealizacao">
@@ -28,7 +29,7 @@
       </div>
     </button>
   </ion-list>
-  <ion-label [hidden]="!noresult">Não há pesquisas a serem exibidas.</ion-label>
+    <ion-label [hidden]="!noresult">Não há pesquisas a serem exibidas.</ion-label>
   <ion-fab bottom right >
      <button ion-fab mini color="dark" (click)="realizarPesquisa()"><ion-icon name="clipboard"></ion-icon>
       <ion-label>Adicionar Pesquisa</ion-label>

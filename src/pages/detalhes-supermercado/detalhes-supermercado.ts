@@ -33,19 +33,19 @@ export class DetalhesSupermercadoPage {
         title: 'Remover Produto',
         message: 'Tem certeza que deseja remover o supermercado?',
         buttons: [
-          {
-            text: 'Não',
-            role: 'cancel',
-            handler: () => {
-
-            }
-          },
-          {
+         {
             text: 'Sim',
             handler: () => {
               this.providerS.remove(supermercados.cnpj)
               this.toast.create({ message: 'Supermercado removido com sucesso.', duration: 3000 }).present();
               this.navCtrl.pop();
+            }
+          },
+          {
+            text: 'Não',
+            role: 'cancel',
+            handler: () => {
+
             }
           }
         ]

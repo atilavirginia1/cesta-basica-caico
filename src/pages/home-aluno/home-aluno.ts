@@ -42,6 +42,7 @@ export class HomeAlunoPage {
   initializePesquisas(){
       this.pesquisas = [];
       this.pesquisasRef = firebase.database().ref('/pesquisas');
+      
       this.pesquisasRef.orderByChild("email").equalTo(this.user).on("value", pesquisasList => {
       let pesquisas = [];
       pesquisasList.forEach( pesquisa => {
@@ -58,6 +59,7 @@ export class HomeAlunoPage {
       }else{
         this.noresult = false;
       }
+         console.log(this.pesquisas)
   }
 
   realizarPesquisa(){
@@ -76,7 +78,7 @@ export class HomeAlunoPage {
   }
 
   ionViewDidLoad() {
-
+    this.initializePesquisas();
   }
 
   enableMenu() {

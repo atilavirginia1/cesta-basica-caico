@@ -67,6 +67,7 @@ export class LoginPage {
       this.navCtrl.setRoot(LoginPage);
     }else if(this.cargo == 'A'){
       credentials.allow = this.auth.signInAluno(credentials);
+      console.log(credentials.allow);
       if(credentials.allow){
         this.navCtrl.setRoot(HomeAlunoPage, {
         data: credentials.email});

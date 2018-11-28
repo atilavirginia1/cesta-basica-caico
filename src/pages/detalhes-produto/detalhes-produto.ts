@@ -42,18 +42,18 @@ export class DetalhesProdutoPage {
         message: 'Tem certeza que deseja remover o produto?',
         buttons: [
           {
-            text: 'Não',
-            role: 'cancel',
-            handler: () => {
-
-            }
-          },
-          {
             text: 'Sim',
             handler: () => {
               this.provider.remove(produtos.id);
               this.toast.create({ message: 'Produto removido sucesso.', duration: 3000 }).present();
               this.navCtrl.pop();
+            }
+          },
+          {
+            text: 'Não',
+            role: 'cancel',
+            handler: () => {
+
             }
           }
         ]

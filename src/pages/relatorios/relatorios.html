@@ -15,23 +15,21 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding #slidingItem *ngFor="let p of pesquisas">
+    <ion-item-sliding #slidingItem *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
         <button ion-item>
-                <div class="item-datarealizacao" item-start>
-                {{p.data_realizacao}}
-                </div>
-                <div class="item-pesquisa">
-                  {{p.pesquisa}}
-                </div>
-                <div class="item-aluno">
-                  {{p.aluno}}
-                </div>
-                <div class="item-supermercado" item-end>
-                  {{p.supermercado}}
-                </div>
+          <ion-icon item-left large name="clipboard"></ion-icon>
+          <div class="item-datarealizacao">
+          <strong>Realizada em: </strong> {{p.data}}
+          </div>
+          <div class="item-aluno">
+            <strong>Email do responsável: </strong> {{p.email}}
+          </div>
+          <div class="item-supermercado">
+            <strong>Supermercado:</strong> {{p.supermercado}}
+          </div>
         </button>
         <ion-item-options side="right">
-          <button ion-button color="secondary" (click)="exportar()">
+          <button ion-button color="secondary" (click)="exportar(p)">
               <div>
                   <div>
                       <ion-icon name="download"></ion-icon>
