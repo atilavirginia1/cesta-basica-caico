@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
 import { AuthService } from '../../services/auth.service';
@@ -31,7 +31,7 @@ export class CadastrarPage {
   buttonName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 	private formBuilder: FormBuilder, private provider: ProvedorProvider,
-    	private toast: ToastController,
+    	private toast: ToastController, private alertCtrl: AlertController,
       private auth: AuthService) {
 
   	this.usuario = this.navParams.data.usuario || { };
@@ -115,6 +115,24 @@ export class CadastrarPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrarPage');
+  }
+
+  ionViewCanLeave() {
+
+    return new Promise((resolve, reject) => {
+      this.alertCtrl.create({
+          enableBackdropDismiss: false,
+          title: 'Voltar',
+          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+          buttons: [{
+              text: "Sim",
+              handler: resolve
+          },{
+              text: "Não",
+              handler: reject
+          }]
+      }).present();
+    });
   }
 
 }

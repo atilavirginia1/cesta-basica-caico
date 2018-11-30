@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProdutosProvider } from '../../providers/produtos/produtos';
 
@@ -29,7 +29,7 @@ export class CadastrarProdutoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProdutosProvider,
-    private toast: ToastController) {
+    private toast: ToastController, private alertCtrl: AlertController) {
       this.selectedItem = navParams.get('push_item');
       console.log(this.provider.getNome());
       this.produto = this.navParams.data.produto || { };
@@ -75,6 +75,24 @@ export class CadastrarProdutoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastrarProdutoPage');
+  }
+
+  ionViewCanLeave() {
+
+    return new Promise((resolve, reject) => {
+      this.alertCtrl.create({
+          enableBackdropDismiss: false,
+          title: 'Voltar',
+          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+          buttons: [{
+              text: "Sim",
+              handler: resolve
+          },{
+              text: "Não",
+              handler: reject
+          }]
+      }).present();
+    });
   }
 
 }

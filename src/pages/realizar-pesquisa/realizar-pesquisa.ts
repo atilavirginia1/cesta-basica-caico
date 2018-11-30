@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ItemSliding, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ItemSliding, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProvedorProvider } from '../../providers/provedor/provedor';
 import { HomePage } from '../home/home';
@@ -48,8 +48,8 @@ export class RealizarPesquisaPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProvedorProvider,
-    private toast: ToastController) {
-    
+    private toast: ToastController, private alertCtrl: AlertController) {
+
     this.pesquisa = this.navParams.data.pesquisa || { };
     this.email = this.provider.getEmail();
     console.log(this.email)
@@ -83,7 +83,7 @@ export class RealizarPesquisaPage {
         if (i.marca == item.marca) {
             this.produtos.splice(this.produtos.indexOf(i), 1);
             break;
-        }      
+        }
     }
 
   }
@@ -142,7 +142,7 @@ export class RealizarPesquisaPage {
      this.isVisible = true;
     }else{
       this.isVisible = false;
-    }    
+    }
     console.log(this.marcasList)
   }
 
@@ -168,7 +168,7 @@ export class RealizarPesquisaPage {
     for(let i = 0;i < this.produtos.length; i++){
 
       if(this.form2.value.marca.toString() === this.produtos[i].marca.toString()){
-        this.toast.create({ message: this.form2.value.nomeProduto.toString() 
+        this.toast.create({ message: this.form2.value.nomeProduto.toString()
           + " " + this.form2.value.marca.toString() + ' já está na lista de itens.', duration: 3000 }).present();
         existe = true;
       }
@@ -219,6 +219,24 @@ export class RealizarPesquisaPage {
       }
       this.produtosList = unique_array;
 
+    });
+  }
+
+  ionViewCanLeave() {
+
+    return new Promise((resolve, reject) => {
+      this.alertCtrl.create({
+          enableBackdropDismiss: false,
+          title: 'Voltar',
+          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+          buttons: [{
+              text: "Sim",
+              handler: resolve
+          },{
+              text: "Não",
+              handler: reject
+          }]
+      }).present();
     });
   }
 
