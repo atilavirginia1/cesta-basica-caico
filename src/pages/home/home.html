@@ -4,12 +4,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
-      <ion-buttons end> 
+      <ion-buttons end>
       <button ion-button icon-start (click)="logoff()">
         <ion-icon name="log-out"></ion-icon>
           Sair
       </button>
-    </ion-buttons> 
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -21,13 +21,14 @@
       <div class="item-datarealizacao">
       <strong>Realizada em: </strong> {{p.data}}
       </div>
+      <div class="item-supermercado">
+          <strong>Supermercado:</strong> {{p.supermercado}}
+        </div>
       <div class="item-aluno">
-        <strong>Email do responsável: </strong> {{p.email}}
+        <strong>Responsável: </strong>
+        {{p.email}}
       </div>
-      <div class="item-supermercado" item-end>
-        <strong>Supermercado:</strong><br>
-        {{p.supermercado}}
-      </div>
+
     </button>
   </ion-list>
 <ion-label [hidden]="!noresult">Não há pesquisas a serem exibidas.</ion-label>
