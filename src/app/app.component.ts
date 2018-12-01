@@ -44,18 +44,18 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { icon: 'home', title: 'Página Inicial', component: HomePage },
+      { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
       { icon: 'search', title: 'Buscar', component: BuscaPage },
       { icon: 'create', title: 'Editar Perfil', component: EditarUsuarioPage },
       { icon: 'pie', title: 'Relatórios', component: RelatoriosPage },
       { icon: 'person-add', title: 'Solicitações', component: SolicitacoesPage },
-      { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
       { icon: 'information-circle', title: 'Sobre', component: SobrePage }
     ];
 
     this.pagesaluno = [
       { icon: 'home', title: 'Página Inicial', component: HomeAlunoPage },
-      { icon: 'clipboard', title: 'Adicionar Pesquisa', component: RealizarPesquisaPage },
       { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
+      { icon: 'clipboard', title: 'Adicionar Pesquisa', component: RealizarPesquisaPage },
       { icon: 'information-circle', title: 'Sobre', component: SobrePage }
     ];
 
@@ -73,7 +73,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    if(page.component.name != 'HomePage' && page.component.name != 'LoginPage' 
+    if(page.component.name != 'HomePage' && page.component.name != 'LoginPage'
         && page.component.name != 'HomeAlunoPage'){
       this.nav.push(page.component);
     }else{
