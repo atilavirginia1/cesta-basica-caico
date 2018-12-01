@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvedorProvider } from './../../providers/provedor/provedor';
 /**
@@ -16,14 +16,13 @@ import { ProvedorProvider } from './../../providers/provedor/provedor';
 })
 export class EditarUsuarioPage {
   form: FormGroup;
-  usuario: any;  
+  usuario: any;
   public nome: any;
   public username: any;
   key: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  	 private formBuilder: FormBuilder,
-  	 private provider: ProvedorProvider,
-    private toast: ToastController) {
+  	 private formBuilder: FormBuilder, private provider: ProvedorProvider,
+    private toast: ToastController, private alertCtrl: AlertController) {
   	this.usuario = this.navParams.data.usuario || { };
 
     if (this.provider.getEmail() != null) {
@@ -42,7 +41,7 @@ export class EditarUsuarioPage {
         key: this.usuario.key,
         nome: this.usuario.nome,
         usuario: this.usuario.usuario,
-      });  
+      });
   }
 
   onSubmit() {
@@ -56,6 +55,28 @@ export class EditarUsuarioPage {
           this.toast.create({ message: 'Erro ao cadastrar usuário.', duration: 3000 }).present();
           console.error(e)
         })
-  	 }
+     }
+     ionViewCanLeave() {
+      return new Promise((resolve, reject) => {
+        this.alertCtrl
+          .create({
+            enableBackdropDismiss: false,
+            title: "Voltar",
+            message:
+              "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+            buttons: [
+              {
+                text: "Sim",
+                handler: resolve
+              },
+              {
+                text: "Não",
+                handler: reject
+              }
+            ]
+          })
+          .present();
+      });
+    }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SupermercadosProvider } from '../../providers/supermercados/supermercados';
 
@@ -26,9 +26,8 @@ export class EditarSupermercadoPage {
   public bairro: any;
   key: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  	 private formBuilder: FormBuilder,
-  	 private provider: SupermercadosProvider,
-    	private toast: ToastController) {
+  	 private formBuilder: FormBuilder, private provider: SupermercadosProvider,
+    	private toast: ToastController, private alertCtrl: AlertController) {
       this.selectedItem = navParams.get('push_item');
       this.supermercado = this.navParams.data.supermercados || { };
       if (this.provider.getNome() != null) {
@@ -67,7 +66,30 @@ export class EditarSupermercadoPage {
           this.toast.create({ message: 'Erro ao editar supermercado.', duration: 3000 }).present();
           console.error(e)
         })
-  	 }
+  }
+
+  ionViewCanLeave() {
+    return new Promise((resolve, reject) => {
+      this.alertCtrl
+        .create({
+          enableBackdropDismiss: false,
+          title: "Voltar",
+          message:
+            "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+          buttons: [
+            {
+              text: "Sim",
+              handler: resolve
+            },
+            {
+              text: "Não",
+              handler: reject
+            }
+          ]
+        })
+        .present();
+    });
+  }
 
 
   ionViewDidLoad() {

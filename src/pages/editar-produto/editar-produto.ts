@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ProdutosProvider } from '../../providers/produtos/produtos';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  AlertController
+} from "ionic-angular";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { ProdutosProvider } from "../../providers/produtos/produtos";
 /**
  * Generated class for the EditarUsuarioPage page.
  *
@@ -11,8 +17,8 @@ import { ProdutosProvider } from '../../providers/produtos/produtos';
 
 @IonicPage()
 @Component({
-  selector: 'page-editar-produto',
-  templateUrl: 'editar-produto.html',
+  selector: "page-editar-produto",
+  templateUrl: "editar-produto.html"
 })
 export class EditarProdutoPage {
   selectedItem: any;
@@ -23,50 +29,81 @@ export class EditarProdutoPage {
   public medida: any;
   public id: any;
   key: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-  	 private formBuilder: FormBuilder,
-  	 private provider: ProdutosProvider,
-    	private toast: ToastController) {
-      this.selectedItem = navParams.get('push_item');
-      this.produto = this.navParams.data.produto || { };
-      if (this.provider.getNome() != null) {
-        this.produto = this.provider.getProduto();
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams,
+    private formBuilder: FormBuilder, private provider: ProdutosProvider,
+    private toast: ToastController, private alertCtrl: AlertController) {
+    this.selectedItem = navParams.get("push_item");
+    this.produto = this.navParams.data.produto || {};
+    if (this.provider.getNome() != null) {
+      this.produto = this.provider.getProduto();
 
       //  var value = this.produto.val();
-       this.key = this.selectedItem.key;
-       this.nomeProduto = this.selectedItem.nomeProduto;
-       this.marca = this.selectedItem.marca;
-       this.medida = this.selectedItem.medida;
-       this.id = this.selectedItem.id;
-     }
-     this.createForm();
+      this.key = this.selectedItem.key;
+      this.nomeProduto = this.selectedItem.nomeProduto;
+      this.marca = this.selectedItem.marca;
+      this.medida = this.selectedItem.medida;
+      this.id = this.selectedItem.id;
+    }
+    this.createForm();
   }
 
   createForm() {
-      this.form = this.formBuilder.group({
-        key: this.selectedItem.key,
-        nomeProduto: this.produto.nome,
-        marca: this.produto.marca,
-        medida: this.produto.medida,
-        id: this.selectedItem.id
-      });
+    this.form = this.formBuilder.group({
+      key: this.selectedItem.key,
+      nomeProduto: this.produto.nome,
+      marca: this.produto.marca,
+      medida: this.produto.medida,
+      id: this.selectedItem.id
+    });
   }
 
   onSubmit() {
     console.log(this.form);
-    if(!this.form.value.id){
-      this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
+    if (!this.form.value.id) {
+      this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca)
+        .toString()
+        .trim();
     }
     // this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
-    this.provider.save(this.form.value)
-        .then(() => {
-          	this.toast.create({ message: 'Alteração realizada com sucesso', duration: 3000 }).present();
-          	this.navCtrl.pop();
+    this.provider
+      .save(this.form.value)
+      .then(() => {
+        this.toast
+          .create({
+            message: "Alteração realizada com sucesso",
+            duration: 3000
+          })
+          .present();
+        this.navCtrl.pop();
+      })
+      .catch(e => {
+        this.toast
+          .create({ message: "Erro ao cadastrar produto.", duration: 3000 })
+          .present();
+        console.error(e);
+      });
+  }
+  ionViewCanLeave() {
+    return new Promise((resolve, reject) => {
+      this.alertCtrl
+        .create({
+          enableBackdropDismiss: false,
+          title: "Voltar",
+          message:
+            "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+          buttons: [
+            {
+              text: "Sim",
+              handler: resolve
+            },
+            {
+              text: "Não",
+              handler: reject
+            }
+          ]
         })
-        .catch((e) => {
-          this.toast.create({ message: 'Erro ao cadastrar produto.', duration: 3000 }).present();
-          console.error(e)
-        })
-  	 }
-
+        .present();
+    });
+  }
 }
