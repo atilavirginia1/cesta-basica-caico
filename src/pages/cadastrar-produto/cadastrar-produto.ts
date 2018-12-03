@@ -26,7 +26,7 @@ export class CadastrarProdutoPage {
   isVisible: boolean = false;
   message_success: string;
   public produto: any;
-
+  buttonClick: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProdutosProvider,
     private toast: ToastController, private alertCtrl: AlertController) {
@@ -57,7 +57,7 @@ export class CadastrarProdutoPage {
 
 
   onSubmit() {
-    console.log(this.produto);
+    this.buttonClick = true;
     if (this.form.valid) {
       this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca).toString().trim();
       this.message_success = 'Cadastro de produto realizado com sucesso';
@@ -78,21 +78,22 @@ export class CadastrarProdutoPage {
   }
 
   ionViewCanLeave() {
-
-    return new Promise((resolve, reject) => {
-      this.alertCtrl.create({
-          enableBackdropDismiss: false,
-          title: 'Voltar',
-          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
-          buttons: [{
-              text: "Sim",
-              handler: resolve
-          },{
-              text: "Não",
-              handler: reject
-          }]
-      }).present();
-    });
+    if(!this.buttonClick){
+      return new Promise((resolve, reject) => {
+        this.alertCtrl.create({
+            enableBackdropDismiss: false,
+            title: 'Voltar',
+            message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+            buttons: [{
+                text: "Sim",
+                handler: resolve
+            },{
+                text: "Não",
+                handler: reject
+            }]
+        }).present();
+      });
+    }
   }
 
 }

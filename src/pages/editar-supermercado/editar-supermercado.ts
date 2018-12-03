@@ -24,6 +24,7 @@ export class EditarSupermercadoPage {
   public nomeSupermercado: any;
   public endereco: any;
   public bairro: any;
+  public buttonClick: boolean = false;
   key: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 private formBuilder: FormBuilder, private provider: SupermercadosProvider,
@@ -56,7 +57,7 @@ export class EditarSupermercadoPage {
   }
 
   onSubmit() {
-    console.log(this.form);
+    this.buttonClick = true;
     this.provider.save(this.form.value)
         .then(() => {
           	this.toast.create({ message: 'Alteração realizada com sucesso', duration: 3000 }).present();
@@ -69,26 +70,28 @@ export class EditarSupermercadoPage {
   }
 
   ionViewCanLeave() {
-    return new Promise((resolve, reject) => {
-      this.alertCtrl
-        .create({
-          enableBackdropDismiss: false,
-          title: "Voltar",
-          message:
-            "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
-          buttons: [
-            {
-              text: "Sim",
-              handler: resolve
-            },
-            {
-              text: "Não",
-              handler: reject
-            }
-          ]
-        })
-        .present();
-    });
+    if(!this.buttonClick){
+      return new Promise((resolve, reject) => {
+        this.alertCtrl
+          .create({
+            enableBackdropDismiss: false,
+            title: "Voltar",
+            message:
+              "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+            buttons: [
+              {
+                text: "Sim",
+                handler: resolve
+              },
+              {
+                text: "Não",
+                handler: reject
+              }
+            ]
+          })
+          .present();
+      });
+    }
   }
 
 

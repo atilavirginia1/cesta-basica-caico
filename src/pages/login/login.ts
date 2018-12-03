@@ -61,7 +61,7 @@ export class LoginPage {
           () => this.navCtrl.setRoot(HomePage, {
             data: credentials.email
             }),
-          error => this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present()
+          error => this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present()
         );
      // this.navCtrl.setRoot(HomePage);
       this.navCtrl.setRoot(LoginPage);
@@ -73,7 +73,7 @@ export class LoginPage {
         data: credentials.email});
       }else{
           this.navCtrl.setRoot(LoginPage);
-          this.toast.create({ message: 'Erro ao efetuar login.', duration: 3000 }).present();
+          this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
       }
     }
 

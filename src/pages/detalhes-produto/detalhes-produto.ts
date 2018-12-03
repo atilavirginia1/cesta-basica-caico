@@ -27,7 +27,6 @@ export class DetalhesProdutoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetalhesProdutoPage');
   }
 
   editProduto(event, produto){

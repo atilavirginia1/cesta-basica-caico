@@ -8,6 +8,7 @@ import {
 } from "ionic-angular";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ProdutosProvider } from "../../providers/produtos/produtos";
+
 /**
  * Generated class for the EditarUsuarioPage page.
  *
@@ -29,6 +30,7 @@ export class EditarProdutoPage {
   public medida: any;
   public id: any;
   key: any;
+  buttonClick: boolean = false;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: ProdutosProvider,
@@ -59,7 +61,7 @@ export class EditarProdutoPage {
   }
 
   onSubmit() {
-    console.log(this.form);
+    this.buttonClick = true;
     if (!this.form.value.id) {
       this.form.value.id = (this.form.value.nomeProduto + this.form.value.marca)
         .toString()
@@ -85,25 +87,28 @@ export class EditarProdutoPage {
       });
   }
   ionViewCanLeave() {
-    return new Promise((resolve, reject) => {
-      this.alertCtrl
-        .create({
-          enableBackdropDismiss: false,
-          title: "Voltar",
-          message:
-            "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
-          buttons: [
-            {
-              text: "Sim",
-              handler: resolve
-            },
-            {
-              text: "Não",
-              handler: reject
-            }
-          ]
-        })
-        .present();
-    });
+    if(!this.buttonClick){
+
+      return new Promise((resolve, reject) => {
+        this.alertCtrl
+          .create({
+            enableBackdropDismiss: false,
+            title: "Voltar",
+            message:
+              "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+            buttons: [
+              {
+                text: "Sim",
+                handler: resolve
+              },
+              {
+                text: "Não",
+                handler: reject
+              }
+            ]
+          })
+          .present();
+      });
+    }
   }
 }

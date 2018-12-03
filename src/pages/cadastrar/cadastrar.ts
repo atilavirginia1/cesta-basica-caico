@@ -29,6 +29,7 @@ export class CadastrarPage {
   signupError: any;
   title: string;
   buttonName: string;
+  buttonClick: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 	private formBuilder: FormBuilder, private provider: ProvedorProvider,
     	private toast: ToastController, private alertCtrl: AlertController,
@@ -57,7 +58,7 @@ export class CadastrarPage {
   }
 
    onSubmit() {
-    console.log(this.form);
+    this.buttonClick = true;
     if (this.form.valid) {
       if(this.cargo == 'A'){
       	this.message_success = 'Cadastro realizado com sucesso. Aguardar aprovação do professor.'
@@ -118,21 +119,22 @@ export class CadastrarPage {
   }
 
   ionViewCanLeave() {
-
-    return new Promise((resolve, reject) => {
-      this.alertCtrl.create({
-          enableBackdropDismiss: false,
-          title: 'Voltar',
-          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
-          buttons: [{
-              text: "Sim",
-              handler: resolve
-          },{
-              text: "Não",
-              handler: reject
-          }]
-      }).present();
-    });
+  if(!this.buttonClick){
+      return new Promise((resolve, reject) => {
+        this.alertCtrl.create({
+            enableBackdropDismiss: false,
+            title: 'Voltar',
+            message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+            buttons: [{
+                text: "Sim",
+                handler: resolve
+            },{
+                text: "Não",
+                handler: reject
+            }]
+        }).present();
+      });
+    }
   }
 
 }

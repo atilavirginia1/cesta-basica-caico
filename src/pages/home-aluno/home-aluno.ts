@@ -54,7 +54,7 @@ export class HomeAlunoPage {
       this.pesquisas.reverse();
       });
       console.log(this.pesquisas)
-      if(this.pesquisas.length == 0){
+      if(this.pesquisas == null){
         this.noresult = true;
       }else{
         this.noresult = false;

@@ -29,7 +29,7 @@ export class CadastrarSupermercadoPage {
   maskedId: any;
   val: any;
   v: any;
-
+  buttonClick: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private provider: SupermercadosProvider,
     private toast: ToastController, private alertCtrl: AlertController) {
@@ -48,7 +48,7 @@ export class CadastrarSupermercadoPage {
   }
 
   onSubmit() {
-    console.log(this.form);
+    this.buttonClick = true;
     if (this.form.valid) {
       	this.message_success = 'Cadastro realizado com sucesso.'
       this.provider.save(this.form.value)
@@ -101,21 +101,22 @@ unFormat(val) {
 }
 
 ionViewCanLeave() {
-
-  return new Promise((resolve, reject) => {
-    this.alertCtrl.create({
-        enableBackdropDismiss: false,
-        title: 'Voltar',
-        message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
-        buttons: [{
-            text: "Sim",
-            handler: resolve
-        },{
-            text: "Não",
-            handler: reject
-        }]
-    }).present();
-  });
+  if(!this.buttonClick){
+    return new Promise((resolve, reject) => {
+        this.alertCtrl.create({
+            enableBackdropDismiss: false,
+            title: 'Voltar',
+            message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+            buttons: [{
+                text: "Sim",
+                handler: resolve
+            },{
+                text: "Não",
+                handler: reject
+            }]
+        }).present();
+      });
+  }
 }
 
 }

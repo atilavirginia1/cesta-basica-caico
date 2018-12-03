@@ -17,6 +17,7 @@ import { ListPage } from '../pages/list/list';
 import { BuscaPage } from '../pages/busca/busca';
 import { SobrePage } from '../pages/sobre/sobre';
 import { AjudaPage } from '../pages/ajuda/ajuda';
+import { AjudaProfessorPage } from '../pages/ajuda-professor/ajuda-professor';
 import { RelatoriosPage } from '../pages/relatorios/relatorios';
 import { EditarUsuarioPage } from '../pages/editar-usuario/editar-usuario';
 
@@ -62,7 +63,8 @@ import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supe
     EditarProdutoPage,
     EditarSupermercadoPage,
     AjudaPage,
-    SobrePage
+    SobrePage,
+    AjudaProfessorPage
   ],
   imports: [
     BrowserModule,
@@ -102,7 +104,8 @@ import { EditarSupermercadoPage } from '../pages/editar-supermercado/editar-supe
     EditarProdutoPage,
     EditarSupermercadoPage,
     AjudaPage,
-    SobrePage
+    SobrePage,
+    AjudaProfessorPage
   ],
   providers: [
     StatusBar,

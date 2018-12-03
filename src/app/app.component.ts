@@ -13,6 +13,7 @@ import { RelatoriosPage } from '../pages/relatorios/relatorios';
 import { RealizarPesquisaPage } from '../pages/realizar-pesquisa/realizar-pesquisa';
 import { EditarUsuarioPage } from '../pages/editar-usuario/editar-usuario';
 import { AjudaPage } from '../pages/ajuda/ajuda';
+import { AjudaProfessorPage } from '../pages/ajuda-professor/ajuda-professor';
 import { SobrePage } from '../pages/sobre/sobre';
 import firebase from 'firebase';
 
@@ -44,7 +45,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { icon: 'home', title: 'Página Inicial', component: HomePage },
-      { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
+      { icon: 'help-circle', title: 'Ajuda', component: AjudaProfessorPage },
       { icon: 'search', title: 'Buscar', component: BuscaPage },
       { icon: 'create', title: 'Editar Perfil', component: EditarUsuarioPage },
       { icon: 'pie', title: 'Relatórios', component: RelatoriosPage },
@@ -54,8 +55,8 @@ export class MyApp {
 
     this.pagesaluno = [
       { icon: 'home', title: 'Página Inicial', component: HomeAlunoPage },
-      { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
       { icon: 'clipboard', title: 'Adicionar Pesquisa', component: RealizarPesquisaPage },
+      { icon: 'help-circle', title: 'Ajuda', component: AjudaPage },
       { icon: 'information-circle', title: 'Sobre', component: SobrePage }
     ];
 

@@ -20,6 +20,7 @@ export class EditarUsuarioPage {
   public nome: any;
   public username: any;
   key: any;
+  buttonClick: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	 private formBuilder: FormBuilder, private provider: ProvedorProvider,
     private toast: ToastController, private alertCtrl: AlertController) {
@@ -45,7 +46,7 @@ export class EditarUsuarioPage {
   }
 
   onSubmit() {
-    console.log(this.form);
+    this.buttonClick = true;
     this.provider.save(this.form.value)
         .then(() => {
           	this.toast.create({ message: 'Alteração realizada com sucesso', duration: 3000 }).present();
@@ -57,26 +58,29 @@ export class EditarUsuarioPage {
         })
      }
      ionViewCanLeave() {
-      return new Promise((resolve, reject) => {
-        this.alertCtrl
-          .create({
-            enableBackdropDismiss: false,
-            title: "Voltar",
-            message:
-              "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
-            buttons: [
-              {
-                text: "Sim",
-                handler: resolve
-              },
-              {
-                text: "Não",
-                handler: reject
-              }
-            ]
-          })
-          .present();
-      });
+      if(!this.buttonClick){
+
+        return new Promise((resolve, reject) => {
+          this.alertCtrl
+            .create({
+              enableBackdropDismiss: false,
+              title: "Voltar",
+              message:
+                "Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.",
+              buttons: [
+                {
+                  text: "Sim",
+                  handler: resolve
+                },
+                {
+                  text: "Não",
+                  handler: reject
+                }
+              ]
+            })
+            .present();
+        });
+      }
     }
 
 }

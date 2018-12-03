@@ -43,6 +43,7 @@ export class RealizarPesquisaPage {
   marcasList: Array<any> = [];
   medidasList: Array<any> = [];
   produtoSelecionado: any;
+  buttonClick: boolean = false;
   public produtosRef: firebase.database.Reference = firebase.database().ref('/produtos');
 
 
@@ -148,7 +149,7 @@ export class RealizarPesquisaPage {
 
 
   onSubmit() {
-    console.log(this.form.value);
+    this.buttonClick = true;
     if (this.form.valid) {
       this.message_success = 'Pesquisa realizada com sucesso';
       this.provider.savePesquisa(this.form.value)
@@ -223,21 +224,22 @@ export class RealizarPesquisaPage {
   }
 
   ionViewCanLeave() {
-
-    return new Promise((resolve, reject) => {
-      this.alertCtrl.create({
-          enableBackdropDismiss: false,
-          title: 'Voltar',
-          message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
-          buttons: [{
-              text: "Sim",
-              handler: resolve
-          },{
-              text: "Não",
-              handler: reject
-          }]
-      }).present();
-    });
+    if(!this.buttonClick){ 
+      return new Promise((resolve, reject) => {
+        this.alertCtrl.create({
+            enableBackdropDismiss: false,
+            title: 'Voltar',
+            message: 'Tem certeza que deseja voltar? Quaisquer alterações feitas serão perdidas.',
+            buttons: [{
+                text: "Sim",
+                handler: resolve
+            },{
+                text: "Não",
+                handler: reject
+            }]
+        }).present();
+      });
+    }
   }
 
 
