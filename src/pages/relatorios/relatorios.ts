@@ -83,9 +83,9 @@ initializePesquisas(){
     this.toast.create({ message: 'Arquivo exportado, verifique seus arquivos.', duration: 3000 }).present();
   }
 
-  compartilhar() {
-    this.toast.create({ message: 'Pesquisa compartilhada com sucesso', duration: 3000 }).present();
-  }
+  // compartilhar() {
+  //   this.toast.create({ message: 'Pesquisa compartilhada com sucesso', duration: 3000 }).present();
+  // }
 
   getStoragePath()
     {

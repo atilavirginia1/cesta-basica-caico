@@ -23,7 +23,7 @@ export class HomePage {
   public pesquisasRef:firebase.database.Reference;
   private menu: MenuController;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
            private auth: AuthService, public provider: ProvedorProvider, menu: MenuController) {
     this.user = this.navParams.get('data');
     if(this.user){
@@ -50,11 +50,15 @@ export class HomePage {
       this.pesquisas = pesquisas;
       this.pesquisas.reverse();
       });
-      if(this.pesquisas.length == 0 ){
+
+      console.log(this.pesquisas)
+
+      if(this.pesquisas == null ){
         this.noresult = true;
       }else{
         this.noresult = false;
       }
+      console.log("pesquisa inicializada")
   }
 
   ionViewDidLoad() {

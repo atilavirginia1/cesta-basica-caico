@@ -5,26 +5,26 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
-      <ion-buttons end> 
+      <ion-buttons end>
       <button ion-button icon-start (click)="logoff()">
         <ion-icon name="log-out"></ion-icon>
           Sair
       </button>
-    </ion-buttons> 
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
     <h3>Pesquisas realizadas</h3>
-     
+
     <button ion-item *ngFor="let p of pesquisas" (click)="itemTapped($event, p)">
       <ion-icon item-left large name="clipboard"></ion-icon>
       <div class="item-datarealizacao">
       <strong>Realizada em: </strong> {{p.data}}
       </div>
-      <div class="item-supermercado" item-end>
-        <strong>Supermercado:</strong><br>
+      <div class="item-supermercado">
+        <strong>Supermercado:</strong>
         {{p.supermercado}}
       </div>
     </button>
