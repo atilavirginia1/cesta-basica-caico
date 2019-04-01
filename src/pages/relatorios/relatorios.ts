@@ -20,8 +20,9 @@ import firebase from 'firebase';
 export class RelatoriosPage {
   pesquisas: Array<any> = [];
   arrayPesquisas: Array<any> =[];
+  arrayOrdenar: Array<any> =[];
   public pesquisasRef:firebase.database.Reference;
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     private toast: ToastController, public file: File, public plt: Platform) {
     //this.arrayPesquisas.push(this.pesquisas);
   }
@@ -52,6 +53,9 @@ initializePesquisas(){
 }
 
   mountExcel(p){
+    for(var i=0; i<2; i++) {
+      this.arrayPesquisas.push([" "]);
+    }
     var dataPesq = [" ", " ", " ", " ", "Realizada em: ", p.data];
     this.arrayPesquisas.push(dataPesq);
 
@@ -61,19 +65,25 @@ initializePesquisas(){
     var email = [" ", " ", " ", " ", "Email do responsável: ", p.email];
     this.arrayPesquisas.push(email);
 
-    for(var i=0; i<2; i++){
+    for(var i=0; i<2; i++) {
       this.arrayPesquisas.push([" "]);
     }
 
     var header = ["Nome do Produto", "Marca/Tipo", "Medida", "Preço"];
     this.arrayPesquisas.push(header);
-    for(var i=0; i<p.produtos.length; i++){
-      var nome    = p.produtos[i].nomeProduto;
-      var marca   = p.produtos[i].marca;
-      var medida  = p.produtos[i].medida;
-      var preco   = p.produtos[i].preco;
+
+    for(var j=0; j<p.produtos.length; j++){
+      var nome    = p.produtos[j].nomeProduto;
+      var marca   = p.produtos[j].marca;
+      var medida  = p.produtos[j].medida;
+      var preco   = p.produtos[j].preco;
       var index   = [nome,marca,medida,preco];
-      this.arrayPesquisas.push(index);
+      this.arrayOrdenar.push(index);
+      this.arrayOrdenar.sort();
+    }
+
+    for(var x=0; x<this.arrayOrdenar.length; x++){
+      this.arrayPesquisas.push(this.arrayOrdenar[x]);
     }
   }
 

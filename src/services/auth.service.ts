@@ -16,7 +16,7 @@ export class AuthService {
 			this.user = user;
 		});
 		console.log(this.user)
-		
+
 	}
 
 	signInWithEmail(credentials) {
@@ -26,13 +26,14 @@ export class AuthService {
 
 	signInAluno(credentials){
 	  if(credentials.email){
-	     	var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
-		    query.on("child_added", function(snapshot) {
-		   	if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
-		      	&& snapshot.val().ativo == true){
-		     	credentials.allow = true;
-		   	}
-		  });
+	    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
+      query.on("child_added", function(snapshot) {
+        if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
+          && snapshot.val().ativo == true){
+            credentials.allow = true;
+          }
+      });
+
 	  }
 	  return credentials.allow;
 	}

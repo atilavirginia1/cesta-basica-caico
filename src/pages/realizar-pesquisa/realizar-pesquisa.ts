@@ -177,7 +177,7 @@ export class RealizarPesquisaPage {
 
      if(existe == false){
       console.log("nao existe")
-        this.produtos.push(this.form2.value);
+      this.produtos.push(this.form2.value);
      }
 
     this.form2 = null;
@@ -224,7 +224,7 @@ export class RealizarPesquisaPage {
   }
 
   ionViewCanLeave() {
-    if(!this.buttonClick){ 
+    if(!this.buttonClick){
       return new Promise((resolve, reject) => {
         this.alertCtrl.create({
             enableBackdropDismiss: false,
