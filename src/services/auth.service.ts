@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
-import { delay } from 'rxjs/operator/delay';
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
 	usuario: any;
 	private PATH = 'usuarios/';
 
-	constructor(public afAuth: AngularFireAuth) {
+	constructor(public afAuth: AngularFireAuth, private loadingCtrl: LoadingController) {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -27,12 +27,16 @@ export class AuthService {
 
 	async signInAluno(credentials){
 	  if(credentials.email){
-	    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
-      query.on("child_added", function(snapshot) {
-        if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
-          && snapshot.val().ativo == true) {
-            credentials.allow = true;
-          }
+		var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
+		await this.loadingCtrl.create({      
+			content: 'Entrando...',
+			duration: 5000
+		  } ); 
+      	query.on("child_added", function(snapshot) {
+        	if(snapshot.val().email === credentials.email && snapshot.val().senha === credentials.password
+			&& snapshot.val().cargo === credentials.cargo && snapshot.val().ativo === true) {
+            	credentials.allow = true;
+          	}
       });
 
 	  }
@@ -40,14 +44,22 @@ export class AuthService {
 	}
 
 	async signInUser(credentials){
-		var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
-		query.on("child_added", function(snapshot) {
-			if(snapshot.val().email === credentials.email && snapshot.val().senha === credentials.password
-				&& snapshot.val().cargo === credentials.cargo && snapshot.val().ativo === true){
-					credentials.allow = true;
-			}	
+		var ref = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
+		const load = this.loadingCtrl.create({      
+			content: 'Entrando...'
+		  } ); 
+		  load.present();
+		console.log(ref);
+		ref.on("child_added", function (snapshot) {
+			if (snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
+				&& snapshot.val().cargo == credentials.cargo && snapshot.val().ativo == true) {
+				credentials.allow = true;
+
+			} 
+				credentials.allow = false;
 		});
-		return await credentials.allow;
+		load.dismiss(); 
+		return credentials.allow;
 	}
 
 	logout(){

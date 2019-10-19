@@ -54,10 +54,10 @@ export class LoginPage {
       email: data.email,
       cargo: this.cargo,
       password: data.password,
-      allow: null
+      allow: false
     };
     // ver se o usuário está ativo no sistema
-    credentials.allow = this.auth.signInUser(credentials); 
+    // credentials.allow = this.auth.signInUser(credentials); 
 
     this.entrar(credentials);
     
@@ -79,31 +79,36 @@ export class LoginPage {
   }
 
   async entrar(credentials) {
-    const loading = await this.loadingCtrl.create({      
-      content: 'Entrando...'
-    }); 
-    await loading.present();
+    // const loading = await this.loadingCtrl.create({      
+    //   content: 'Entrando...'
+    // }); 
+    // await loading.present();
 
-    console.log(credentials.allow);
-    console.log(credentials.cargo);
-    if (credentials.allow) { // se o usuario estiver ativo, vai ser verificado se ele é aluno ou prof
-      if (credentials.cargo == 'P') { // se for prof 
-        this.navCtrl.setRoot(HomePage, { 
-        data: credentials.email}); // abre a home de professor
-      } else if (credentials.cargo == 'A') { // se for aluno
-        this.navCtrl.setRoot(HomeAlunoPage, {
-        data: credentials.email}); // abre a home de aluno
+    credentials.allow = this.auth.signInUser(credentials); 
+    if(this.cargo === 'P'){
+      // credentials.allow = this.auth.signInUser(credentials);
+      console.log(credentials.allow + 'prof');
+      if(credentials.allow){
+        this.navCtrl.setRoot(HomePage, {
+        data: credentials.email});
+      }else{ 
+          this.navCtrl.setRoot(LoginPage);
+          this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
       }
-    } else {
-        this.navCtrl.setRoot(LoginPage);
-        this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', 
-          duration: 3000 }).present();
+    }else if(this.cargo === 'A'){
+      // credentials.allow = this.auth.signInUser(credentials);
+      console.log(credentials.allow + 'aluno');
+      if(credentials.allow){
+        this.navCtrl.setRoot(HomeAlunoPage, {
+        data: credentials.email});
+      }else{
+          this.navCtrl.setRoot(LoginPage);
+          this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
+      }
     }
-    loading.dismiss();
-  }
-      // esse código é para se quiser que o professor tenha outro modo de validação
+    // esse código é para se quiser que o professor tenha outro modo de validação
     // if(this.cargo == 'P'){
-    //   this.auth.signInWithEmail(credentials)
+    //   this.auth.signInUser(credentials)
     //     .then(
     //       () => this.navCtrl.setRoot(HomePage, {
     //         data: credentials.email
@@ -112,7 +117,7 @@ export class LoginPage {
     //     );
     //  // this.navCtrl.setRoot(HomePage);
     //   this.navCtrl.setRoot(LoginPage);
-    // }else if(this.cargo == 'A'){
+    // }else if(this.cargo === 'A'){
     //   credentials.allow = this.auth.signInAluno(credentials);
     //   console.log(credentials.allow);
     //   if(credentials.allow){
@@ -123,6 +128,10 @@ export class LoginPage {
     //       this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
     //   }
     // }
+    
+    // loading.dismiss();
+  }
+      
 
   cadastrar() {
   	this.navCtrl.push(CadastrarPage);
