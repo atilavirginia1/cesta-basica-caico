@@ -21,7 +21,12 @@ export class SolicitacoesPage {
   public alunosList: Array<any>;
   public alunosKeyList: Array<any> = [];
   public alunosRef: firebase.database.Reference;
-  alunos: Array<{nome: string, matricula: string}>;
+  alunos: Array<{nome: string, cargo: string, matricula: string}>;
+  
+  public usersList: Array<any>;
+  public usersKeyList: Array<any> = [];
+  public usersRef: firebase.database.Reference;
+  users: Array<{nome: string, cargo: string, matricula: string}>;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -29,12 +34,24 @@ export class SolicitacoesPage {
     this.alunos = [];
 	    for (let p = 1; p < 6; p++) {
 	      this.alunos.push({
-	        nome: 'Nome ' + p,
+          nome: 'Nome ' + p,
+          cargo: 'Cargo ' + p,
 	        matricula: 'Matricula ' + p,
 	      });
 	    }
 
       this.loadAlunosList();
+
+      this.users = [];
+	    for (let q = 1; q < 6; q++) {
+	      this.users.push({
+          nome: 'Nome ' + q,
+          cargo: 'Cargo ' + q,
+	        matricula: 'Matricula ' + q,
+	      });
+	    }
+
+      this.loadUserList();
 
   }
 
@@ -61,12 +78,35 @@ export class SolicitacoesPage {
     }
     });
   }
+  
+  loadUserList(){
+    this.usersList = [];
+    this.usersRef = firebase.database().ref('/usuarios');
+    this.usersRef.orderByChild("cargo" || "ativo").on('value', usersList => {
+    let users = [];
+    let usersKey = [];
+    usersList.forEach( user => {
+      if(user.val().ativo == false){
+        users.push(user.val());
+        usersKey.push(user.key);
+      }
+    return false;
+    });
+    this.usersList = users;
+    for(var i = 0; i < this.usersList.length; i++){
+      this.usersList[i].senha = usersKey[i];
+    }
+    });
+  }
+
+
+  
 
   aceitar(event, selectedItem) {
     if(selectedItem) {
       selectedItem.ativo = true;
       this.provider.aceitar(selectedItem);
-      this.toast.create({ message: 'Aluno aceito com sucesso', duration: 3000 }).present();
+      this.toast.create({ message: 'Usuário aceito com sucesso', duration: 3000 }).present();
 
     }
   }
@@ -74,7 +114,7 @@ export class SolicitacoesPage {
 
     if (selectedItem) {
       this.provider.remove(selectedItem);
-      this.toast.create({ message: 'Aluno recusado com sucesso', duration: 3000 }).present();
+      this.toast.create({ message: 'Usuário recusado com sucesso', duration: 3000 }).present();
 
     }
   }

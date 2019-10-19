@@ -15,7 +15,47 @@
 
 <ion-content padding>
 
-    <ion-list>
+  <ion-list>
+    <ion-item-sliding #slidingItem *ngFor="let aluno of usersList" detail>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/imgs/avatar.svg" alt="avatar">
+        </ion-avatar>
+            <div class="item-nome">
+            {{aluno.nome}}
+            </div>
+            <div class="item-cargo" *ngIf="aluno.cargo === 'A'">
+              Aluno
+            </div>
+            <div class="item-cargo" *ngIf="aluno.cargo === 'P'">
+              Professor
+            </div>
+            <div class="item-matricula">
+              {{aluno.matricula}}
+            </div>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="secondary" (click)="aceitar($event, aluno)">
+            <div>
+                <div>
+                    <ion-icon name="checkmark"></ion-icon>
+                </div>
+                <label>Aceitar</label>
+            </div>
+        </button>
+        <button ion-button color="danger" (click)="recusar($event, aluno)">
+            <div>
+                <div>
+                    <ion-icon name="close"></ion-icon>
+                </div>
+                <label>Recusar</label>
+            </div>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+    <!-- <ion-list>
         <ion-item-sliding #slidingItem *ngFor="let aluno of alunosList">
           <ion-item>
             <ion-avatar item-start>
@@ -23,6 +63,9 @@
             </ion-avatar>
                 <div class="item-nome">
                 {{aluno.nome}}
+                </div>
+                <div class="item-cargo">
+                  {{aluno.cargo}}
                 </div>
                 <div class="item-matricula">
                   {{aluno.matricula}}
@@ -47,7 +90,7 @@
             </button>
           </ion-item-options>
         </ion-item-sliding>
-      </ion-list>
+      </ion-list> -->
 
 
 </ion-content>
