@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import { delay } from 'rxjs/operator/delay';
 
 @Injectable()
 export class AuthService {
@@ -24,18 +25,29 @@ export class AuthService {
 			 credentials.password);
 	}
 
-	signInAluno(credentials){
+	async signInAluno(credentials){
 	  if(credentials.email){
 	    var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
       query.on("child_added", function(snapshot) {
         if(snapshot.val().email == credentials.email && snapshot.val().senha == credentials.password
-          && snapshot.val().ativo == true){
+          && snapshot.val().ativo == true) {
             credentials.allow = true;
           }
       });
 
 	  }
-	  return credentials.allow;
+	  return await credentials.allow; //o await faz com que a função espere a requisição voltar do firebase
+	}
+
+	async signInUser(credentials){
+		var query = firebase.database().ref(this.PATH).orderByChild("email").equalTo(credentials.email);
+		query.on("child_added", function(snapshot) {
+			if(snapshot.val().email === credentials.email && snapshot.val().senha === credentials.password
+				&& snapshot.val().cargo === credentials.cargo && snapshot.val().ativo === true){
+					credentials.allow = true;
+			}	
+		});
+		return await credentials.allow;
 	}
 
 	logout(){

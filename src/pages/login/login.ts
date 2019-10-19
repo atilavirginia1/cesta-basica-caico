@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ToastController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ToastController, Events, LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HomeAlunoPage } from '../home-aluno/home-aluno';
 import { HomeProfessorPage } from '../home-professor/home-professor';
@@ -29,7 +29,7 @@ export class LoginPage {
   password: any;
   private menu: MenuController;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-             private auth: AuthService, fb: FormBuilder,
+             private auth: AuthService, fb: FormBuilder, private loadingCtrl: LoadingController,
              private toast: ToastController, menu: MenuController) {
         if(this.cargo == null){
           this.cargo = "A";
@@ -43,43 +43,88 @@ export class LoginPage {
         this.menu.enable(false, 'professor');
   }
 
-  login(){
+  login() {
     let data = this.loginForm.value;
 
     if (!data.email) {
       return;
     }
-
+    // declara as credenciais
     let credentials = {
       email: data.email,
+      cargo: this.cargo,
       password: data.password,
       allow: null
     };
-    if(this.cargo == 'P'){
-      this.auth.signInWithEmail(credentials)
-        .then(
-          () => this.navCtrl.setRoot(HomePage, {
-            data: credentials.email
-            }),
-          error => this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present()
-        );
-     // this.navCtrl.setRoot(HomePage);
-      this.navCtrl.setRoot(LoginPage);
-    }else if(this.cargo == 'A'){
-      credentials.allow = this.auth.signInAluno(credentials);
-      console.log(credentials.allow);
-      if(credentials.allow){
-        this.navCtrl.setRoot(HomeAlunoPage, {
-        data: credentials.email});
-      }else{
-          this.navCtrl.setRoot(LoginPage);
-          this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
-      }
-    }
+    // ver se o usuário está ativo no sistema
+    credentials.allow = this.auth.signInUser(credentials); 
 
+    this.entrar(credentials);
+    
+    // console.log(credentials.allow);
+    // console.log(credentials.cargo);
+    // if (credentials.allow) { // se o usuario estiver ativo, vai ser verificado se ele é aluno ou prof
+    //   if (credentials.cargo == 'P') { // se for prof 
+    //     this.navCtrl.setRoot(HomePage, { 
+    //     data: credentials.email}); // abre a home de professor
+    //   } else if (credentials.cargo == 'A') { // se for aluno
+    //     this.navCtrl.setRoot(HomeAlunoPage, {
+    //     data: credentials.email}); // abre a home de aluno
+    //   }
+    // } else {
+    //     this.navCtrl.setRoot(LoginPage);
+    //     this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', 
+    //       duration: 3000 }).present();
+    // }
   }
 
-  cadastrar(){
+  async entrar(credentials) {
+    const loading = await this.loadingCtrl.create({      
+      content: 'Entrando...'
+    }); 
+    await loading.present();
+
+    console.log(credentials.allow);
+    console.log(credentials.cargo);
+    if (credentials.allow) { // se o usuario estiver ativo, vai ser verificado se ele é aluno ou prof
+      if (credentials.cargo == 'P') { // se for prof 
+        this.navCtrl.setRoot(HomePage, { 
+        data: credentials.email}); // abre a home de professor
+      } else if (credentials.cargo == 'A') { // se for aluno
+        this.navCtrl.setRoot(HomeAlunoPage, {
+        data: credentials.email}); // abre a home de aluno
+      }
+    } else {
+        this.navCtrl.setRoot(LoginPage);
+        this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', 
+          duration: 3000 }).present();
+    }
+    loading.dismiss();
+  }
+      // esse código é para se quiser que o professor tenha outro modo de validação
+    // if(this.cargo == 'P'){
+    //   this.auth.signInWithEmail(credentials)
+    //     .then(
+    //       () => this.navCtrl.setRoot(HomePage, {
+    //         data: credentials.email
+    //         }),
+    //       error => this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present()
+    //     );
+    //  // this.navCtrl.setRoot(HomePage);
+    //   this.navCtrl.setRoot(LoginPage);
+    // }else if(this.cargo == 'A'){
+    //   credentials.allow = this.auth.signInAluno(credentials);
+    //   console.log(credentials.allow);
+    //   if(credentials.allow){
+    //     this.navCtrl.setRoot(HomeAlunoPage, {
+    //     data: credentials.email});
+    //   }else{
+    //       this.navCtrl.setRoot(LoginPage);
+    //       this.toast.create({ message: 'Erro ao efetuar login. Email e/ou senha inválidos.', duration: 3000 }).present();
+    //   }
+    // }
+
+  cadastrar() {
   	this.navCtrl.push(CadastrarPage);
   }
 
